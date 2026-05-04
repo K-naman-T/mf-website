@@ -17,6 +17,7 @@ next-env.d.ts
 .DS_Store
 *.pem
 *.log
+*:Zone.Identifier
 
 # Debug
 npm-debug.log*
@@ -45,6 +46,11 @@ next-env.d.ts
 # Screenshots
 /screenshots/*.png
 /screenshots/*.jpg
+
+# Generated mockup conversion artifacts
+/mockups/icons-output/
+*.pbm
+*.7z
 
 # Cloudflare
 .cloudflared
