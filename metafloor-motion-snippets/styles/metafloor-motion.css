@@ -1,0 +1,27 @@
+.metafloor-liquid-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.metafloor-liquid-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid currentColor;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.metafloor-focus-ring:focus-visible {
+  outline: 2px solid #E31B23;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metafloor-reduce-motion,
+  .metafloor-reduce-motion * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
