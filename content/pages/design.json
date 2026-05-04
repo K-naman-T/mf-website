@@ -1,0 +1,38 @@
+{
+  "slug": "design",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "MINIMUM SELLABLE PRODUCT STUDIO",
+    "title": ["DESIGN.", "ENGINEERING.", "OUTCOMES."],
+    "intro": "We build beautiful, high-performance digital products that are ready to ship, sell, and scale."
+  },
+  "sections": [
+    {
+      "eyebrow": "PRODUCT STUDIO",
+      "title": "DIGITAL PRODUCTS THAT PERFORM AND COMPOUND.",
+      "body": "Strategy, design, engineering, and growth stay in one tight execution loop.",
+      "cards": [
+        {
+          "number": "01",
+          "title": "STRATEGY",
+          "description": "Define the sharpest version of the problem and the fastest credible route to market."
+        },
+        {
+          "number": "02",
+          "title": "DESIGN",
+          "description": "Turn the product into a system: clear, fast, memorable, and usable."
+        },
+        {
+          "number": "03",
+          "title": "ENGINEERING",
+          "description": "Ship robust interfaces and infrastructure that can survive real use."
+        },
+        {
+          "number": "04",
+          "title": "GROWTH",
+          "description": "Measure outcomes, iterate quickly, and compound every release."
+        }
+      ]
+    }
+  ]
+}

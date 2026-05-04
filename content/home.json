@@ -1,0 +1,105 @@
+{
+  "hero": {
+    "eyebrow": "SOVEREIGN AI FOUNDRY",
+    "headline_line1": "MADE FOR",
+    "headline_line2": "WHAT",
+    "headline_line3": "WORKS",
+    "subheadline": "Deterministic production systems. AI that actually ships.",
+    "cta_primary": "VIEW OUR WORK",
+    "cta_secondary": "INITIATE A SIGNAL"
+  },
+  "navigation": {
+    "links": [
+      { "href": "/work", "label": "WORK" },
+      { "href": "/capabilities", "label": "CAPABILITIES" },
+      { "href": "/design", "label": "DESIGN" },
+      { "href": "/process", "label": "PROCESS" },
+      { "href": "/about", "label": "ABOUT" },
+      { "href": "/animations/preview", "label": "ANIMATIONS" }
+    ],
+    "cta": {
+      "label": "INITIATE A SIGNAL",
+      "href": "/contact"
+    }
+  },
+  "problem": {
+    "eyebrow": "THE PROBLEM",
+    "title": "EVERYONE SELLS AI. NOBODY SHIPS IT.",
+    "description": "Chatbots hallucinate. Dashboards need interpretation. RAG retrieves the wrong docs. The only metric: does it run in production, 24/7, without a human babysitting it?",
+    "icon": "/brand/19-warning-alert.svg"
+  },
+  "capabilities": [
+    {
+      "eyebrow": "01",
+      "title": "AGENTIC WORKFLOW SYSTEMS",
+      "description": "Autonomous systems that plan, act, and adapt. Built for real-world chaos.",
+      "icon": "/brand/01-connected-user-network.svg",
+      "href": "/capabilities"
+    },
+    {
+      "eyebrow": "02",
+      "title": "PRIVATE AI PIPELINES",
+      "description": "Secure, modular pipelines for ingestion, reasoning, and action at scale.",
+      "icon": "/brand/02-secure-database-lock.svg",
+      "href": "/capabilities"
+    },
+    {
+      "eyebrow": "03",
+      "title": "INDUSTRIAL COMPUTER VISION",
+      "description": "Robust CV systems that perform in the real world, not just in benchmarks.",
+      "icon": "/brand/03-vision-aperture-eye.svg",
+      "href": "/capabilities"
+    },
+    {
+      "eyebrow": "04",
+      "title": "MULTIMODAL CONVERSATIONAL AI",
+      "description": "Voice, text, image — understood in context. Conversationally useful.",
+      "icon": "/brand/04-voice-message-waveform.svg",
+      "href": "/capabilities"
+    }
+  ],
+  "work": [
+    {
+      "eyebrow": "01",
+      "title": "AI AVATAR INTERFACE",
+      "description": "Multilingual speech-to-speech interaction with expressive avatars for global audiences.",
+      "icon": "/brand/15-speech-input-terminal.svg",
+      "href": "/work"
+    },
+    {
+      "eyebrow": "02",
+      "title": "HYPERSPECTRAL PLATFORM",
+      "description": "Mineral analysis and grading with hyperspectral imaging and ML models.",
+      "icon": "/brand/33-vision-scan-eye.svg",
+      "href": "/work"
+    },
+    {
+      "eyebrow": "03",
+      "title": "INVESTIGATION ASSISTANT",
+      "description": "Secure evidence workflows, semantic search, and automated case summaries.",
+      "icon": "/brand/29-security-shield.svg",
+      "href": "/work"
+    }
+  ],
+  "process": {
+    "eyebrow": "OUR PROCESS",
+    "title": "HOW WE WORK",
+    "description": "A clear, repeatable process that turns complex problems into production systems.",
+    "steps": [
+      { "number": "01", "title": "DISCOVER", "description": "We uncover the right problems to solve." },
+      { "number": "02", "title": "DESIGN", "description": "We design solutions users love." },
+      { "number": "03", "title": "ENGINEER", "description": "We build robust, scalable products." },
+      { "number": "04", "title": "LAUNCH", "description": "We ship, iterate, and drive growth." }
+    ],
+    "cta": "NEED THE FIRST VERSION WORTH SHIPPING?"
+  },
+  "contact": {
+    "email": "hello@metafloor.in",
+    "website": "metafloor.in",
+    "tagline": "BUILT TO RUN. NOT BUILT TO PITCH."
+  },
+  "metadata": {
+    "site_name": "METAFLOOR",
+    "tagline": "Sovereign AI Foundry"
+  }
+}

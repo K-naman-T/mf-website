@@ -1,0 +1,40 @@
+{
+  "slug": "process",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "OUR PROCESS",
+    "title": ["HOW WE WORK"],
+    "intro": "A clear, repeatable process that turns complex problems into high-performance digital products."
+  },
+  "sections": [
+    {
+      "title": "PROCESS",
+      "cards": [
+        {
+          "number": "01",
+          "title": "DISCOVER",
+          "description": "We uncover the right problems to solve."
+        },
+        {
+          "number": "02",
+          "title": "DESIGN",
+          "description": "We design solutions users love."
+        },
+        {
+          "number": "03",
+          "title": "ENGINEER",
+          "description": "We build robust, scalable products."
+        },
+        {
+          "number": "04",
+          "title": "LAUNCH",
+          "description": "We ship, iterate, and drive growth."
+        }
+      ]
+    },
+    {
+      "title": "NEED THE FIRST VERSION WORTH SHIPPING?",
+      "body": "Start with the version that proves the system can work in the real world."
+    }
+  ]
+}

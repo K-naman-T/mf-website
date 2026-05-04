@@ -1,0 +1,15 @@
+{
+  "slug": "contact",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "CONTACT",
+    "title": ["INITIATE", "A SIGNAL"],
+    "intro": "Send the problem, the deadline, and the outcome you need. We will tell you if we can help."
+  },
+  "sections": [
+    {
+      "title": "START WITH CONTEXT.",
+      "body": "Email signal@metafloor.ai with the problem, current stack, constraints, and target ship date."
+    }
+  ]
+}

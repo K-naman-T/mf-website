@@ -1,0 +1,34 @@
+{
+  "slug": "work",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "SELECTED WORK",
+    "title": ["SELECTED WORK"],
+    "intro": "Proof of systems that shipped."
+  },
+  "sections": [
+    {
+      "title": "OUTCOMES, NOT DECORATION.",
+      "cards": [
+        {
+          "number": "01",
+          "title": "AI AVATAR INTERFACE",
+          "description": "Multilingual speech-to-speech interaction with expressive avatars for global audiences.",
+          "tags": ["OUTCOME", "REALTIME"]
+        },
+        {
+          "number": "02",
+          "title": "HYPERSPECTRAL PLATFORM",
+          "description": "Mineral analysis and grading with hyperspectral imaging and ML models.",
+          "tags": ["OUTCOME", "INDUSTRIAL"]
+        },
+        {
+          "number": "03",
+          "title": "INVESTIGATION ASSISTANT",
+          "description": "Secure evidence workflows, semantic search, and automated case summaries.",
+          "tags": ["OUTCOME", "OPERATIONAL"]
+        }
+      ]
+    }
+  ]
+}

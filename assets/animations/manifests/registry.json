@@ -1,0 +1,72 @@
+{
+  "animations": [
+    {
+      "id": "oo-blink",
+      "type": "dotlottie",
+      "src": "/assets/animations/lottie/oo-blink.json",
+      "trigger": "idle",
+      "loop": false,
+      "repeatDelayMs": 10000,
+      "reducedMotion": "static-opacity",
+      "placement": ["navbar", "loader"],
+      "description": "OO signal blink — five circles compress vertically and reopen like a shutter"
+    },
+    {
+      "id": "logo-reveal",
+      "type": "css",
+      "src": "/src/components/animations/LogoReveal.tsx",
+      "trigger": "load",
+      "loop": false,
+      "repeatDelayMs": 0,
+      "reducedMotion": "fade-only",
+      "placement": ["hero"],
+      "description": "Full logo fade + blur clear on hero load, 0.8s"
+    },
+    {
+      "id": "cta-hover",
+      "type": "theatre",
+      "src": "/src/components/animations/CtaHover.tsx",
+      "trigger": "hover",
+      "loop": false,
+      "repeatDelayMs": 0,
+      "reducedMotion": "color-only",
+      "placement": ["buttons"],
+      "description": "CTA arrow shifts right 5px, shimmer sweeps across button on hover"
+    },
+    {
+      "id": "service-hover",
+      "type": "theatre",
+      "src": "/src/components/animations/ServiceHover.tsx",
+      "trigger": "hover",
+      "loop": false,
+      "repeatDelayMs": 0,
+      "reducedMotion": "color-only",
+      "placement": ["service-cards"],
+      "description": "Service icon scales 8% up, red pulse ring expands outward"
+    },
+    {
+      "id": "hero-ambient",
+      "type": "css-canvas",
+      "src": "/src/components/animations/MoltenAmbient.tsx",
+      "trigger": "idle",
+      "loop": true,
+      "repeatDelayMs": 0,
+      "reducedMotion": "static",
+      "placement": ["hero-bg"],
+      "description": "Three molten red blobs drift with orbital signal dots, canvas animation"
+    },
+    {
+      "id": "loader-mark",
+      "type": "canvas",
+      "src": "/src/components/animations/LoaderMark.tsx",
+      "trigger": "load",
+      "loop": false,
+      "repeatDelayMs": 0,
+      "reducedMotion": "static-opacity",
+      "placement": ["loader", "splash"],
+      "description": "Five OO circles draw in sequentially, under 1.2s"
+    }
+  ],
+  "version": "1.0",
+  "lastUpdated": "2026-05-04"
+}

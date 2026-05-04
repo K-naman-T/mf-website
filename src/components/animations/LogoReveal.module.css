@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.logoWrap {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  transition: none;
+}
+
+.logoWrap.entering {
+  animation: logoRevealIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.logoWrap.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.logoSvg {
+  width: 280px;
+  height: 70px;
+}
+
+@keyframes logoRevealIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoWrap.entering {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

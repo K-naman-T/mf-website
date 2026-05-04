@@ -1,0 +1,40 @@
+{
+  "slug": "capabilities",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "CAPABILITIES",
+    "title": ["CAPABILITIES."],
+    "intro": "Design systems, engineering, and launch support under one roof."
+  },
+  "sections": [
+    {
+      "title": "WHAT WE CAN SHIP",
+      "cards": [
+        {
+          "number": "01",
+          "title": "PRODUCT DESIGN",
+          "description": "User-centered products that are intuitive, usable, and built to perform.",
+          "tags": ["RESEARCH", "UX/UI", "DESIGN SYSTEMS", "PROTOTYPING"]
+        },
+        {
+          "number": "02",
+          "title": "FRONTEND SYSTEMS",
+          "description": "Fast, accessible, and scalable interfaces built for real-world complexity.",
+          "tags": ["REACT", "NEXT.JS", "PERFORMANCE", "ACCESSIBILITY"]
+        },
+        {
+          "number": "03",
+          "title": "BACKEND & AI",
+          "description": "Robust infrastructure and intelligent systems that power modern digital products.",
+          "tags": ["APIS", "AI/ML", "DATA", "INFRASTRUCTURE"]
+        },
+        {
+          "number": "04",
+          "title": "LAUNCH SUPPORT",
+          "description": "From go-to-market strategy to analytics, we help you ship and scale with confidence.",
+          "tags": ["STRATEGY", "ANALYTICS", "QA", "GROWTH"]
+        }
+      ]
+    }
+  ]
+}

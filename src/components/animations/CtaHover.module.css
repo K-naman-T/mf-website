@@ -1,0 +1,92 @@
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  border: none;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.primary {
+  background: #F01820;
+  color: #FFFFFF;
+}
+
+.secondary {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+}
+
+.arrowWrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover .arrowWrap,
+.btn.active .arrowWrap {
+  transform: translateX(5px);
+}
+
+.arrow {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn:hover .arrow,
+.btn.active .arrow {
+  transform: translateX(2px);
+}
+
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: none;
+}
+
+.btn:hover .shimmer,
+.btn.active .shimmer {
+  animation: shimmerSlide 0.6s ease forwards;
+}
+
+@keyframes shimmerSlide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arrowWrap,
+  .btn:hover .arrowWrap,
+  .btn.active .arrowWrap {
+    transform: none;
+  }
+  .shimmer {
+    display: none;
+  }
+  .btn:hover,
+  .btn.active {
+    animation: none;
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "slug": "about",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "ABOUT METAFLOOR",
+    "title": ["BUILT TO RUN.", "NOT BUILT", "TO PITCH."],
+    "intro": "Metafloor is a product and AI systems studio for teams that need working software, not theater."
+  },
+  "sections": [
+    {
+      "title": "WE CARE ABOUT THE PART AFTER THE DEMO.",
+      "body": "Production is where the real product begins: failure modes, messy users, difficult data, security boundaries, and scale."
+    }
+  ]
+}
