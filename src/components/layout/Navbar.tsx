@@ -23,6 +23,8 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
       <div className="mf-nav-inner">
         <Link href="/" className="mf-nav-brand">
           <MetafloorShortLogo theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+          <span id="mf-nav-o-target-1" className="mf-nav-o-target mf-nav-o-target-left" aria-hidden="true" />
+          <span id="mf-nav-o-target-2" className="mf-nav-o-target mf-nav-o-target-right" aria-hidden="true" />
         </Link>
 
         <div className="mf-nav-links">

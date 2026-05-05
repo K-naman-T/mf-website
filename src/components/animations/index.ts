@@ -4,3 +4,4 @@ export { ServiceHover } from "./ServiceHover";
 export { CtaHover } from "./CtaHover";
 export { LoaderMark } from "./LoaderMark";
 export { MoltenAmbient } from "./MoltenAmbient";
+export { MockupMotionGallery } from "./MockupMotionGallery";
