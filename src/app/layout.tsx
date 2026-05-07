@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Navbar } from "@/components/layout/Navbar";
+import { IntroDoneProvider } from "@/components/motion/core/IntroDoneContext";
+import { OOPositionProvider } from "@/components/motion/core/OOPositionContext";
+import { getHomeContent } from "@/lib/cms/loader";
 
 export const metadata: Metadata = {
   title: "METAFLOOR — Sovereign AI Foundry",
@@ -17,6 +21,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const content = getHomeContent();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -28,7 +34,14 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <IntroDoneProvider>
+            <OOPositionProvider>
+              <Navbar content={content.navigation} />
+              {children}
+            </OOPositionProvider>
+          </IntroDoneProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

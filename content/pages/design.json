@@ -2,35 +2,39 @@
   "slug": "design",
   "theme": "red",
   "hero": {
-    "eyebrow": "MINIMUM SELLABLE PRODUCT STUDIO",
-    "title": ["DESIGN.", "ENGINEERING.", "OUTCOMES."],
-    "intro": "We build beautiful, high-performance digital products that are ready to ship, sell, and scale."
+    "eyebrow": "PRODUCT STUDIO",
+    "title": [
+      "DESIGN.",
+      "ENGINEERING.",
+      "OUTCOMES."
+    ],
+    "intro": "We build what works and ship it. The rest is theater."
   },
   "sections": [
     {
-      "eyebrow": "PRODUCT STUDIO",
-      "title": "DIGITAL PRODUCTS THAT PERFORM AND COMPOUND.",
-      "body": "Strategy, design, engineering, and growth stay in one tight execution loop.",
+      "eyebrow": "WHAT WE BUILD",
+      "title": "PRODUCTS, NOT PORTFOLIOS.",
+      "body": "Strategy, design, engineering, and launch \u2014 in one tight loop. No hand-offs between agencies. No account managers. You deal directly with the people building it.",
       "cards": [
         {
           "number": "01",
-          "title": "STRATEGY",
-          "description": "Define the sharpest version of the problem and the fastest credible route to market."
+          "title": "PRODUCT",
+          "description": "We define what to build and why. Not what's impressive \u2014 what's fundable, saleable, or livable."
         },
         {
           "number": "02",
           "title": "DESIGN",
-          "description": "Turn the product into a system: clear, fast, memorable, and usable."
+          "description": "Clear, fast, usable. Whatever makes the user do the thing, nothing extra."
         },
         {
           "number": "03",
           "title": "ENGINEERING",
-          "description": "Ship robust interfaces and infrastructure that can survive real use."
+          "description": "Ship something that runs. Not something that works in the demo."
         },
         {
           "number": "04",
-          "title": "GROWTH",
-          "description": "Measure outcomes, iterate quickly, and compound every release."
+          "title": "LAUNCH",
+          "description": "We go live and measure. First revenue, not first impressions."
         }
       ]
     }

@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
 import { MetafloorShortLogo } from "@/components/brand/MetafloorShortLogo";
-import { useState } from "react";
+import { OOGlow } from "@/components/brand/OOGlow";
+import { useEffect, useRef, useState } from "react";
+import { useOOPosition } from "@/components/motion/core/OOPositionContext";
 import type { Navigation } from "@/lib/cms/types";
 
 interface NavbarProps {
@@ -17,12 +19,27 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const isDark = (themeOverride ?? theme) === "dark";
+  const ooRef = useRef<HTMLDivElement>(null);
+  const { setOOPosition } = useOOPosition();
+  const isOO = pathname !== "/";
+
+  useEffect(() => {
+    if (isOO && ooRef.current) {
+      setOOPosition(ooRef.current.getBoundingClientRect());
+    }
+  }, [isOO, setOOPosition]);
 
   return (
     <nav className={isDark ? "mf-nav mf-nav-dark" : "mf-nav mf-nav-red"}>
       <div className="mf-nav-inner">
         <Link href="/" className="mf-nav-brand">
-          <MetafloorShortLogo theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+          <div className="mf-nav-oo-wrapper" ref={isOO ? ooRef : undefined}>
+            {pathname === "/" ? (
+              <MetafloorShortLogo theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+            ) : (
+              <OOGlow width={88} height={36} pulse={true} />
+            )}
+          </div>
           <span id="mf-nav-o-target-1" className="mf-nav-o-target mf-nav-o-target-left" aria-hidden="true" />
           <span id="mf-nav-o-target-2" className="mf-nav-o-target mf-nav-o-target-right" aria-hidden="true" />
         </Link>

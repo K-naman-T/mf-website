@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
+import { createPortal } from "react-dom";
 import { gsap } from "gsap";
+import { useIntroDone, useIsIntroDone } from "@/components/motion/core/IntroDoneContext";
 
 const flyingLetters = [
   { key: "m", viewBox: "0 0 536.852 426.266", d: "M327 218.967C298.12 222.097 294.99 281.707 265.29 279.297C249.59 278.027 246.38 267.667 243.09 254.437C238.11 234.397 237.48 213.477 234.9 193.067C214.35 195.357 203.87 213.827 199.89 232.327C196.37 248.667 195.67 262.567 189.87 278.907C169.41 336.557 103.59 395.147 38.7301 374.367C23.9601 369.637 0.0400627 350.387 6.26874e-05 333.687C-0.0199373 325.027 4.75006 298.937 8.07006 290.907C16.1201 271.427 39.4401 262.117 55.8401 250.417C75.8101 236.167 105.38 213.987 99.2401 186.267C94.8101 166.267 86.4601 158.157 88.1701 134.037C92.9701 66.5265 152.12 35.5465 214.3 42.4165C247.25 46.0565 276.49 74.6665 279.11 108.087C279.94 118.677 274.92 130.497 282.92 138.817C295.58 151.977 328.93 157.147 343.02 144.717C372.39 118.797 359.4 75.8465 387 44.3065C418.42 8.40654 442.38 -6.17346 492.26 2.38654C540.31 10.6365 550.8 63.3565 517.51 95.1865C499.5 112.407 476.65 114.347 460.96 135.537C430.31 176.907 415.78 253.067 430.16 302.407C437.08 326.147 468.79 316.807 478.12 344.627C493.27 389.807 428.38 428.807 389.89 426.137C349.76 423.357 317.9 389.177 317.41 348.867C317.13 326.007 315.14 303.057 318.86 280.297C322.17 260.057 331.2 239.317 326.99 218.947L327 218.967Z", className: "mf-intro-letter-m", x: -1500, y: -800 },
@@ -20,97 +22,199 @@ const oLetters = [
 
 export function LogoIntro() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const startRef = useRef<(event?: Event | SyntheticEvent) => void>(() => {});
+  const [mounted, setMounted] = useState(false);
   const [done, setDone] = useState(false);
+  const introDone = useIntroDone();
+  const isIntroDone = useIsIntroDone();
 
   useEffect(() => {
-    if (
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      sessionStorage.getItem("mf-intro-played")
-    ) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    if (isIntroDone) {
       setDone(true);
+      return;
+    }
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDone(true);
+      introDone();
       return;
     }
 
     const root = rootRef.current;
     if (!root) return;
 
-    const play = window.setTimeout(() => {
-      sessionStorage.setItem("mf-intro-played", "1");
-      const ctx = gsap.context(() => {
-        const navBrand = document.querySelector(".mf-nav-brand") as HTMLElement | null;
-        const navTargets = oLetters.map((letter) => document.getElementById(letter.target));
-        const oNodes = oLetters.map((letter) => root.querySelector(`.${letter.className}`) as HTMLElement | null);
+    let timeline: gsap.core.Timeline | null = null;
+    let unlockTimer: number | null = null;
+    let started = false;
+    let queuedStart = false;
+    let scrollRestored = false;
 
-        if (!navBrand || navTargets.some((target) => !target) || oNodes.some((node) => !node)) {
-          setDone(true);
-          return;
-        }
+    window.scrollTo(0, 0);
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
 
-        gsap.set(navBrand, { opacity: 0 });
-        gsap.set(root.querySelectorAll(".mf-intro-letter"), { opacity: 1, transformOrigin: "50% 50%" });
+    const restoreScroll = () => {
+      if (scrollRestored) return;
+      scrollRestored = true;
+      document.documentElement.style.removeProperty("overflow");
+      document.body.style.removeProperty("overflow");
+    };
 
-        const timeline = gsap.timeline({
-          defaults: { duration: 1.25, ease: "power2.inOut" },
-          onComplete: () => {
-            gsap.set(navBrand, { opacity: 1 });
-            gsap.to(root, { opacity: 0, duration: 0.28, ease: "power2.out", onComplete: () => setDone(true) });
+    const finishIntro = () => {
+      if (unlockTimer) {
+        window.clearTimeout(unlockTimer);
+        unlockTimer = null;
+      }
+      restoreScroll();
+      introDone();
+      setDone(true);
+    };
+
+    const getLanding = (node: HTMLElement, target: HTMLElement) => {
+      const nodeRect = node.getBoundingClientRect();
+      const targetRect = target.getBoundingClientRect();
+      return {
+        x: targetRect.left + targetRect.width / 2 - (nodeRect.left + nodeRect.width / 2),
+        y: targetRect.top + targetRect.height / 2 - (nodeRect.top + nodeRect.height / 2),
+        scaleX: targetRect.width / nodeRect.width,
+        scaleY: targetRect.height / nodeRect.height,
+      };
+    };
+
+    const startIntro = (event?: Event | SyntheticEvent) => {
+      if (!timeline) {
+        queuedStart = true;
+        return;
+      }
+      if (started || timeline.isActive() || timeline.progress() > 0) return;
+      started = true;
+      unlockTimer = window.setTimeout(finishIntro, 3600);
+      timeline.play();
+    };
+    startRef.current = startIntro;
+
+    const stopScroll = (event: Event) => event.preventDefault();
+
+    const ctx = gsap.context(() => {
+      const navBrand = document.querySelector(".mf-nav-brand") as HTMLElement | null;
+      const navTargets = oLetters.map((letter) => document.getElementById(letter.target));
+      const oNodes = oLetters.map((letter) => root.querySelector(`.${letter.className}`) as HTMLElement | null);
+
+      if (!navBrand || navTargets.some((target) => !target) || oNodes.some((node) => !node)) {
+        restoreScroll();
+        setDone(true);
+        return;
+      }
+
+      gsap.set(navBrand, { opacity: 0 });
+      gsap.set(root.querySelectorAll(".mf-intro-letter"), { opacity: 1, transformOrigin: "50% 50%" });
+
+      const introTimeline = gsap.timeline({
+        paused: true,
+        defaults: { duration: 1.25, ease: "power2.inOut" },
+        onComplete: () => {
+          gsap.set(navBrand, { opacity: 1 });
+          gsap.to(root, {
+            opacity: 0,
+            duration: 0.28,
+            ease: "power2.out",
+            onComplete: finishIntro,
+          });
+        },
+      });
+      timeline = introTimeline;
+      if (queuedStart) {
+        queuedStart = false;
+        requestAnimationFrame(() => startIntro());
+      }
+
+      flyingLetters.forEach((letter) => {
+        introTimeline.to(`.${letter.className}`, { x: letter.x, y: letter.y, rotate: letter.x > 0 ? 18 : -18, ease: "power2.in" }, 0.16);
+      });
+
+      oLetters.forEach((letter, index) => {
+        const node = oNodes[index] as HTMLElement;
+        const target = navTargets[index] as HTMLElement;
+
+        introTimeline.to(
+          node,
+          {
+            x: () => getLanding(node, target).x,
+            y: () => getLanding(node, target).y,
+            scaleX: () => getLanding(node, target).scaleX,
+            scaleY: () => getLanding(node, target).scaleY,
+            ease: "power2.out",
           },
-        });
+          0.05,
+        );
+      });
 
-        flyingLetters.forEach((letter) => {
-          timeline.to(`.${letter.className}`, { x: letter.x, y: letter.y, rotate: letter.x > 0 ? 18 : -18, ease: "power2.in" }, 0.16);
-        });
+      introTimeline.to(root, { backgroundColor: "rgba(240, 24, 32, 0)", duration: 0.3 }, 1.05);
+    }, root);
 
-        oLetters.forEach((letter, index) => {
-          const node = oNodes[index] as HTMLElement;
-          const target = navTargets[index] as HTMLElement;
-          const nodeRect = node.getBoundingClientRect();
-          const targetRect = target.getBoundingClientRect();
-          const nodeCx = nodeRect.left + nodeRect.width / 2;
-          const nodeCy = nodeRect.top + nodeRect.height / 2;
-          const targetCx = targetRect.left + targetRect.width / 2;
-          const targetCy = targetRect.top + targetRect.height / 2;
+    root.addEventListener("pointerdown", startIntro, { capture: true });
+    root.addEventListener("pointerup", startIntro, { capture: true });
+    root.addEventListener("touchstart", startIntro, { capture: true, passive: true });
+    root.addEventListener("touchend", startIntro, { capture: true, passive: true });
+    root.addEventListener("click", startIntro, { capture: true });
+    root.addEventListener("touchmove", stopScroll, { passive: false });
+    window.addEventListener("pointerdown", startIntro, { capture: true });
+    window.addEventListener("touchstart", startIntro, { capture: true, passive: true });
+    window.addEventListener("keydown", startIntro, { capture: true });
 
-          timeline.to(
-            node,
-            {
-              x: targetCx - nodeCx,
-              y: targetCy - nodeCy,
-              scaleX: targetRect.width / nodeRect.width,
-              scaleY: targetRect.height / nodeRect.height,
-              ease: "power2.out",
-            },
-            0.05,
-          );
-        });
+    return () => {
+      root.removeEventListener("pointerdown", startIntro, { capture: true });
+      root.removeEventListener("pointerup", startIntro, { capture: true });
+      root.removeEventListener("touchstart", startIntro, { capture: true });
+      root.removeEventListener("touchend", startIntro, { capture: true });
+      root.removeEventListener("click", startIntro, { capture: true });
+      root.removeEventListener("touchmove", stopScroll);
+      window.removeEventListener("pointerdown", startIntro, { capture: true });
+      window.removeEventListener("touchstart", startIntro, { capture: true });
+      window.removeEventListener("keydown", startIntro, { capture: true });
+      if (unlockTimer) window.clearTimeout(unlockTimer);
+      restoreScroll();
+      ctx.revert();
+      startRef.current = () => {};
+    };
+  }, [introDone, isIntroDone, mounted]);
 
-        timeline.to(".mf-intro-prompt", { opacity: 0, y: -6, duration: 0.22 }, 0);
-        timeline.to(root, { backgroundColor: "rgba(240, 24, 32, 0)", duration: 0.3 }, 1.05);
-      }, root);
+  if (done || !mounted) return null;
 
-      return () => ctx.revert();
-    }, 420);
-
-    return () => window.clearTimeout(play);
-  }, []);
-
-  if (done) return null;
-
-  return (
-    <div className="mf-logo-intro" ref={rootRef} aria-hidden="true">
+  return createPortal(
+    <div
+      className="mf-logo-intro"
+      ref={rootRef}
+      role="presentation"
+      onPointerDown={(event) => startRef.current(event)}
+      onPointerUp={(event) => startRef.current(event)}
+      onTouchStart={(event) => startRef.current(event)}
+      onTouchEnd={(event) => startRef.current(event)}
+      onClick={(event) => startRef.current(event)}
+    >
       <div className="mf-logo-intro-stage">
         {flyingLetters.map((letter) => (
-          <svg className={`mf-intro-letter ${letter.className}`} viewBox={letter.viewBox} key={letter.key} focusable="false">
-            <path d={letter.d} />
-          </svg>
+          <div className={`mf-intro-letter ${letter.className}`} key={letter.key}>
+            <svg viewBox={letter.viewBox} focusable="false">
+              <path d={letter.d} />
+            </svg>
+          </div>
         ))}
         {oLetters.map((letter) => (
-          <svg className={`mf-intro-letter mf-intro-o ${letter.className}`} viewBox={letter.viewBox} key={letter.key} focusable="false">
-            <path d={letter.d} />
-          </svg>
+          <div className={`mf-intro-letter mf-intro-o ${letter.className}`} key={letter.key}>
+            <svg viewBox={letter.viewBox} focusable="false">
+              <path d={letter.d} />
+            </svg>
+          </div>
         ))}
       </div>
-      <p className="mf-intro-prompt">Metafloor systems coming online</p>
-    </div>
+    </div>,
+    document.body,
   );
 }

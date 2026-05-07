@@ -2,14 +2,25 @@
   "slug": "about",
   "theme": "red",
   "hero": {
-    "eyebrow": "ABOUT METAFLOOR",
-    "title": ["BUILT TO RUN.", "NOT BUILT", "TO PITCH."],
-    "intro": "Metafloor is a product and AI systems studio for teams that need working software, not theater."
+    "eyebrow": "ABOUT",
+    "title": [
+      "BUILT TO RUN.",
+      "NOT TO PITCH."
+    ],
+    "intro": "Metafloor builds products that generate revenue. Not decks. Not demos. Revenue."
   },
   "sections": [
     {
-      "title": "WE CARE ABOUT THE PART AFTER THE DEMO.",
-      "body": "Production is where the real product begins: failure modes, messy users, difficult data, security boundaries, and scale."
+      "title": "WE DON'T DO THEATER.",
+      "body": "Most AI studios build something impressive and spend the next six months explaining why it doesn't work yet. We skip that part. We build what works, ship it, and let the results speak."
+    },
+    {
+      "title": "FOUNDED ON PRODUCTION.",
+      "body": "Started in Dhanbad. Tata Steel ecosystem gave us access to real industrial problems \u2014 factory floors, mining operations, enterprise sales cycles. We learned what breaks when money is actually on the line."
+    },
+    {
+      "title": "THE PRODUCTS ARE THE PROOF.",
+      "body": "ORACLE runs live prediction signals. OUTBOUND books real meetings. SHADOW is in beta for serious investors. Each one shipped because something had to work \u2014 not because a deck needed to look good."
     }
   ]
 }

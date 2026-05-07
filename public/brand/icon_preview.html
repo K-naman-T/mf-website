@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metafloor Icon Pack — 62 Icons</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #1a1a1a;
+    --card-bg: #f5f5f5;
+    --border: #333;
+    --accent: #e31b23;
+    --text-muted: #888;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 2rem;
+  }
+  h1 {
+    color: var(--accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+  }
+  .subtitle { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 2rem; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: border-color 0.15s, transform 0.1s;
+    cursor: pointer;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    filter: none;
+  }
+  .card span {
+    font-size: 0.55rem;
+    color: #444;
+    text-align: center;
+    word-break: break-all;
+    font-family: 'Courier New', monospace;
+    line-height: 1.3;
+  }
+</style>
+</head>
+<body>
+<h1>Metafloor Icon Pack</h1>
+<p class="subtitle">62 icons — extracted via potrace pipeline</p>
+
+<div class="grid" id="grid"></div>
+
+<script>
+const files = [
+  '01-connected-user-network.svg','02-secure-database-lock.svg','03-vision-aperture-eye.svg',
+  '04-voice-message-waveform.svg','05-modular-cubes-system.svg','06-ai-chip-processor.svg',
+  '07-crystal-ball-insight.svg','08-support-agent-hand.svg','09-monitoring-eye.svg',
+  '10-alert-bell-ring.svg','11-performance-check-gauge.svg','12-time-cycle-clock.svg',
+  '13-governance-building.svg','14-deep-tech-core.svg','15-speech-input-terminal.svg',
+  '16-growth-uptrend.svg','17-verified-target.svg','18-no-cloud-server.svg',
+  '19-warning-alert.svg','20-network-node-mesh.svg','21-process-hierarchy.svg',
+  '22-modular-block-stack.svg','23-rocket-launch.svg','24-sync-refresh-cycle.svg',
+  '25-outbound-link.svg','26-email-message.svg','27-global-web.svg',
+  '28-access-lock.svg','29-security-shield.svg','30-latency-clock-speed.svg',
+  '31-connected-identity.svg','32-platform-layers.svg','33-vision-scan-eye.svg',
+  '34-ai-brain-circuit.svg','35-power-lightning.svg','36-secure-lock-badge.svg',
+  'icon-37-iconpack7-01.svg','icon-38-iconpack7-02.svg','icon-39-iconpack7-03.svg',
+  'icon-40-iconpack7-04.svg','icon-41-iconpack7-05.svg','icon-42-iconpack7-06.svg',
+  'icon-43-iconpack8-01.svg','icon-44-iconpack8-02.svg','icon-45-iconpack8-03.svg',
+  'icon-46-iconpack8-04.svg','icon-47-iconpack8-05.svg','icon-48-iconpack8-06.svg',
+  'icon-49-iconpack9-01.svg','icon-50-iconpack9-02.svg','icon-51-iconpack9-03.svg',
+  'icon-52-iconpack9-04.svg','icon-53-iconpack9-05.svg','icon-54-iconpack9-06.svg',
+  'icon-55-iconpack10-01.svg','icon-56-iconpack10-02.svg','icon-57-iconpack10-03.svg',
+  'icon-58-iconpack10-04.svg','icon-59-iconpack10-05.svg','icon-60-iconpack10-06.svg',
+];
+
+const grid = document.getElementById('grid');
+
+files.forEach(file => {
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const img = document.createElement('img');
+  img.src = file;
+  img.alt = file;
+  img.loading = 'lazy';
+
+  const label = document.createElement('span');
+  label.textContent = file;
+
+  card.appendChild(img);
+  card.appendChild(label);
+  grid.appendChild(card);
+});
+</script>
+</body>
+</html>

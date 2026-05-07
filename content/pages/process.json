@@ -2,39 +2,38 @@
   "slug": "process",
   "theme": "red",
   "hero": {
-    "eyebrow": "OUR PROCESS",
-    "title": ["HOW WE WORK"],
-    "intro": "A clear, repeatable process that turns complex problems into high-performance digital products."
+    "eyebrow": "PROCESS",
+    "title": [
+      "SIMPLE.",
+      "FAST.",
+      "REAL."
+    ],
+    "intro": "No discovery sprints. No design thinking workshops. We build what works and ship it."
   },
   "sections": [
     {
-      "title": "PROCESS",
+      "title": "HOW WE WORK",
       "cards": [
         {
           "number": "01",
-          "title": "DISCOVER",
-          "description": "We uncover the right problems to solve."
+          "title": "YOU TELL US THE PROBLEM",
+          "description": "What needs to work? What's the deadline? What's it worth to you? That's the start."
         },
         {
           "number": "02",
-          "title": "DESIGN",
-          "description": "We design solutions users love."
+          "title": "WE BUILD A WORKING VERSION",
+          "description": "Fast. Not perfect. Something you can touch, test, and break. That's the point."
         },
         {
           "number": "03",
-          "title": "ENGINEER",
-          "description": "We build robust, scalable products."
-        },
-        {
-          "number": "04",
-          "title": "LAUNCH",
-          "description": "We ship, iterate, and drive growth."
+          "title": "WE LAUNCH IT",
+          "description": "It goes live. You start seeing results. We iterate based on what's actually happening."
         }
       ]
     },
     {
-      "title": "NEED THE FIRST VERSION WORTH SHIPPING?",
-      "body": "Start with the version that proves the system can work in the real world."
+      "title": "READY TO SHIP?",
+      "body": "Tell us what you need built. We'll tell you if it's realistic, what it costs, and how fast we can get it running."
     }
   ]
 }

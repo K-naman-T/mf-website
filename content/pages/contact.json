@@ -3,13 +3,20 @@
   "theme": "red",
   "hero": {
     "eyebrow": "CONTACT",
-    "title": ["INITIATE", "A SIGNAL"],
-    "intro": "Send the problem, the deadline, and the outcome you need. We will tell you if we can help."
+    "title": [
+      "INITIATE",
+      "A SIGNAL"
+    ],
+    "intro": "Tell us what you need. If we can help, we'll tell you exactly what it costs and how fast we can ship."
   },
   "sections": [
     {
-      "title": "START WITH CONTEXT.",
-      "body": "Email signal@metafloor.ai with the problem, current stack, constraints, and target ship date."
+      "title": "START WITH THE PROBLEM.",
+      "body": "Email signal@metafloor.in with: what needs to work, when you need it by, and what it's worth to you. No NDAs, no pitch decks. Just the problem."
+    },
+    {
+      "title": "WE RESPOND WITHIN 24 HOURS.",
+      "body": "If it makes sense, we'll tell you straight. If it doesn't, we'll tell you that too \u2014 and maybe point you to someone who can help."
     }
   ]
 }

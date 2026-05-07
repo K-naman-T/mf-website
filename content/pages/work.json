@@ -2,31 +2,109 @@
   "slug": "work",
   "theme": "red",
   "hero": {
-    "eyebrow": "SELECTED WORK",
-    "title": ["SELECTED WORK"],
-    "intro": "Proof of systems that shipped."
+    "eyebrow": "PRODUCTS",
+    "title": [
+      "WHAT WE SHIP."
+    ],
+    "intro": "Live products. Not case studies."
   },
   "sections": [
     {
-      "title": "OUTCOMES, NOT DECORATION.",
+      "title": "ORACLE \u2014 PREDICTION SIGNALS",
       "cards": [
         {
           "number": "01",
-          "title": "AI AVATAR INTERFACE",
-          "description": "Multilingual speech-to-speech interaction with expressive avatars for global audiences.",
-          "tags": ["OUTCOME", "REALTIME"]
+          "title": "THE PRODUCT",
+          "description": "Temporal intelligence for traders. Binary signals on world events \u2014 yes or no \u2014 published to Discord before the market resolves.",
+          "tags": [
+            "LIVE",
+            "$19-99/MO"
+          ]
         },
         {
           "number": "02",
-          "title": "HYPERSPECTRAL PLATFORM",
-          "description": "Mineral analysis and grading with hyperspectral imaging and ML models.",
-          "tags": ["OUTCOME", "INDUSTRIAL"]
+          "title": "THE MECHANIC",
+          "description": "Entity corpus + news monitoring + Vedic astrological timing. 1-bit signals. No ambiguity. No explanatory footnotes.",
+          "tags": [
+            "OSINT",
+            "VASIC",
+            "RULE-BASED"
+          ]
         },
         {
           "number": "03",
-          "title": "INVESTIGATION ASSISTANT",
-          "description": "Secure evidence workflows, semantic search, and automated case summaries.",
-          "tags": ["OUTCOME", "OPERATIONAL"]
+          "title": "THE RESULT",
+          "description": "5/5 on blind test resolved markets. Brier Score: 0.0000. Not a demo. Not a backtest.",
+          "tags": [
+            "VERIFIED",
+            "LIVE"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "OUTBOUND \u2014 VOICE AI SALES",
+      "cards": [
+        {
+          "number": "01",
+          "title": "THE PRODUCT",
+          "description": "Voice AI that makes real B2B calls. Handles objection. Books the meeting. Your phone starts ringing.",
+          "tags": [
+            "LIVE",
+            "\u20b98K/MO PER CLIENT"
+          ]
+        },
+        {
+          "number": "02",
+          "title": "THE MECHANIC",
+          "description": "Upload prospects \u2192 voice AI calls them \u2192 conversation \u2192 calendar booking. No humans involved in the outreach.",
+          "tags": [
+            "AUTO-BOOKING",
+            "CRM"
+          ]
+        },
+        {
+          "number": "03",
+          "title": "THE STACK",
+          "description": "FastAPI + Sarvam STT + MiniMax TTS + Twilio webhook. Industry kits for HVAC, plumbing, electrical, pest control.",
+          "tags": [
+            "FASTAPI",
+            "SARVAM",
+            "MINIMAX"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "SHADOW \u2014 FOUNDER TIMING",
+      "cards": [
+        {
+          "number": "01",
+          "title": "THE PRODUCT",
+          "description": "When is this founder's next peak? When is this company likely to break out or burn out? For VCs who want to know before the pitch.",
+          "tags": [
+            "BETA",
+            "REQUEST ACCESS"
+          ]
+        },
+        {
+          "number": "02",
+          "title": "THE MECHANIC",
+          "description": "Founder birth chart + company incorporation date \u2192 peak timing windows. Vedic astrology meets due diligence.",
+          "tags": [
+            "VASIC",
+            "DUE DILIGENCE"
+          ]
+        },
+        {
+          "number": "03",
+          "title": "THE USE CASE",
+          "description": "Pre-investment timing check. Portfolio founder review. Co-founder compatibility analysis.",
+          "tags": [
+            "VC",
+            "ANGELS",
+            "FAMILY OFFICE"
+          ]
         }
       ]
     }

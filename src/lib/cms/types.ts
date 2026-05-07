@@ -29,18 +29,18 @@ export const SiteMetadataSchema = z.object({
 });
 
 export const HomeTileSchema = z.object({
-  eyebrow: z.string().optional(),
+  eyebrow: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
-  icon: z.string().optional(),
-  href: z.string().optional(),
+  icon: z.string().min(1),
+  href: z.string().min(1),
 });
 
 export const HomeProblemSchema = z.object({
   eyebrow: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
-  icon: z.string().optional(),
+  icon: z.string().min(1),
 });
 
 export const HomeProcessStepSchema = z.object({
@@ -73,16 +73,16 @@ export const HomeContentSchema = z.object({
 });
 
 export const PageCardSchema = z.object({
-  number: z.string().optional(),
+  number: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
   tags: z.array(z.string()).optional(),
 });
 
 export const PageSectionSchema = z.object({
-  eyebrow: z.string().optional(),
+  eyebrow: z.string().min(1).optional(),
   title: z.string().min(1),
-  body: z.string().optional(),
+  body: z.string().min(1).optional(),
   cards: z.array(PageCardSchema).optional(),
 });
 

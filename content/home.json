@@ -1,21 +1,31 @@
 {
   "hero": {
-    "eyebrow": "SOVEREIGN AI FOUNDRY",
-    "headline_line1": "MADE FOR",
-    "headline_line2": "WHAT",
-    "headline_line3": "WORKS",
-    "subheadline": "Deterministic production systems. AI that actually ships.",
-    "cta_primary": "VIEW OUR WORK",
+    "eyebrow": " ",
+    "headline_line1": "BUILT TO",
+    "headline_line2": "RUN.",
+    "headline_line3": "NOT TO PITCH.",
+    "subheadline": "Products that make money. Not slide decks.",
+    "cta_primary": "SEE PRODUCTS",
     "cta_secondary": "INITIATE A SIGNAL"
   },
   "navigation": {
     "links": [
-      { "href": "/work", "label": "WORK" },
-      { "href": "/capabilities", "label": "CAPABILITIES" },
-      { "href": "/design", "label": "DESIGN" },
-      { "href": "/process", "label": "PROCESS" },
-      { "href": "/about", "label": "ABOUT" },
-      { "href": "/animations/preview", "label": "ANIMATIONS" }
+      {
+        "href": "/work",
+        "label": "PRODUCTS"
+      },
+      {
+        "href": "/process",
+        "label": "PROCESS"
+      },
+      {
+        "href": "/about",
+        "label": "ABOUT"
+      },
+      {
+        "href": "/contact",
+        "label": "CONTACT"
+      }
     ],
     "cta": {
       "label": "INITIATE A SIGNAL",
@@ -31,75 +41,86 @@
   "capabilities": [
     {
       "eyebrow": "01",
-      "title": "AGENTIC WORKFLOW SYSTEMS",
-      "description": "Autonomous systems that plan, act, and adapt. Built for real-world chaos.",
+      "title": "ORACLE",
+      "description": "Temporal prediction intelligence. Binary signals on world events \u2014 yes or no, before it happens. For traders who need an edge, not an explanation.",
       "icon": "/brand/01-connected-user-network.svg",
-      "href": "/capabilities"
+      "href": "/work"
     },
     {
       "eyebrow": "02",
-      "title": "PRIVATE AI PIPELINES",
-      "description": "Secure, modular pipelines for ingestion, reasoning, and action at scale.",
+      "title": "SHADOW",
+      "description": "Founder timing analysis. Birth chart + company incorporation date = when this person or idea peaks. For VCs who want to know before the pitch.",
       "icon": "/brand/02-secure-database-lock.svg",
-      "href": "/capabilities"
+      "href": "/work"
     },
     {
       "eyebrow": "03",
-      "title": "INDUSTRIAL COMPUTER VISION",
-      "description": "Robust CV systems that perform in the real world, not just in benchmarks.",
+      "title": "OUTBOUND",
+      "description": "Voice AI for B2B sales calls. Real voice, real conversation, real meetings booked. Not a demo \u2014 your phone starts ringing.",
       "icon": "/brand/03-vision-aperture-eye.svg",
-      "href": "/capabilities"
+      "href": "/work"
     },
     {
       "eyebrow": "04",
-      "title": "MULTIMODAL CONVERSATIONAL AI",
-      "description": "Voice, text, image — understood in context. Conversationally useful.",
+      "title": "VOICE DISPATCH",
+      "description": "Factory repair technician routing. Call comes in, system routes to the right technician, job gets booked. No multi-day waits.",
       "icon": "/brand/04-voice-message-waveform.svg",
-      "href": "/capabilities"
+      "href": "/work"
     }
   ],
   "work": [
     {
-      "eyebrow": "01",
-      "title": "AI AVATAR INTERFACE",
-      "description": "Multilingual speech-to-speech interaction with expressive avatars for global audiences.",
+      "eyebrow": "ORACLE",
+      "title": "PREDICTION SIGNALS THAT TRADE",
+      "description": "Entity corpus + news monitoring + astrological timing \u2192 1-bit signals. Yes or no. Published to Discord. Ready to act on.",
       "icon": "/brand/15-speech-input-terminal.svg",
       "href": "/work"
     },
     {
-      "eyebrow": "02",
-      "title": "HYPERSPECTRAL PLATFORM",
-      "description": "Mineral analysis and grading with hyperspectral imaging and ML models.",
+      "eyebrow": "SHADOW",
+      "title": "FOUNDER TIMING FOR INVESTORS",
+      "description": "When is this founder's next peak? When is this company likely to break out or burn out? Birth chart + incorporation date.",
       "icon": "/brand/33-vision-scan-eye.svg",
       "href": "/work"
     },
     {
-      "eyebrow": "03",
-      "title": "INVESTIGATION ASSISTANT",
-      "description": "Secure evidence workflows, semantic search, and automated case summaries.",
+      "eyebrow": "OUTBOUND",
+      "title": "YOUR SALES TEAM RUNS 24/7",
+      "description": "Voice AI that makes real B2B calls. Handles objection, books the meeting. You stop prospecting and start closing.",
       "icon": "/brand/29-security-shield.svg",
       "href": "/work"
     }
   ],
   "process": {
-    "eyebrow": "OUR PROCESS",
-    "title": "HOW WE WORK",
-    "description": "A clear, repeatable process that turns complex problems into production systems.",
+    "eyebrow": "HOW WE WORK",
+    "title": "SIMPLE PROCESS.",
+    "description": "No discovery sprints. No design thinking workshops. We build what works and ship it.",
     "steps": [
-      { "number": "01", "title": "DISCOVER", "description": "We uncover the right problems to solve." },
-      { "number": "02", "title": "DESIGN", "description": "We design solutions users love." },
-      { "number": "03", "title": "ENGINEER", "description": "We build robust, scalable products." },
-      { "number": "04", "title": "LAUNCH", "description": "We ship, iterate, and drive growth." }
+      {
+        "number": "01",
+        "title": "DISCOVER",
+        "description": "You tell us the problem and the deadline."
+      },
+      {
+        "number": "02",
+        "title": "BUILD",
+        "description": "We ship a working version fast."
+      },
+      {
+        "number": "03",
+        "title": "LAUNCH",
+        "description": "It runs. You charge."
+      }
     ],
-    "cta": "NEED THE FIRST VERSION WORTH SHIPPING?"
+    "cta": "READY TO SHIP?"
   },
   "contact": {
-    "email": "hello@metafloor.in",
+    "email": "signal@metafloor.in",
     "website": "metafloor.in",
-    "tagline": "BUILT TO RUN. NOT BUILT TO PITCH."
+    "tagline": "BUILT TO RUN. NOT TO PITCH."
   },
   "metadata": {
     "site_name": "METAFLOOR",
-    "tagline": "Sovereign AI Foundry"
+    "tagline": "Products that run."
   }
 }

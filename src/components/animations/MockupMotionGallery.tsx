@@ -212,9 +212,12 @@ function LogoParticleCanvas({ replayKey }: { replayKey: number }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
+    const isValid = (v: number) => Number.isFinite(v);
+
     const easeOutExpo = (value: number) => (value === 1 ? 1 : 1 - 2 ** (-10 * value));
 
     const draw = (now: number) => {
+      if (!width || !height) return;
       const t = Math.min((now - start) / 1650, 1);
       const pulse = (now - start) / 1000;
       const progress = easeOutExpo(t);
@@ -227,6 +230,7 @@ function LogoParticleCanvas({ replayKey }: { replayKey: number }) {
         const orbitY = Math.sin(particle.angle + pulse * 0.65) * particle.radius * 0.55;
         const x = width / 2 + particle.sx * (1 - progress) + particle.tx * progress + orbitX * (1 - progress);
         const y = height / 2 + particle.sy * (1 - progress) + particle.ty * progress + orbitY * (1 - progress);
+        if (!isValid(x) || !isValid(y)) continue;
         const size = particle.size + Math.sin(pulse * 5 + particle.angle) * 0.8;
         const gradient = ctx.createRadialGradient(x - size, y - size, 1, x, y, size * 4.8);
         gradient.addColorStop(0, "rgba(255, 86, 78, 0.98)");
