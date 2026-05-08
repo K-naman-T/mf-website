@@ -11,43 +11,37 @@
     }
   },
   "cta": {
-    "title": "READY TO BUILD SOMETHING THAT WORKS?"
+    "title": "READY WHEN IT NEEDS TO SHIP."
   },
   "sections": [
     {
       "title": "THE OPERATING SEQUENCE",
-      "body": "You bring the problem. We dissect the constraints. We design the architecture. We build, test, iterate, and ship something that works.",
       "cards": [
         {
           "number": "01",
           "title": "YOU BRING THE PROBLEM",
-          "description": "What needs to work? Where does it break? What environment does it survive? What outcome matters?"
+          "description": "What needs to work? Where does it break? What outcome actually matters?"
         },
         {
           "number": "02",
-          "title": "WE DISSECT THE CONSTRAINTS",
-          "description": "Compute, latency, data quality, deployment surface, model reliability, language, and operational failure modes."
+          "title": "WE FIGURE OUT WHAT'S REAL",
+          "description": "What can actually be built. What the constraints are. What the honest timeline looks like."
         },
         {
           "number": "03",
-          "title": "WE DESIGN THE ARCHITECTURE",
-          "description": "We choose the stack, define state boundaries, decide what the model does, and decide what deterministic code must own."
+          "title": "WE BUILD",
+          "description": "Fast. Not perfect. Something you can touch and test."
         },
         {
           "number": "04",
-          "title": "WE BUILD, TEST, ITERATE",
-          "description": "The system gets built against real constraints and refined until it can survive the conditions it was designed for."
-        },
-        {
-          "number": "05",
-          "title": "WE SHIP SOMETHING THAT WORKS",
-          "description": "No sandbox theater. No maybe. A deployed system that can be measured."
+          "title": "WE LAUNCH",
+          "description": "It goes live. You start seeing results. We iterate from there."
         }
       ]
     },
     {
       "title": "NO THEATER",
-      "body": "We do not sell long discovery engagements, vague transformation decks, or a roadmap that never touches production. We build.",
+      "body": "No long discovery engagements. No vague transformation decks. We build.",
       "ornament": {
         "asset": "/ornaments/molten-08.svg",
         "placement": "section-pool"

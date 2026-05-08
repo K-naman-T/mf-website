@@ -2,66 +2,37 @@
   "slug": "design",
   "theme": "red",
   "hero": {
-    "eyebrow": "DESIGN PROTOCOL",
+    "eyebrow": "DESIGN",
     "title": ["MOLTEN", "MINIMALIST."],
-    "intro": "Deterministic systems around probabilistic engines. Fluid intelligence held inside structural rigor.",
+    "intro": "The aesthetic is the tension between organic molten forms and rigid structural grids.",
     "ornament": {
       "asset": "/ornaments/molten-02.svg",
       "placement": "hero-right"
     }
   },
   "cta": {
-    "title": "READY TO BUILD SOMETHING THAT WORKS?"
+    "title": "READY WHEN IT NEEDS TO SHIP."
   },
   "sections": [
     {
-      "eyebrow": "CORE PHILOSOPHY",
-      "title": "AGENTIC DESIGN FOUNDRY.",
-      "body": "Metafloor forges the rigid state machines and deterministic frameworks required to turn volatile AI models into high-conviction industrial outcomes.",
-      "cards": [
-        {
-          "number": "01",
-          "title": "FOUNDRY, NOT AGENCY",
-          "description": "We do not provide services as decoration. We forge infrastructure that works."
-        },
-        {
-          "number": "02",
-          "title": "1-BIT SIGNALS",
-          "description": "The output should resolve to conviction: yes or no, done or error, working or broken."
-        },
-        {
-          "number": "03",
-          "title": "SOVEREIGN TECHNICALITY",
-          "description": "Local compute, air-gapped security, outcome-based monetization, and systems that survive outside the demo."
-        }
-      ]
+      "eyebrow": "COLOR",
+      "title": "RED. BLACK. WHITE.",
+      "body": "Red as a signal, not a statement. Black as depth. White as clarity. Everything earns its place or it doesn't go in."
     },
     {
-      "eyebrow": "VISUAL IDENTITY",
-      "title": "FLUID INTELLIGENCE. RIGID GRID.",
-      "body": "The aesthetic represents the tension between molten probabilistic engines and structural deterministic systems.",
-      "cards": [
-        {
-          "number": "01",
-          "title": "HIGH-ENERGY RED",
-          "description": "Brand red carries urgency, heat, and innovation. Stark black carries rigor and grounding. White gives the system air."
-        },
-        {
-          "number": "02",
-          "title": "DUAL TYPOGRAPHY",
-          "description": "All-caps technical hierarchy for authority. Organic molten logotype for human personality and memorability."
-        },
-        {
-          "number": "03",
-          "title": "MOTIFS",
-          "description": "Molten forms, heavy dividers, dot matrices, and star cutouts as 1-bit indicators."
-        }
-      ]
+      "eyebrow": "TYPE",
+      "title": "BOLD. CONDENSED. TIGHT.",
+      "body": "Bold typography with tight tracking. All-caps hierarchy where it counts. Nothing decorative. Every letter does work."
     },
     {
-      "eyebrow": "LAYOUT",
-      "title": "ORDER WITH ASYMMETRY.",
-      "body": "A 12-column commitment to structure, broken by modular asymmetry, breathing room, and strong dividers that preserve hierarchy.",
+      "eyebrow": "GRID",
+      "title": "GEOMETRIC PRECISION.",
+      "body": "12-column structure. Asymmetric breaks. Strong dividers. The grid is a tool, not a prison."
+    },
+    {
+      "eyebrow": "TENSION",
+      "title": "MOLTEN VS RIGID.",
+      "body": "We hold two things at once: the organic, probabilistic nature of intelligence and the structural, deterministic requirements of systems that work. This tension is the aesthetic.",
       "ornament": {
         "asset": "/ornaments/molten-06.svg",
         "placement": "section-right"

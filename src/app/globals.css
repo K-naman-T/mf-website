@@ -8,7 +8,7 @@
   --mf-nav-height: 96px;
   --mf-red-hot: #FF1A1A;
   --mf-red-core: #E91118;
-  --mf-red-shadow: #A90008;
+  --mf-red-shadow: #D10C12;
   --color-brand-red: var(--mf-red-core);
   --color-bg-red: var(--mf-red-core);
   --color-bg-dark: #000000;
@@ -540,9 +540,9 @@ body > * {
 
 .mf-hero-red {
   background:
-    radial-gradient(circle at 18% 12%, rgba(255, 48, 48, 0.16), transparent 34%),
-    radial-gradient(circle at 84% 82%, rgba(120, 0, 0, 0.13), transparent 42%),
-    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 48%, var(--mf-red-shadow));
+    radial-gradient(circle at 18% 12%, rgba(255, 96, 96, 0.14), transparent 34%),
+    radial-gradient(circle at 84% 82%, rgba(209, 12, 18, 0.08), transparent 42%),
+    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 56%, var(--mf-red-shadow));
 }
 
 .mf-hero-dark {
@@ -719,9 +719,9 @@ body > * {
   scroll-margin-top: var(--mf-nav-height);
   overflow: hidden;
   background:
-    radial-gradient(circle at 18% 12%, rgba(255, 48, 48, 0.14), transparent 34%),
-    radial-gradient(circle at 82% 78%, rgba(120, 0, 0, 0.12), transparent 42%),
-    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 48%, var(--mf-red-shadow));
+    radial-gradient(circle at 18% 12%, rgba(255, 96, 96, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(209, 12, 18, 0.08), transparent 42%),
+    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 56%, var(--mf-red-shadow));
   color: #000;
   border-bottom: 2px solid #000;
   box-sizing: border-box;
@@ -1043,7 +1043,7 @@ body > * {
   overflow: visible;
   background:
     radial-gradient(circle at 18% 10%, rgba(255, 255, 255, 0.08), transparent 30%),
-    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 52%, var(--mf-red-shadow));
+    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 58%, var(--mf-red-shadow));
 }
 
 .mf-footer-ink-corner {
@@ -1299,18 +1299,18 @@ body > * {
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(circle at 18% 12%, rgba(255, 48, 48, 0.14), transparent 34%),
-    radial-gradient(circle at 82% 78%, rgba(120, 0, 0, 0.12), transparent 42%),
-    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 48%, var(--mf-red-shadow));
+    radial-gradient(circle at 18% 12%, rgba(255, 96, 96, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(209, 12, 18, 0.08), transparent 42%),
+    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 56%, var(--mf-red-shadow));
 }
 
 .mf-page-theme {
   position: relative;
   isolation: isolate;
   background:
-    radial-gradient(circle at 18% 12%, rgba(255, 48, 48, 0.14), transparent 34%),
-    radial-gradient(circle at 82% 78%, rgba(120, 0, 0, 0.12), transparent 42%),
-    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 48%, var(--mf-red-shadow));
+    radial-gradient(circle at 18% 12%, rgba(255, 96, 96, 0.12), transparent 34%),
+    radial-gradient(circle at 82% 78%, rgba(209, 12, 18, 0.08), transparent 42%),
+    linear-gradient(135deg, var(--mf-red-hot), var(--mf-red-core) 56%, var(--mf-red-shadow));
   color: #000;
 }
 
