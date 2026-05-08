@@ -1,0 +1,44 @@
+{
+  "hero": {
+    "eyebrow": "LEGAL",
+    "title": ["LEGAL", "DOCUMENTS"],
+    "intro": "Policies, terms, and operating boundaries for Metafloor products, services, and client engagements."
+  },
+  "documents": [
+    {
+      "slug": "terms-of-service",
+      "title": "Terms of Service",
+      "description": "The terms that govern Metafloor services, project engagements, payment, IP, confidentiality, and dispute resolution."
+    },
+    {
+      "slug": "privacy-policy",
+      "title": "Privacy Policy",
+      "description": "How Metafloor collects, uses, stores, shares, and protects personal and project information."
+    },
+    {
+      "slug": "acceptable-use-policy",
+      "title": "Acceptable Use Policy",
+      "description": "Rules for acceptable conduct when using Metafloor's website, products, and services."
+    },
+    {
+      "slug": "cookie-policy",
+      "title": "Cookie Policy",
+      "description": "How Metafloor uses cookies for site functionality, preferences, and privacy-respecting analytics."
+    },
+    {
+      "slug": "refund-policy",
+      "title": "Refund Policy",
+      "description": "Payment, cancellation, refund, retainer, and subscription billing terms."
+    },
+    {
+      "slug": "nda-policy",
+      "title": "NDA Policy",
+      "description": "Metafloor's standard approach to confidentiality, NDAs, and handling client information."
+    },
+    {
+      "slug": "disclaimer",
+      "title": "Disclaimer",
+      "description": "Important limitations, no-advice language, third-party disclaimers, and product-specific disclaimers."
+    }
+  ]
+}

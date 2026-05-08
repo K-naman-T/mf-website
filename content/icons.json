@@ -1,0 +1,314 @@
+{
+  "icons": [
+    {
+      "id": "connected-user-network",
+      "label": "Connected User Network",
+      "path": "/brand/01-connected-user-network.svg"
+    },
+    {
+      "id": "secure-database-lock",
+      "label": "Secure Database Lock",
+      "path": "/brand/02-secure-database-lock.svg"
+    },
+    {
+      "id": "vision-aperture-eye",
+      "label": "Vision Aperture Eye",
+      "path": "/brand/03-vision-aperture-eye.svg"
+    },
+    {
+      "id": "voice-message-waveform",
+      "label": "Voice Message Waveform",
+      "path": "/brand/04-voice-message-waveform.svg"
+    },
+    {
+      "id": "modular-cubes-system",
+      "label": "Modular Cubes System",
+      "path": "/brand/05-modular-cubes-system.svg"
+    },
+    {
+      "id": "ai-chip-processor",
+      "label": "Ai Chip Processor",
+      "path": "/brand/06-ai-chip-processor.svg"
+    },
+    {
+      "id": "crystal-ball-insight",
+      "label": "Crystal Ball Insight",
+      "path": "/brand/07-crystal-ball-insight.svg"
+    },
+    {
+      "id": "support-agent-hand",
+      "label": "Support Agent Hand",
+      "path": "/brand/08-support-agent-hand.svg"
+    },
+    {
+      "id": "monitoring-eye",
+      "label": "Monitoring Eye",
+      "path": "/brand/09-monitoring-eye.svg"
+    },
+    {
+      "id": "alert-bell-ring",
+      "label": "Alert Bell Ring",
+      "path": "/brand/10-alert-bell-ring.svg"
+    },
+    {
+      "id": "performance-check-gauge",
+      "label": "Performance Check Gauge",
+      "path": "/brand/11-performance-check-gauge.svg"
+    },
+    {
+      "id": "time-cycle-clock",
+      "label": "Time Cycle Clock",
+      "path": "/brand/12-time-cycle-clock.svg"
+    },
+    {
+      "id": "governance-building",
+      "label": "Governance Building",
+      "path": "/brand/13-governance-building.svg"
+    },
+    {
+      "id": "deep-tech-core",
+      "label": "Deep Tech Core",
+      "path": "/brand/14-deep-tech-core.svg"
+    },
+    {
+      "id": "speech-input-terminal",
+      "label": "Speech Input Terminal",
+      "path": "/brand/15-speech-input-terminal.svg"
+    },
+    {
+      "id": "growth-uptrend",
+      "label": "Growth Uptrend",
+      "path": "/brand/16-growth-uptrend.svg"
+    },
+    {
+      "id": "verified-target",
+      "label": "Verified Target",
+      "path": "/brand/17-verified-target.svg"
+    },
+    {
+      "id": "no-cloud-server",
+      "label": "No Cloud Server",
+      "path": "/brand/18-no-cloud-server.svg"
+    },
+    {
+      "id": "warning-alert",
+      "label": "Warning Alert",
+      "path": "/brand/19-warning-alert.svg"
+    },
+    {
+      "id": "network-node-mesh",
+      "label": "Network Node Mesh",
+      "path": "/brand/20-network-node-mesh.svg"
+    },
+    {
+      "id": "process-hierarchy",
+      "label": "Process Hierarchy",
+      "path": "/brand/21-process-hierarchy.svg"
+    },
+    {
+      "id": "modular-block-stack",
+      "label": "Modular Block Stack",
+      "path": "/brand/22-modular-block-stack.svg"
+    },
+    {
+      "id": "rocket-launch",
+      "label": "Rocket Launch",
+      "path": "/brand/23-rocket-launch.svg"
+    },
+    {
+      "id": "sync-refresh-cycle",
+      "label": "Sync Refresh Cycle",
+      "path": "/brand/24-sync-refresh-cycle.svg"
+    },
+    {
+      "id": "outbound-link",
+      "label": "Outbound Link",
+      "path": "/brand/25-outbound-link.svg"
+    },
+    {
+      "id": "email-message",
+      "label": "Email Message",
+      "path": "/brand/26-email-message.svg"
+    },
+    {
+      "id": "global-web",
+      "label": "Global Web",
+      "path": "/brand/27-global-web.svg"
+    },
+    {
+      "id": "access-lock",
+      "label": "Access Lock",
+      "path": "/brand/28-access-lock.svg"
+    },
+    {
+      "id": "security-shield",
+      "label": "Security Shield",
+      "path": "/brand/29-security-shield.svg"
+    },
+    {
+      "id": "latency-clock-speed",
+      "label": "Latency Clock Speed",
+      "path": "/brand/30-latency-clock-speed.svg"
+    },
+    {
+      "id": "connected-identity",
+      "label": "Connected Identity",
+      "path": "/brand/31-connected-identity.svg"
+    },
+    {
+      "id": "platform-layers",
+      "label": "Platform Layers",
+      "path": "/brand/32-platform-layers.svg"
+    },
+    {
+      "id": "vision-scan-eye",
+      "label": "Vision Scan Eye",
+      "path": "/brand/33-vision-scan-eye.svg"
+    },
+    {
+      "id": "ai-brain-circuit",
+      "label": "Ai Brain Circuit",
+      "path": "/brand/34-ai-brain-circuit.svg"
+    },
+    {
+      "id": "power-lightning",
+      "label": "Power Lightning",
+      "path": "/brand/35-power-lightning.svg"
+    },
+    {
+      "id": "secure-lock-badge",
+      "label": "Secure Lock Badge",
+      "path": "/brand/36-secure-lock-badge.svg"
+    },
+    {
+      "id": "37-iconpack7-01",
+      "label": "37 Iconpack7 01",
+      "path": "/brand/icon-37-iconpack7-01.svg"
+    },
+    {
+      "id": "38-iconpack7-02",
+      "label": "38 Iconpack7 02",
+      "path": "/brand/icon-38-iconpack7-02.svg"
+    },
+    {
+      "id": "39-iconpack7-03",
+      "label": "39 Iconpack7 03",
+      "path": "/brand/icon-39-iconpack7-03.svg"
+    },
+    {
+      "id": "40-iconpack7-04",
+      "label": "40 Iconpack7 04",
+      "path": "/brand/icon-40-iconpack7-04.svg"
+    },
+    {
+      "id": "41-iconpack7-05",
+      "label": "41 Iconpack7 05",
+      "path": "/brand/icon-41-iconpack7-05.svg"
+    },
+    {
+      "id": "42-iconpack7-06",
+      "label": "42 Iconpack7 06",
+      "path": "/brand/icon-42-iconpack7-06.svg"
+    },
+    {
+      "id": "43-iconpack8-01",
+      "label": "43 Iconpack8 01",
+      "path": "/brand/icon-43-iconpack8-01.svg"
+    },
+    {
+      "id": "44-iconpack8-02",
+      "label": "44 Iconpack8 02",
+      "path": "/brand/icon-44-iconpack8-02.svg"
+    },
+    {
+      "id": "45-iconpack8-03",
+      "label": "45 Iconpack8 03",
+      "path": "/brand/icon-45-iconpack8-03.svg"
+    },
+    {
+      "id": "46-iconpack8-04",
+      "label": "46 Iconpack8 04",
+      "path": "/brand/icon-46-iconpack8-04.svg"
+    },
+    {
+      "id": "47-iconpack8-05",
+      "label": "47 Iconpack8 05",
+      "path": "/brand/icon-47-iconpack8-05.svg"
+    },
+    {
+      "id": "48-iconpack8-06",
+      "label": "48 Iconpack8 06",
+      "path": "/brand/icon-48-iconpack8-06.svg"
+    },
+    {
+      "id": "49-iconpack9-01",
+      "label": "49 Iconpack9 01",
+      "path": "/brand/icon-49-iconpack9-01.svg"
+    },
+    {
+      "id": "50-iconpack9-02",
+      "label": "50 Iconpack9 02",
+      "path": "/brand/icon-50-iconpack9-02.svg"
+    },
+    {
+      "id": "51-iconpack9-03",
+      "label": "51 Iconpack9 03",
+      "path": "/brand/icon-51-iconpack9-03.svg"
+    },
+    {
+      "id": "52-iconpack9-04",
+      "label": "52 Iconpack9 04",
+      "path": "/brand/icon-52-iconpack9-04.svg"
+    },
+    {
+      "id": "53-iconpack9-05",
+      "label": "53 Iconpack9 05",
+      "path": "/brand/icon-53-iconpack9-05.svg"
+    },
+    {
+      "id": "54-iconpack9-06",
+      "label": "54 Iconpack9 06",
+      "path": "/brand/icon-54-iconpack9-06.svg"
+    },
+    {
+      "id": "55-iconpack10-01",
+      "label": "55 Iconpack10 01",
+      "path": "/brand/icon-55-iconpack10-01.svg"
+    },
+    {
+      "id": "56-iconpack10-02",
+      "label": "56 Iconpack10 02",
+      "path": "/brand/icon-56-iconpack10-02.svg"
+    },
+    {
+      "id": "57-iconpack10-03",
+      "label": "57 Iconpack10 03",
+      "path": "/brand/icon-57-iconpack10-03.svg"
+    },
+    {
+      "id": "58-iconpack10-04",
+      "label": "58 Iconpack10 04",
+      "path": "/brand/icon-58-iconpack10-04.svg"
+    },
+    {
+      "id": "59-iconpack10-05",
+      "label": "59 Iconpack10 05",
+      "path": "/brand/icon-59-iconpack10-05.svg"
+    },
+    {
+      "id": "60-iconpack10-06",
+      "label": "60 Iconpack10 06",
+      "path": "/brand/icon-60-iconpack10-06.svg"
+    },
+    {
+      "id": "metafloor-full-logo",
+      "label": "Metafloor Full Logo",
+      "path": "/brand/metafloor-full-logo.svg"
+    },
+    {
+      "id": "metafloor-short-logo",
+      "label": "Metafloor Short Logo",
+      "path": "/brand/metafloor-short-logo.svg"
+    }
+  ]
+}

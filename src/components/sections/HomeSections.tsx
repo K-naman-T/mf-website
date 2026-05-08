@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { HomeContent, HomeTile } from "@/lib/cms/types";
 import { MetafloorShortLogo } from "@/components/brand/MetafloorShortLogo";
+import { SectionReveal } from "@/components/motion/transitions/SectionReveal";
 
 function Icon({ src, alt }: { src?: string; alt: string }) {
   if (!src) return <span className="mf-home-star">★</span>;
@@ -11,9 +12,9 @@ function Arrow() {
   return <span aria-hidden="true" className="mf-arrow">↗</span>;
 }
 
-function Tile({ item }: { item: HomeTile }) {
+function Tile({ item, delay = 0 }: { item: HomeTile; delay?: number }) {
   const body = (
-    <article className="mf-home-tile">
+    <SectionReveal as="article" className="mf-home-tile" delay={delay} distance={16} scale={0.992}>
       <div className="mf-tile-media">
         <Icon src={item.icon} alt="" />
       </div>
@@ -23,7 +24,7 @@ function Tile({ item }: { item: HomeTile }) {
         <p>{item.description}</p>
       </div>
       <Arrow />
-    </article>
+    </SectionReveal>
   );
 
   return item.href ? <Link href={item.href}>{body}</Link> : body;
@@ -33,63 +34,65 @@ export function HomeSections({ content }: { content: HomeContent }) {
   return (
     <>
       <section className="mf-home-screen mf-problem-screen">
-        <div className="mf-problem-icon-cell">
+        <SectionReveal className="mf-problem-icon-cell" distance={18}>
           <Icon src={content.problem.icon} alt="" />
-        </div>
-        <div className="mf-problem-copy">
+        </SectionReveal>
+        <SectionReveal className="mf-problem-copy" delay={0.04} distance={18}>
           <p className="mf-home-eyebrow">★ {content.problem.eyebrow}</p>
           <h2>{content.problem.title}</h2>
-        </div>
-        <p className="mf-problem-description">{content.problem.description}</p>
+        </SectionReveal>
+        <SectionReveal as="p" className="mf-problem-description" delay={0.08} distance={14}>
+          {content.problem.description}
+        </SectionReveal>
       </section>
 
       <section className="mf-home-screen mf-capabilities-screen">
-        <div className="mf-screen-heading">
-          <p className="mf-home-eyebrow">SYSTEMS</p>
-          <h2>WHAT WE BUILD</h2>
-        </div>
+        <SectionReveal className="mf-screen-heading" distance={18}>
+          <p className="mf-home-eyebrow">{content.homeSections.capabilitiesEyebrow}</p>
+          <h2>{content.homeSections.capabilitiesTitle}</h2>
+        </SectionReveal>
         <div className="mf-home-tile-grid mf-home-tile-grid-four">
-          {content.capabilities.map((item) => (
-            <Tile item={item} key={item.title} />
+          {content.capabilities.map((item, index) => (
+            <Tile item={item} delay={0.06 + index * 0.045} key={item.title} />
           ))}
         </div>
       </section>
 
       <section className="mf-home-screen mf-work-screen">
-        <div className="mf-screen-heading mf-work-heading">
-          <p className="mf-home-eyebrow">SELECTED WORK</p>
-          <h2>OUTCOMES, NOT DECORATION.</h2>
-        </div>
+        <SectionReveal className="mf-screen-heading mf-work-heading" distance={18}>
+          <p className="mf-home-eyebrow">{content.homeSections.workEyebrow}</p>
+          <h2>{content.homeSections.workTitle}</h2>
+        </SectionReveal>
         <div className="mf-home-tile-grid mf-home-tile-grid-three">
-          {content.work.map((item) => (
-            <Tile item={item} key={item.title} />
+          {content.work.map((item, index) => (
+            <Tile item={item} delay={0.06 + index * 0.055} key={item.title} />
           ))}
         </div>
       </section>
 
       <section className="mf-home-screen mf-process-screen">
-        <div className="mf-process-intro">
+        <SectionReveal className="mf-process-intro" distance={18}>
           <p className="mf-home-eyebrow">★ {content.process.eyebrow}</p>
           <h2>{content.process.title}</h2>
           <p>{content.process.description}</p>
-        </div>
+        </SectionReveal>
         <div className="mf-process-grid">
-          {content.process.steps.map((step) => (
-            <article className="mf-process-card" key={step.number}>
+          {content.process.steps.map((step, index) => (
+            <SectionReveal as="article" className="mf-process-card" delay={0.06 + index * 0.05} distance={16} scale={0.992} key={step.number}>
               <div className="mf-card-topline">
                 <span>{step.number}</span>
                 <span>★</span>
               </div>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
-            </article>
+            </SectionReveal>
           ))}
         </div>
-        <div className="mf-process-cta">
+        <SectionReveal className="mf-process-cta" distance={16}>
           <h3>{content.process.cta}</h3>
-          <Link href="/contact" className="mf-button mf-button-primary">BOOK A CALL</Link>
-          <Link href="/process" className="mf-button mf-button-secondary">SEE THE PROCESS</Link>
-        </div>
+          <Link href="/contact" className="mf-button mf-button-primary">{content.homeSections.primaryCtaLabel}</Link>
+          <Link href="/process" className="mf-button mf-button-secondary">{content.homeSections.secondaryCtaLabel}</Link>
+        </SectionReveal>
       </section>
 
       <section className="mf-home-screen mf-contact-strip-screen">
@@ -125,54 +128,43 @@ export function HomeSections({ content }: { content: HomeContent }) {
             <path className="mf-footer-ink-highlight mf-footer-ink-highlight-low" d="M92 364C142 370 186 354 232 384C278 414 320 424 370 400C324 460 246 468 192 430C158 408 128 396 90 402C84 390 86 374 92 364Z" />
           </svg>
         </div>
-        <div className="mf-footer-brand-panel">
+        <SectionReveal className="mf-footer-brand-panel" distance={18}>
           <MetafloorShortLogo theme="dark" className="mf-footer-logo" />
-          <p>We design, engineer, and launch systems that scale; products, platforms, and experiences built to perform.</p>
+          <p>{content.footer.description}</p>
           <Link href="/contact" className="mf-footer-outline-cta">
-            Initiate a signal <Arrow />
+            {content.footer.ctaLabel} <Arrow />
           </Link>
-        </div>
-        <nav className="mf-footer-columns" aria-label="Footer navigation">
-          <div>
-            <h3>Work</h3>
-            <Link href="/work">Selected Work</Link>
-            <Link href="/work">Case Studies</Link>
-            <Link href="/work">Industries</Link>
-          </div>
-          <div>
-            <h3>Services</h3>
-            <Link href="/capabilities">Product Design</Link>
-            <Link href="/capabilities">Backend Systems</Link>
-            <Link href="/capabilities">AI Integration</Link>
-            <Link href="/capabilities">Launch Support</Link>
-          </div>
-          <div>
-            <h3>Process</h3>
-            <Link href="/process">Strategy</Link>
-            <Link href="/design">Design</Link>
-            <Link href="/process">Engineering</Link>
-            <Link href="/process">Launch</Link>
-          </div>
-        </nav>
-        <div className="mf-footer-contact-panel">
-          <h2>Let’s build together.</h2>
-          <p>Have a project in mind or a production system that needs rescuing?</p>
+        </SectionReveal>
+        <SectionReveal as="nav" className="mf-footer-columns" aria-label="Footer navigation" delay={0.04} distance={18}>
+          {content.footer.columns.map((column) => (
+            <div key={column.title}>
+              <h3>{column.title}</h3>
+              {column.links.map((link) => (
+                <Link href={link.href} key={`${column.title}-${link.href}-${link.label}`}>{link.label}</Link>
+              ))}
+            </div>
+          ))}
+        </SectionReveal>
+        <SectionReveal className="mf-footer-contact-panel" delay={0.08} distance={18}>
+          <h2>{content.footer.headline}</h2>
+          <p>{content.footer.body}</p>
           <nav aria-label="Company footer links" className="mf-footer-company-links">
-            <Link href="/about">About</Link>
-            <Link href="/design">Product Studio</Link>
-            <Link href="/contact">Contact</Link>
+            {content.footer.companyLinks.map((link) => (
+              <Link href={link.href} key={`${link.href}-${link.label}`}>{link.label}</Link>
+            ))}
           </nav>
           <a href={`mailto:${content.contact.email}`} className="mf-footer-email">
             {content.contact.email} <Arrow />
           </a>
-        </div>
-        <div className="mf-footer-bottom-rail">
-          <span>© 2026 Metafloor, Inc.</span>
+        </SectionReveal>
+        <SectionReveal className="mf-footer-bottom-rail" delay={0.1} distance={12}>
+          <span>{content.footer.copyright}</span>
           <strong>{content.contact.tagline}</strong>
-          <Link href="/process">Process</Link>
-          <Link href="/contact">Contact</Link>
-          <span className="mf-footer-status"><i /> Systems operational</span>
-        </div>
+          {content.footer.bottomLinks.map((link) => (
+            <Link href={link.href} key={`${link.href}-${link.label}`}>{link.label}</Link>
+          ))}
+          <span className="mf-footer-status"><i /> {content.footer.status}</span>
+        </SectionReveal>
       </section>
     </>
   );

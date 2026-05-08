@@ -1,126 +1,181 @@
 {
   "hero": {
-    "eyebrow": " ",
-    "headline_line1": "BUILT TO",
-    "headline_line2": "RUN.",
-    "headline_line3": "NOT TO PITCH.",
-    "subheadline": "Products that make money. Not slide decks.",
-    "cta_primary": "SEE PRODUCTS",
-    "cta_secondary": "INITIATE A SIGNAL"
+    "eyebrow": "PRODUCT FOUNDRY",
+    "headline_line1": "INTELLIGENT",
+    "headline_line2": "INTERFACES.",
+    "headline_line3": "BUILT TO SHIP.",
+    "subheadline": "We build AI systems that work in the real world. Not lab conditions. Not sandbox demos. Production-grade intelligence for teams that care about shipping.",
+    "cta_primary": "VIEW OUR WORK",
+    "cta_secondary": "TALK TO US"
   },
   "navigation": {
     "links": [
-      {
-        "href": "/work",
-        "label": "PRODUCTS"
-      },
-      {
-        "href": "/process",
-        "label": "PROCESS"
-      },
-      {
-        "href": "/about",
-        "label": "ABOUT"
-      },
-      {
-        "href": "/contact",
-        "label": "CONTACT"
-      }
+      { "href": "/work", "label": "WORK" },
+      { "href": "/capabilities", "label": "CAPABILITIES" },
+      { "href": "/process", "label": "PROCESS" },
+      { "href": "/about", "label": "ABOUT" },
+      { "href": "/contact", "label": "CONTACT" }
     ],
     "cta": {
-      "label": "INITIATE A SIGNAL",
+      "label": "TALK TO US",
       "href": "/contact"
     }
   },
   "problem": {
-    "eyebrow": "THE PROBLEM",
-    "title": "EVERYONE SELLS AI. NOBODY SHIPS IT.",
-    "description": "Chatbots hallucinate. Dashboards need interpretation. RAG retrieves the wrong docs. The only metric: does it run in production, 24/7, without a human babysitting it?",
-    "icon": "/brand/19-warning-alert.svg"
+    "eyebrow": "THE INDUSTRY IS BROKEN",
+    "title": "EVERYONE WRAPS MODELS. FEW SHIP INTELLIGENCE.",
+    "description": "Everyone is building wrapper APIs while actual intelligence happens in the weeds: quantization that preserves accuracy, distillation that keeps models useful, edge deployment under real constraints, and low-resource languages everyone ignores. We do not do maybe. We ship.",
+    "icon": "warning-alert"
   },
   "capabilities": [
     {
       "eyebrow": "01",
-      "title": "ORACLE",
-      "description": "Temporal prediction intelligence. Binary signals on world events \u2014 yes or no, before it happens. For traders who need an edge, not an explanation.",
-      "icon": "/brand/01-connected-user-network.svg",
-      "href": "/work"
+      "title": "AGENTIC WORKFLOWS",
+      "description": "Autonomous systems that close loops, handle errors gracefully, and deliver outcomes without babysitting.",
+      "icon": "process-hierarchy",
+      "href": "/capabilities"
     },
     {
       "eyebrow": "02",
-      "title": "SHADOW",
-      "description": "Founder timing analysis. Birth chart + company incorporation date = when this person or idea peaks. For VCs who want to know before the pitch.",
-      "icon": "/brand/02-secure-database-lock.svg",
-      "href": "/work"
+      "title": "COMPUTER VISION",
+      "description": "Vision pipelines for mining sites, low-light environments, dust, smoke, poor connectivity, and other places cameras should not work but have to.",
+      "icon": "vision-scan-eye",
+      "href": "/capabilities"
     },
     {
       "eyebrow": "03",
-      "title": "OUTBOUND",
-      "description": "Voice AI for B2B sales calls. Real voice, real conversation, real meetings booked. Not a demo \u2014 your phone starts ringing.",
-      "icon": "/brand/03-vision-aperture-eye.svg",
-      "href": "/work"
+      "title": "MULTIMODAL AVATARS",
+      "description": "Speech interfaces with STT/TTS, low-latency response, and code-switching that understands how people actually talk.",
+      "icon": "voice-message-waveform",
+      "href": "/capabilities"
     },
     {
       "eyebrow": "04",
-      "title": "VOICE DISPATCH",
-      "description": "Factory repair technician routing. Call comes in, system routes to the right technician, job gets booked. No multi-day waits.",
-      "icon": "/brand/04-voice-message-waveform.svg",
+      "title": "R&D PRODUCTS",
+      "description": "Hyperspectral mineral mapping, mining safety pipelines, multilingual conversational AI, and products that compound from field constraints.",
+      "icon": "deep-tech-core",
       "href": "/work"
     }
   ],
   "work": [
     {
-      "eyebrow": "ORACLE",
-      "title": "PREDICTION SIGNALS THAT TRADE",
-      "description": "Entity corpus + news monitoring + astrological timing \u2192 1-bit signals. Yes or no. Published to Discord. Ready to act on.",
-      "icon": "/brand/15-speech-input-terminal.svg",
+      "eyebrow": "FIELD SYSTEMS",
+      "title": "VISION FOR EXTREME ENVIRONMENTS",
+      "description": "Models tested against dust, low light, smoke, intermittent connectivity, and real operational mess.",
+      "icon": "vision-aperture-eye",
       "href": "/work"
     },
     {
-      "eyebrow": "SHADOW",
-      "title": "FOUNDER TIMING FOR INVESTORS",
-      "description": "When is this founder's next peak? When is this company likely to break out or burn out? Birth chart + incorporation date.",
-      "icon": "/brand/33-vision-scan-eye.svg",
+      "eyebrow": "AGENTS",
+      "title": "WORKFLOWS THAT CLOSE LOOPS",
+      "description": "Case management, document processing, and research automation that handles failure states and finishes the job.",
+      "icon": "connected-user-network",
       "href": "/work"
     },
     {
-      "eyebrow": "OUTBOUND",
-      "title": "YOUR SALES TEAM RUNS 24/7",
-      "description": "Voice AI that makes real B2B calls. Handles objection, books the meeting. You stop prospecting and start closing.",
-      "icon": "/brand/29-security-shield.svg",
+      "eyebrow": "INTERFACES",
+      "title": "REAL-TIME SPEECH SYSTEMS",
+      "description": "Low-latency multimodal interfaces built for code-switching, not sterile lab prompts.",
+      "icon": "speech-input-terminal",
       "href": "/work"
     }
   ],
   "process": {
     "eyebrow": "HOW WE WORK",
-    "title": "SIMPLE PROCESS.",
-    "description": "No discovery sprints. No design thinking workshops. We build what works and ship it.",
+    "title": "NO ENDLESS DISCOVERY.",
+    "description": "You bring the problem. We dissect constraints, design the architecture, build, test, iterate, and ship something that works.",
     "steps": [
       {
         "number": "01",
-        "title": "DISCOVER",
-        "description": "You tell us the problem and the deadline."
+        "title": "BRING THE PROBLEM",
+        "description": "Tell us what needs to work, where it breaks, and what constraints matter: compute, latency, data quality, environment, language, and failure cost."
       },
       {
         "number": "02",
-        "title": "BUILD",
-        "description": "We ship a working version fast."
+        "title": "DISSECT THE SYSTEM",
+        "description": "We map the architecture, model choices, deployment surface, and operational risks before pretending anything is solved."
       },
       {
         "number": "03",
-        "title": "LAUNCH",
-        "description": "It runs. You charge."
+        "title": "BUILD AND SHIP",
+        "description": "We build, test, iterate, and put the system where it has to survive real users and real conditions."
       }
     ],
-    "cta": "READY TO SHIP?"
+    "cta": "LET'S BUILD SOMETHING"
+  },
+  "homeSections": {
+    "capabilitiesEyebrow": "SERVICES",
+    "capabilitiesTitle": "WHAT WE ACTUALLY BUILD",
+    "workEyebrow": "SELECTED SYSTEMS",
+    "workTitle": "PRODUCTION-GRADE INTELLIGENCE.",
+    "primaryCtaLabel": "TALK TO US",
+    "secondaryCtaLabel": "SEE THE PROCESS"
   },
   "contact": {
     "email": "signal@metafloor.in",
     "website": "metafloor.in",
-    "tagline": "BUILT TO RUN. NOT TO PITCH."
+    "tagline": "PRODUCT FOUNDRY FOR INTELLIGENT INTERFACES."
+  },
+  "footer": {
+    "description": "Metafloor is a product foundry for intelligent interfaces. Computational craft house. Production-grade systems for teams that care about shipping.",
+    "ctaLabel": "Talk to us",
+    "headline": "Let's build something.",
+    "body": "We are selective about projects. If you have something that matters, let's talk.",
+    "copyright": "© 2026 Metafloor. All rights reserved.",
+    "status": "Building, not waiting for leads",
+    "columns": [
+      {
+        "title": "Work",
+        "links": [
+          { "href": "/work", "label": "Selected Work" },
+          { "href": "/capabilities", "label": "Capabilities" },
+          { "href": "/design", "label": "Design Protocol" }
+        ]
+      },
+      {
+        "title": "Systems",
+        "links": [
+          { "href": "/capabilities", "label": "Agentic Workflows" },
+          { "href": "/capabilities", "label": "Computer Vision" },
+          { "href": "/capabilities", "label": "Multimodal Interfaces" },
+          { "href": "/capabilities", "label": "R&D Products" }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          { "href": "/about", "label": "About" },
+          { "href": "/process", "label": "Process" },
+          { "href": "/contact", "label": "Contact" }
+        ]
+      },
+      {
+        "title": "Legal",
+        "links": [
+          { "href": "/legal/terms-of-service", "label": "Terms" },
+          { "href": "/legal/privacy-policy", "label": "Privacy" },
+          { "href": "/legal/refund-policy", "label": "Refunds" },
+          { "href": "/legal", "label": "All Legal" }
+        ]
+      }
+    ],
+    "companyLinks": [
+      { "href": "/about", "label": "About" },
+      { "href": "/work", "label": "Work" },
+      { "href": "/contact", "label": "Contact" },
+      { "href": "/legal", "label": "Legal" }
+    ],
+    "bottomLinks": [
+      { "href": "/work", "label": "Work" },
+      { "href": "/about", "label": "About" },
+      { "href": "/legal/privacy-policy", "label": "Privacy" },
+      { "href": "/legal/terms-of-service", "label": "Terms" }
+    ]
   },
   "metadata": {
     "site_name": "METAFLOOR",
-    "tagline": "Products that run."
+    "tagline": "Product foundry for intelligent interfaces.",
+    "site_url": "https://metafloor.in",
+    "description": "Metafloor builds production-grade AI systems, intelligent interfaces, and custom software for teams that care about shipping."
   }
 }

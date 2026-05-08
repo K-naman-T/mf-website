@@ -2,41 +2,70 @@
   "slug": "design",
   "theme": "red",
   "hero": {
-    "eyebrow": "PRODUCT STUDIO",
-    "title": [
-      "DESIGN.",
-      "ENGINEERING.",
-      "OUTCOMES."
-    ],
-    "intro": "We build what works and ship it. The rest is theater."
+    "eyebrow": "DESIGN PROTOCOL",
+    "title": ["MOLTEN", "MINIMALIST."],
+    "intro": "Deterministic systems around probabilistic engines. Fluid intelligence held inside structural rigor.",
+    "ornament": {
+      "asset": "/ornaments/molten-02.svg",
+      "placement": "hero-right"
+    }
+  },
+  "cta": {
+    "title": "READY TO BUILD SOMETHING THAT WORKS?"
   },
   "sections": [
     {
-      "eyebrow": "WHAT WE BUILD",
-      "title": "PRODUCTS, NOT PORTFOLIOS.",
-      "body": "Strategy, design, engineering, and launch \u2014 in one tight loop. No hand-offs between agencies. No account managers. You deal directly with the people building it.",
+      "eyebrow": "CORE PHILOSOPHY",
+      "title": "AGENTIC DESIGN FOUNDRY.",
+      "body": "Metafloor forges the rigid state machines and deterministic frameworks required to turn volatile AI models into high-conviction industrial outcomes.",
       "cards": [
         {
           "number": "01",
-          "title": "PRODUCT",
-          "description": "We define what to build and why. Not what's impressive \u2014 what's fundable, saleable, or livable."
+          "title": "FOUNDRY, NOT AGENCY",
+          "description": "We do not provide services as decoration. We forge infrastructure that works."
         },
         {
           "number": "02",
-          "title": "DESIGN",
-          "description": "Clear, fast, usable. Whatever makes the user do the thing, nothing extra."
+          "title": "1-BIT SIGNALS",
+          "description": "The output should resolve to conviction: yes or no, done or error, working or broken."
         },
         {
           "number": "03",
-          "title": "ENGINEERING",
-          "description": "Ship something that runs. Not something that works in the demo."
-        },
-        {
-          "number": "04",
-          "title": "LAUNCH",
-          "description": "We go live and measure. First revenue, not first impressions."
+          "title": "SOVEREIGN TECHNICALITY",
+          "description": "Local compute, air-gapped security, outcome-based monetization, and systems that survive outside the demo."
         }
       ]
+    },
+    {
+      "eyebrow": "VISUAL IDENTITY",
+      "title": "FLUID INTELLIGENCE. RIGID GRID.",
+      "body": "The aesthetic represents the tension between molten probabilistic engines and structural deterministic systems.",
+      "cards": [
+        {
+          "number": "01",
+          "title": "HIGH-ENERGY RED",
+          "description": "Brand red carries urgency, heat, and innovation. Stark black carries rigor and grounding. White gives the system air."
+        },
+        {
+          "number": "02",
+          "title": "DUAL TYPOGRAPHY",
+          "description": "All-caps technical hierarchy for authority. Organic molten logotype for human personality and memorability."
+        },
+        {
+          "number": "03",
+          "title": "MOTIFS",
+          "description": "Molten forms, heavy dividers, dot matrices, and star cutouts as 1-bit indicators."
+        }
+      ]
+    },
+    {
+      "eyebrow": "LAYOUT",
+      "title": "ORDER WITH ASYMMETRY.",
+      "body": "A 12-column commitment to structure, broken by modular asymmetry, breathing room, and strong dividers that preserve hierarchy.",
+      "ornament": {
+        "asset": "/ornaments/molten-06.svg",
+        "placement": "section-right"
+      }
     }
   ]
 }

@@ -3,24 +3,52 @@
   "theme": "red",
   "hero": {
     "eyebrow": "ABOUT",
-    "title": [
-      "BUILT TO RUN.",
-      "NOT TO PITCH."
-    ],
-    "intro": "Metafloor builds products that generate revenue. Not decks. Not demos. Revenue."
+    "title": ["BUILT TO RUN.", "NOT TO PITCH."],
+    "intro": "Metafloor builds products that generate revenue. Not decks. Not demos. Revenue.",
+    "ornament": {
+      "asset": "/ornaments/molten-01.svg",
+      "placement": "hero-right"
+    }
+  },
+  "cta": {
+    "title": "READY WHEN IT NEEDS TO SHIP."
   },
   "sections": [
     {
       "title": "WE DON'T DO THEATER.",
-      "body": "Most AI studios build something impressive and spend the next six months explaining why it doesn't work yet. We skip that part. We build what works, ship it, and let the results speak."
+      "body": "Most AI studios build something impressive and spend the next six months explaining why it doesn't work yet. We skip that part. We build what works, ship it, and let the results speak.",
+      "ornament": {
+        "asset": "/ornaments/molten-05.svg",
+        "placement": "section-right"
+      }
     },
     {
-      "title": "FOUNDED ON PRODUCTION.",
-      "body": "Started in Dhanbad. Tata Steel ecosystem gave us access to real industrial problems \u2014 factory floors, mining operations, enterprise sales cycles. We learned what breaks when money is actually on the line."
+      "title": "WHERE WE ARE.",
+      "body": "Bangalore. India."
     },
     {
-      "title": "THE PRODUCTS ARE THE PROOF.",
-      "body": "ORACLE runs live prediction signals. OUTBOUND books real meetings. SHADOW is in beta for serious investors. Each one shipped because something had to work \u2014 not because a deck needed to look good."
+      "title": "PHILOSOPHY.",
+      "body": "The best product is one that runs. The best design is the one that gets out of the way. The best strategy is the one that ships and gets measured.",
+      "ornament": {
+        "asset": "/ornaments/molten-07.svg",
+        "placement": "section-corner"
+      }
+    },
+    {
+      "title": "DOMAINS.",
+      "body": "We've operated across prediction systems, voice platforms, industrial tools, and whatever else needed building. Past work stays under NDA — reach out to discuss what we've done in your domain."
+    },
+    {
+      "title": "HOW WE WORK.",
+      "body": "You tell us the problem. We tell you if we can solve it and what it costs. That's it."
+    },
+    {
+      "title": "PRODUCTS.",
+      "body": "We've also built standalone products — ORACLE, OUTBOUND, SHADOW. Each with its own page."
+    },
+    {
+      "title": "LET'S TALK.",
+      "body": "signal@metafloor.in"
     }
   ]
 }

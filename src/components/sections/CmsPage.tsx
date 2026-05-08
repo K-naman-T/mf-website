@@ -3,13 +3,16 @@
 import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
 import { SectionReveal } from "@/components/motion/transitions/SectionReveal";
+import { PageOrnament } from "@/components/sections/PageOrnament";
 import type { PageContent } from "@/lib/cms/types";
 
 interface CmsPageProps {
   content: PageContent;
+  ctaLabel: string;
+  ctaHref: string;
 }
 
-export function CmsPage({ content }: CmsPageProps) {
+export function CmsPage({ content, ctaLabel, ctaHref }: CmsPageProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -17,6 +20,7 @@ export function CmsPage({ content }: CmsPageProps) {
     <div className={isDark ? "mf-page mf-page-dark" : "mf-page mf-page-red"}>
       <main className="mf-cms-main">
         <section className="mf-page-hero">
+          <PageOrnament ornament={content.hero.ornament} />
           <SectionReveal as="div" className="mf-page-hero-copy" distance={18}>
             <p className="mf-page-eyebrow">★ {content.hero.eyebrow}</p>
             <h1 className="mf-page-title">
@@ -32,6 +36,7 @@ export function CmsPage({ content }: CmsPageProps) {
 
         {content.sections.map((section, sectionIndex) => (
           <SectionReveal as="section" className="mf-cms-section" delay={sectionIndex * 0.04} distance={22} key={`${section.title}-${sectionIndex}`}>
+            <PageOrnament ornament={section.ornament} />
             <div className="mf-section-heading">
               {section.eyebrow ? <p className="mf-page-eyebrow">★ {section.eyebrow}</p> : null}
               <h2>{section.title}</h2>
@@ -63,9 +68,9 @@ export function CmsPage({ content }: CmsPageProps) {
         ))}
 
         <SectionReveal as="section" className="mf-page-cta" distance={18}>
-          <h2>READY WHEN IT NEEDS TO SHIP.</h2>
-          <Link href="/contact" className="mf-button mf-button-primary">
-            INITIATE A SIGNAL
+          <h2>{content.cta.title}</h2>
+          <Link href={ctaHref} className="mf-button mf-button-primary">
+            {ctaLabel}
           </Link>
         </SectionReveal>
       </main>

@@ -2,6 +2,9 @@ import { LogoIntro } from "@/components/animations/LogoIntro";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { HomeSections } from "@/components/sections/HomeSections";
 import { getHomeContent } from "@/lib/cms/loader";
+import { getHomeMetadata } from "@/lib/seo";
+
+export const metadata = getHomeMetadata();
 
 export default function HomePage() {
   const content = getHomeContent();

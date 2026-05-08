@@ -5,16 +5,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { IntroDoneProvider } from "@/components/motion/core/IntroDoneContext";
 import { OOPositionProvider } from "@/components/motion/core/OOPositionContext";
 import { getHomeContent } from "@/lib/cms/loader";
+import { getOrganizationJsonLd, getRootMetadata, getWebsiteJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "METAFLOOR — Sovereign AI Foundry",
-  description:
-    "Deterministic production systems. AI that actually ships.",
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export const metadata: Metadata = getRootMetadata();
 
 export default function RootLayout({
   children,
@@ -22,6 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const content = getHomeContent();
+  const jsonLd = [getOrganizationJsonLd(), getWebsiteJsonLd()];
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -34,6 +28,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <ThemeProvider>
           <IntroDoneProvider>
             <OOPositionProvider>

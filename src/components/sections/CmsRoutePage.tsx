@@ -1,6 +1,7 @@
 import { CmsPage } from "@/components/sections/CmsPage";
-import { getPageContent } from "@/lib/cms/loader";
+import { getHomeContent, getPageContent } from "@/lib/cms/loader";
 
 export function CmsRoutePage({ slug }: { slug: string }) {
-  return <CmsPage content={getPageContent(slug)} />;
+  const home = getHomeContent();
+  return <CmsPage content={getPageContent(slug)} ctaLabel={home.navigation.cta.label} ctaHref={home.navigation.cta.href} />;
 }

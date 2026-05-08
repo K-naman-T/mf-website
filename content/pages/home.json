@@ -1,0 +1,24 @@
+{
+  "slug": "home",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "METAFLOOR",
+    "title": ["BUILT TO RUN.", "NOT TO PITCH."],
+    "intro": "Products that generate revenue. Not decks. Not demos. Revenue."
+  },
+  "cta": {
+    "title": "READY WHEN IT NEEDS TO SHIP."
+  },
+  "sections": [
+    {
+      "eyebrow": "WHAT WE DO",
+      "title": "CUSTOM DEVELOPMENT.",
+      "body": "Systems engineering. Design to deployment. We've operated across prediction, voice, industrial, and other domains. Past work under NDA."
+    },
+    {
+      "eyebrow": "HOW WE WORK",
+      "title": "FAST. REAL. MINIMAL.",
+      "body": "You tell us the problem. We tell you if we can solve it and what it costs. That's it."
+    }
+  ]
+}

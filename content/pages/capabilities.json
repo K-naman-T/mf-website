@@ -2,190 +2,53 @@
   "slug": "capabilities",
   "theme": "red",
   "hero": {
-    "eyebrow": "PRODUCTS",
-    "title": [
-      "WHAT WE SHIP."
-    ],
-    "intro": "Four products. Each one generates revenue or saves time. No feature matrices."
+    "eyebrow": "CAPABILITIES",
+    "title": ["WHAT WE DO."],
+    "intro": "Custom development. Systems engineering. Design to deployment.",
+    "ornament": {
+      "asset": "/ornaments/molten-03.svg",
+      "placement": "hero-right"
+    }
+  },
+  "cta": {
+    "title": "READY WHEN IT NEEDS TO SHIP."
   },
   "sections": [
     {
-      "title": "ORACLE \u2014 PREDICTION SIGNALS",
+      "title": "SERVICES.",
       "cards": [
         {
           "number": "01",
-          "title": "WHEN IT LAUNCHES",
-          "description": "Binary signals on real-world events. Yes or no, before it resolves. Posted to Discord, ready to trade on.",
-          "tags": [
-            "POLYMARKET",
-            "SIGNALS",
-            "DISCORD"
-          ]
+          "title": "CUSTOM DEVELOPMENT",
+          "description": "We build what you need. Custom products, internal tools, platform work. Whatever the problem demands."
         },
         {
           "number": "02",
-          "title": "HOW IT WORKS",
-          "description": "Entity corpus + news monitoring + astrological timing. Rule-based engine. No LLM hallucination. Just dates and probabilities.",
-          "tags": [
-            "OSINT",
-            "VASIC",
-            "TIMING"
-          ]
+          "title": "SYSTEMS ENGINEERING",
+          "description": "Infrastructure, pipelines, integrations. Things that need to run and stay running."
         },
         {
           "number": "03",
-          "title": "WHO IT'S FOR",
-          "description": "Traders who want a signal, not a sentiment analysis. Prediction market participants. Crypto macro players.",
-          "tags": [
-            "TRADERS",
-            "INVESTORS",
-            "POLYMARKET"
-          ]
-        },
-        {
-          "number": "04",
-          "title": "PRICING",
-          "description": "$19/month for signals feed. $99/month for full entity corpus and API access.",
-          "tags": [
-            "$19",
-            "$99",
-            "TIERED"
-          ]
+          "title": "DESIGN TO DEPLOYMENT",
+          "description": "Concept to live. We handle strategy, design, build, and launch. One team, start to finish."
         }
       ]
     },
     {
-      "title": "OUTBOUND \u2014 VOICE AI SALES",
-      "cards": [
-        {
-          "number": "01",
-          "title": "WHAT IT DOES",
-          "description": "Real voice AI makes B2B sales calls for you. Not a chatbot. Not a script. A voice that handles objection and books the meeting.",
-          "tags": [
-            "VOICE AI",
-            "SALES",
-            "B2B"
-          ]
-        },
-        {
-          "number": "02",
-          "title": "HOW IT WORKS",
-          "description": "Upload your prospect list. Our voice AI calls them, has a real conversation, and books meetings directly into your calendar.",
-          "tags": [
-            "CRM",
-            "CALENDAR",
-            "AUTO-BOOKING"
-          ]
-        },
-        {
-          "number": "03",
-          "title": "WHO IT'S FOR",
-          "description": "Founders doing outbound. Sales teams that need backup. Anyone whose calendar is empty and phone won't ring.",
-          "tags": [
-            "SALES",
-            "OUTBOUND",
-            "FOUNDERS"
-          ]
-        },
-        {
-          "number": "04",
-          "title": "PRICING",
-          "description": "\u20b98,000/month per client. First billing in 30 days.",
-          "tags": [
-            "\u20b98K",
-            "PER CLIENT",
-            "MONTHLY"
-          ]
-        }
-      ]
+      "title": "DOMAINS.",
+      "body": "We've operated across prediction systems, voice platforms, industrial tools, and other domains. Past work stays under NDA — reach out to discuss your domain.",
+      "ornament": {
+        "asset": "/ornaments/molten-05.svg",
+        "placement": "section-right"
+      }
     },
     {
-      "title": "SHADOW \u2014 FOUNDER TIMING",
-      "cards": [
-        {
-          "number": "01",
-          "title": "WHAT IT DOES",
-          "description": "Birth chart + company incorporation date = peak timing windows for founders and their companies. For VCs who want to know before the pitch.",
-          "tags": [
-            "VC",
-            "DILIGENCE",
-            "TIMING"
-          ]
-        },
-        {
-          "number": "02",
-          "title": "HOW IT WORKS",
-          "description": "Submit founder DOB + birthplace + company registration date. We run Vedic chart analysis and return timing windows \u2014 when to invest, when to expect friction.",
-          "tags": [
-            "ASTROLOGY",
-            "DUE DILIGENCE",
-            "STARTUP"
-          ]
-        },
-        {
-          "number": "03",
-          "title": "WHO IT'S FOR",
-          "description": "VC firms, angel investors, family offices making early-stage bets.",
-          "tags": [
-            "VC",
-            "ANGELS",
-            "FAMILY OFFICE"
-          ]
-        },
-        {
-          "number": "04",
-          "title": "STATUS",
-          "description": "Beta. Request access via signal@metafloor.in.",
-          "tags": [
-            "BETA",
-            "REQUEST ACCESS"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "VOICE DISPATCH \u2014 FACTORY REPAIR",
-      "cards": [
-        {
-          "number": "01",
-          "title": "WHAT IT DOES",
-          "description": "Factory maintenance calls get routed to the right technician automatically. No multi-day waits. No phone tag.",
-          "tags": [
-            "VOICE AI",
-            "INDUSTRIAL",
-            "DISPATCH"
-          ]
-        },
-        {
-          "number": "02",
-          "title": "HOW IT WORKS",
-          "description": "Incoming call \u2192 voice AI understands the problem \u2192 routes to the relevant technician \u2192 books the job. Owner gets an SMS confirmation.",
-          "tags": [
-            "IVR",
-            "ROUTING",
-            "SMS"
-          ]
-        },
-        {
-          "number": "03",
-          "title": "WHO IT'S FOR",
-          "description": "Factory owners with maintenance contracts. Industrial zones with fragmented technician networks.",
-          "tags": [
-            "FACTORIES",
-            "MAINTENANCE",
-            "INDIA"
-          ]
-        },
-        {
-          "number": "04",
-          "title": "STATUS",
-          "description": "Tata Steel vendor network. In field testing.",
-          "tags": [
-            "TATA STEEL",
-            "BETA"
-          ]
-        }
-      ]
+      "title": "PRODUCTS.",
+      "body": "We've also shipped standalone products — ORACLE, OUTBOUND, SHADOW. Each with its own page.",
+      "ornament": {
+        "asset": "/ornaments/molten-08.svg",
+        "placement": "section-pool"
+      }
     }
   ]
 }
