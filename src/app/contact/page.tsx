@@ -1,8 +1,5 @@
-import { CmsRoutePage } from "@/components/sections/CmsRoutePage";
-import { getPageMetadata } from "@/lib/seo";
+import { redirect } from "next/navigation";
 
-export const metadata = getPageMetadata("contact");
-
-export default function ContactPage() {
-  return <CmsRoutePage slug="contact" />;
+export default function ContactRedirectPage() {
+  redirect("/#contact");
 }

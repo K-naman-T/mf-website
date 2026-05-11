@@ -1,12 +1,13 @@
 .main {
-  min-height: 100vh;
+  min-height: 100svh;
   background: #080808;
   color: #FFFFFF;
-  padding: 48px 24px;
+  padding: clamp(32px, 5vw, 48px) clamp(16px, 4vw, 24px);
+  overflow-x: clip;
 }
 
 .header {
-  max-width: 900px;
+  width: min(100%, 900px);
   margin: 0 auto 56px;
   text-align: center;
 }
@@ -39,10 +40,10 @@
 }
 
 .grid {
-  max-width: 1100px;
+  width: min(100%, 1100px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -82,10 +83,10 @@
 }
 
 .cta {
-  max-width: 500px;
+  width: min(100%, 500px);
   margin: 64px auto 0;
   text-align: center;
-  padding: 48px;
+  padding: clamp(28px, 6vw, 48px);
   background: #0D0D0D;
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
@@ -103,35 +104,6 @@
   color: rgba(255,255,255,0.45);
   margin-bottom: 28px;
   line-height: 1.5;
-}
-
-.liquidInkDemo {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #050505;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.liquidInkLabel {
-  position: relative;
-  z-index: 1;
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-}
-
-.splatterDemo {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #050505;
-  overflow: hidden;
 }
 
 .centerDemo {

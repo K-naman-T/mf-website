@@ -1,0 +1,47 @@
+{
+  "slug": "services",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "SERVICES",
+    "title": ["WHAT", "WE BUILD."],
+    "intro": "Custom products, internal tools, AI systems, and interfaces built from constraint to launch."
+  },
+  "cta": {
+    "title": "READY WHEN IT NEEDS TO SHIP."
+  },
+  "sections": [
+    {
+      "title": "SERVICES.",
+      "cards": [
+        {
+          "number": "01",
+          "title": "CUSTOM DEVELOPMENT",
+          "description": "We build what you need: custom products, internal tools, platform work, and systems that do not fit a template."
+        },
+        {
+          "number": "02",
+          "title": "SYSTEMS ENGINEERING",
+          "description": "Infrastructure, pipelines, integrations, and operational layers that need to run and stay running."
+        },
+        {
+          "number": "03",
+          "title": "AI INTERFACES",
+          "description": "Agentic workflows, computer vision, speech systems, and multimodal interfaces shaped around real constraints."
+        },
+        {
+          "number": "04",
+          "title": "DESIGN TO DEPLOYMENT",
+          "description": "Strategy, interface design, engineering, launch, and iteration handled as one production sequence."
+        }
+      ]
+    },
+    {
+      "title": "DOMAINS.",
+      "body": "We have worked across prediction systems, voice platforms, industrial tools, and other applied AI surfaces. Past work stays under NDA — talk to us if you are working in one of these areas."
+    },
+    {
+      "title": "HOW ENGAGEMENTS WORK.",
+      "body": "You bring the problem. We map what is real, define the system, build, ship, and iterate from actual use."
+    }
+  ]
+}

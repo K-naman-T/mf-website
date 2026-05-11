@@ -14,10 +14,9 @@ Cookies are small text files stored on your device (computer, phone, tablet) whe
 
 Metafloor uses cookies to:
 
-- Keep your session active on our website
-- Understand how visitors use our site (anonymized analytics)
-- Remember your preferences (e.g., language, dark/light mode)
+- Remember site preferences, such as theme and cookie choice
 - Provide essential site functionality
+- Understand site usage only if privacy-respecting analytics are added and permitted
 
 ---
 
@@ -27,9 +26,8 @@ Metafloor uses cookies to:
 
 These are required for the website to function. They cannot be disabled without affecting site performance.
 
-- **Session cookies** — maintain your login state and security
-- **CSRF tokens** — prevent cross-site request forgery
-- **Form data** — remember input in contact forms
+- **Preference storage** — remembers theme and cookie notice choices
+- **Security and platform storage** — may be used by our hosting platform for basic site delivery and protection
 
 ### Analytics Cookies
 
@@ -39,14 +37,14 @@ These help us understand how visitors use our site. Data is anonymized and aggre
 - **Time on site** — how long visitors stay
 - **Referral source** — how visitors arrived at the site
 
-We use privacy-respecting analytics. We do not use third-party tracking cookies for advertising.
+We do not currently use advertising trackers. If analytics are added, we intend to use privacy-respecting analytics and avoid third-party advertising cookies.
 
 ### Functional Cookies
 
 These remember your preferences.
 
 - **Theme preference** — dark or light mode
-- **Language settings** — if applicable
+- **Cookie notice preference** — essential-only or accepted choice
 
 ---
 
@@ -54,8 +52,8 @@ These remember your preferences.
 
 Some third-party services we use may set their own cookies:
 
-- **Payment processing** — payment providers may set cookies for fraud prevention
-- **Embedded content** — if we embed videos or other content from third parties
+- **Hosting and infrastructure** — our deployment provider may use technical storage for security, performance, or routing
+- **Embedded content** — if we later embed videos or other third-party content
 
 We do not control third-party cookies. Review the respective third-party privacy policies for details.
 
@@ -76,7 +74,7 @@ Disabling cookies may affect some site functionality.
 
 ## 6. Do Not Track
 
-Our site respects Do Not Track signals from browsers. When we detect a DNT signal, we disable analytics cookies for that session.
+We do not currently run advertising trackers. If analytics are added, Do Not Track and cookie choices should be respected where technically supported.
 
 ---
 

@@ -1,13 +1,10 @@
 .gallery {
   --ink: #050403;
-  --charcoal: #090706;
   --paper: #f4eee4;
   --red: #d3131e;
   --red-hot: #ff463c;
-  --red-deep: #740007;
   --line: rgba(211, 19, 30, 0.34);
-  position: relative;
-  width: min(1540px, calc(100vw - 40px));
+  width: min(1540px, calc(100% - 40px));
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -17,626 +14,64 @@
   box-shadow: 0 42px 140px rgba(0, 0, 0, 0.58);
 }
 
-.svgDefs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
-
 .galleryCard {
-  position: relative;
-  min-height: 470px;
+  min-height: 360px;
   display: grid;
-  grid-template-rows: minmax(340px, 1fr) auto;
-  overflow: hidden;
+  grid-template-rows: 1fr auto;
   background:
-    radial-gradient(circle at 14% 8%, rgba(255, 70, 60, 0.16), transparent 26%),
-    linear-gradient(135deg, #0b0908 0%, #030202 62%, #120002 100%);
-}
-
-.galleryCard::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(211, 19, 30, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(211, 19, 30, 0.045) 1px, transparent 1px);
-  background-size: 52px 52px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent 72%);
-}
-
-.galleryCard::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.052;
-  background-image: radial-gradient(circle, #fff 0.65px, transparent 0.8px);
-  background-size: 6px 6px;
+    linear-gradient(rgba(211, 19, 30, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(211, 19, 30, 0.05) 1px, transparent 1px),
+    linear-gradient(135deg, #0b0908 0%, #030202 68%, #110305 100%);
+  background-size: 48px 48px, 48px 48px, auto;
+  color: var(--paper);
 }
 
 .stage {
-  position: relative;
-  min-height: 340px;
-  overflow: hidden;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: clamp(24px, 3vw, 40px);
 }
 
-.stage::before {
-  content: "";
-  position: absolute;
-  inset: 18px;
-  z-index: 3;
-  border: 1px solid rgba(211, 19, 30, 0.22);
-  pointer-events: none;
+.stage span {
+  color: var(--red-hot);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stage h2 {
+  width: min(100%, 440px);
+  margin: 0;
+  font-family: "Teko", system-ui, sans-serif;
+  font-size: clamp(42px, 4vw, 70px);
+  font-weight: 600;
+  line-height: 0.86;
+  text-transform: uppercase;
+  text-wrap: balance;
 }
 
 .cardInfo {
-  position: relative;
-  z-index: 5;
-  min-height: 130px;
+  min-height: 120px;
   padding: 22px 24px 26px;
   border-top: 1px solid rgba(211, 19, 30, 0.28);
   background: rgba(3, 2, 2, 0.82);
 }
 
-.cardInfo span,
-.motionNote,
-.moltenCopy span,
-.serviceCard span {
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cardInfo span {
-  display: block;
-  margin-bottom: 9px;
-  color: var(--red-hot);
-}
-
-.cardInfo h2 {
-  max-width: 440px;
-  margin: 0 0 9px;
-  color: var(--paper);
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: clamp(38px, 2.75vw, 54px);
-  font-weight: 600;
-  line-height: 0.82;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-}
-
 .cardInfo p {
-  max-width: 430px;
+  width: min(100%, 430px);
   margin: 0;
-  color: rgba(244, 238, 228, 0.58);
+  color: rgba(244, 238, 228, 0.62);
   font-family: "Inter", system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.045em;
   line-height: 1.48;
   text-transform: uppercase;
-}
-
-.logoScene,
-.moltenScene,
-.buttonScene,
-.wipeScene,
-.serviceScene,
-.ooScene {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  min-height: 340px;
-  overflow: hidden;
-}
-
-.logoScene {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 52% 44%, rgba(255, 70, 60, 0.16), transparent 22%),
-    radial-gradient(circle at 78% 16%, rgba(116, 0, 7, 0.58), transparent 30%),
-    #030202;
-}
-
-.logoInkDrift,
-.heroInkDrift,
-.buttonInkDrift,
-.wipeInkDrift,
-.ooInkDrift {
-  position: absolute;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.logoInkDrift {
-  right: -36%;
-  top: -20%;
-  width: 116%;
-  height: 118%;
-  opacity: 0.78;
-  mix-blend-mode: normal;
-}
-
-.logoCanvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  filter: url("#mf-gallery-soft-goo");
-}
-
-.logoGooSvg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.9;
-}
-
-.fullLogoSvg {
-  position: relative;
-  z-index: 2;
-  display: block;
-  width: min(72%, 440px);
-  height: auto;
-  aspect-ratio: 16 / 9;
-  overflow: visible;
-  filter: drop-shadow(0 18px 38px rgba(211, 19, 30, 0.34));
-}
-
-.fullLogoSvg path {
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.replayButton {
-  position: absolute;
-  right: 28px;
-  bottom: 26px;
-  z-index: 6;
-  padding: 11px 15px 10px;
-  border: 1px solid rgba(255, 70, 60, 0.72);
-  background: rgba(5, 4, 3, 0.64);
-  color: var(--red-hot);
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1), background 360ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.replayButton:hover {
-  transform: translateY(-2px);
-  background: rgba(211, 19, 30, 0.16);
-}
-
-.moltenScene {
-  background:
-    radial-gradient(circle at 44% 38%, rgba(116, 0, 7, 0.42), transparent 34%),
-    #060403;
-}
-
-.heroInkDrift {
-  inset: -38px;
-  width: calc(100% + 76px);
-  height: calc(100% + 76px);
-  z-index: 1;
-  opacity: 0.98;
-}
-
-.moltenSvg {
-  position: absolute;
-  inset: -54px;
-  width: calc(100% + 108px);
-  height: calc(100% + 108px);
-  mix-blend-mode: screen;
-  opacity: 0.96;
-  z-index: 2;
-}
-
-.moltenVeil {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background:
-    linear-gradient(90deg, rgba(5, 4, 3, 0.54), transparent 40%, rgba(5, 4, 3, 0.36)),
-    repeating-linear-gradient(105deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 8px);
-  mix-blend-mode: multiply;
-}
-
-.moltenCopy {
-  position: absolute;
-  left: 32px;
-  right: 32px;
-  bottom: 32px;
-  z-index: 4;
-  display: grid;
-  gap: 10px;
-  color: var(--paper);
-}
-
-.moltenCopy span {
-  color: var(--red-hot);
-}
-
-.moltenCopy strong {
-  max-width: 360px;
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: clamp(40px, 3.2vw, 62px);
-  font-weight: 600;
-  line-height: 0.84;
-  text-transform: uppercase;
-}
-
-.buttonScene {
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 28px;
-  background: var(--paper);
-}
-
-.buttonInkDrift {
-  right: -54%;
-  top: -34%;
-  width: 104%;
-  height: 112%;
-  opacity: 0.16;
-}
-
-.gooButton {
-  position: relative;
-  isolation: isolate;
-  min-width: 250px;
-  height: 76px;
-  border: 1px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
-  overflow: visible;
-  cursor: pointer;
-}
-
-.buttonText {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100%;
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: 34px;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-}
-
-.buttonGooSvg {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 330px;
-  height: 126px;
-  z-index: -1;
-  overflow: visible;
-  transform: translate(-50%, -50%);
-}
-
-.buttonGooSvg :is(rect, circle) {
-  background: var(--red);
-  fill: var(--red);
-  transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.buttonGooBody {
-  transform: scaleX(0.02);
-  transform-origin: left;
-}
-
-.gooButton:hover .buttonGooBody,
-.gooButton:focus-visible .buttonGooBody {
-  transform: scaleX(1);
-}
-
-.gooButton:hover .buttonBlobOne { transform: translate(28px, 18px) scale(1.38); }
-.gooButton:hover .buttonBlobTwo { transform: translate(46px, -12px) scale(1.1); }
-.gooButton:hover .buttonBlobThree { transform: translate(-42px, 20px) scale(1.24); }
-.gooButton:hover .buttonBlobFour { transform: translate(-34px, -20px) scale(1.52); }
-
-.motionNote {
-  width: min(72%, 310px);
-  margin: 0;
-  color: rgba(5, 4, 3, 0.58);
-  line-height: 1.45;
-  text-align: center;
-}
-
-.wipeScene {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255, 70, 60, 0.12), transparent 28%),
-    #070504;
-}
-
-.wipeInkDrift {
-  right: -36%;
-  top: -22%;
-  width: 112%;
-  height: 124%;
-  opacity: 0.7;
-}
-
-.workCard {
-  position: relative;
-  z-index: 2;
-  width: min(72%, 360px);
-  min-height: 210px;
-  padding: 28px;
-  border: 1px solid rgba(244, 238, 228, 0.22);
-  background: rgba(244, 238, 228, 0.92);
-  color: var(--ink);
-  box-shadow: 18px 18px 0 rgba(211, 19, 30, 0.72);
-}
-
-.workCard span {
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.workCard h3 {
-  margin: 36px 0 12px;
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: 56px;
-  line-height: 0.82;
-  text-transform: uppercase;
-}
-
-.workCard p {
-  max-width: 245px;
-  margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.45;
-  text-transform: uppercase;
-}
-
-.wipeSvg {
-  position: absolute;
-  inset: -24px;
-  width: calc(100% + 48px);
-  height: calc(100% + 48px);
-  z-index: 4;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.serviceScene {
-  display: grid;
-  place-items: center;
-  background: var(--paper);
-}
-
-.serviceCard {
-  position: relative;
-  isolation: isolate;
-  width: min(74%, 370px);
-  min-height: 248px;
-  padding: 30px;
-  border: 1px solid var(--ink);
-  background: var(--paper);
-  color: var(--ink);
-  overflow: hidden;
-  transition: color 420ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.serviceCard:hover {
-  color: var(--paper);
-  transform: translateY(-4px);
-}
-
-.serviceCard img {
-  position: relative;
-  z-index: 2;
-  width: 58px;
-  height: 58px;
-  margin-bottom: 32px;
-  filter: brightness(0);
-  transition: filter 420ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.serviceCard:hover img {
-  filter: invert(1);
-  transform: scale(1.1) rotate(-6deg);
-}
-
-.serviceCard span,
-.serviceCard h3,
-.serviceCard p {
-  position: relative;
-  z-index: 2;
-}
-
-.serviceCard span {
-  display: block;
-  color: var(--red);
-  transition: color 420ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.serviceCard:hover span {
-  color: var(--paper);
-}
-
-.serviceCard h3 {
-  max-width: 250px;
-  margin: 10px 0 14px;
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: 48px;
-  line-height: 0.84;
-  text-transform: uppercase;
-}
-
-.serviceCard p {
-  max-width: 280px;
-  margin: 0;
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.45;
-  text-transform: uppercase;
-}
-
-.serviceGooSvg {
-  position: absolute;
-  right: -86px;
-  top: -86px;
-  width: 230px;
-  height: 230px;
-  z-index: 1;
-  transform: scale(0.36);
-  transform-origin: top right;
-  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.serviceCard:hover .serviceGooSvg {
-  transform: scale(3.2);
-}
-
-.ooScene {
-  display: grid;
-  place-items: center;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(211, 19, 30, 0.08), transparent 28%),
-    var(--paper);
-  color: var(--ink);
-}
-
-.ooInkDrift {
-  left: 50%;
-  top: 28%;
-  width: 46%;
-  height: 52%;
-  opacity: 0.1;
-  transform: translateX(-50%);
-}
-
-.navRail {
-  position: relative;
-  z-index: 2;
-  width: min(78%, 500px);
-  height: 94px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 32px;
-  padding: 0 34px;
-  border: 1px solid var(--ink);
-  background: rgba(244, 238, 228, 0.78);
-  box-shadow: 0 18px 0 rgba(5, 4, 3, 0.05);
-}
-
-.navRail span {
-  font-family: "Teko", system-ui, sans-serif;
-  font-size: 25px;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.navRail span:last-child {
-  text-align: right;
-}
-
-.ooMark {
-  position: relative;
-  width: 88px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  animation: ooCompress 7.2s cubic-bezier(0.66, 0, 0.18, 1) infinite;
-}
-
-.ooInlineSvg {
-  width: 100%;
-  height: auto;
-  color: var(--ink);
-}
-
-.ooMark i {
-  position: absolute;
-  top: 50%;
-  width: 26px;
-  height: 2px;
-  background: var(--red);
-  opacity: 0;
-  animation: eyelidFlash 7.2s cubic-bezier(0.66, 0, 0.18, 1) infinite;
-}
-
-.ooMark i:nth-child(2) { left: 8px; }
-.ooMark i:nth-child(3) { right: 8px; animation-delay: 0.04s; }
-
-.navSignals {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.navSignals i {
-  position: absolute;
-  top: 50%;
-  width: 118px;
-  height: 1px;
-  background: var(--red);
-  transform: scaleX(0);
-  animation: navSignal 7.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-
-.navSignals i:first-child { left: 38px; transform-origin: right; }
-.navSignals i:last-child { right: 38px; transform-origin: left; }
-
-@keyframes logoBlobAssemble {
-  0% { transform: translate(-50%, -50%) scale(0.01); opacity: 0; }
-  18% { opacity: 1; }
-  46% { transform: translate(-50%, -50%) scale(1); opacity: 0.92; }
-  72%, 100% { transform: translate(-50%, -50%) scale(0.18); opacity: 0; }
-}
-
-@keyframes moltenDrift {
-  0% { transform: translate3d(-34px, 18px, 0) rotate(0deg) scale(0.92); border-radius: 48% 52% 43% 57%; }
-  50% { transform: translate3d(42px, -22px, 0) rotate(19deg) scale(1.08); border-radius: 62% 38% 54% 46%; }
-  100% { transform: translate3d(-6px, 34px, 0) rotate(-14deg) scale(0.98); border-radius: 40% 60% 62% 38%; }
-}
-
-@keyframes ooCompress {
-  0%, 54%, 64%, 100% { transform: scaleY(1) scaleX(1); }
-  58% { transform: scaleY(0.12) scaleX(1.08); }
-  61% { transform: scaleY(0.62) scaleX(1.03); }
-}
-
-@keyframes eyelidFlash {
-  0%, 54%, 65%, 100% { opacity: 0; transform: translateY(-50%) scaleX(0); }
-  58%, 61% { opacity: 1; transform: translateY(-50%) scaleX(1); }
-}
-
-@keyframes navSignal {
-  0%, 47%, 68%, 100% { opacity: 0; transform: scaleX(0); }
-  55% { opacity: 1; transform: scaleX(1); }
-  64% { opacity: 0.8; transform: scaleX(0.18); }
 }
 
 @media (max-width: 1120px) {
@@ -647,44 +82,11 @@
 
 @media (max-width: 720px) {
   .gallery {
-    width: min(100% - 24px, 520px);
+    width: min(calc(100% - 24px), 520px);
     grid-template-columns: 1fr;
   }
 
   .galleryCard {
-    min-height: 440px;
-  }
-
-  .cardInfo {
-    min-height: 120px;
-  }
-
-  .navRail {
-    width: min(82%, 360px);
-    gap: 18px;
-    padding: 0 20px;
-  }
-
-  .navRail span {
-    font-size: 21px;
-  }
-
-  .ooMark {
-    width: 70px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ooMark,
-  .ooMark i,
-  .navSignals i {
-    animation: none;
-  }
-
-  .buttonGooSvg :is(rect, circle),
-  .serviceCard,
-  .serviceCard img,
-  .serviceGooSvg {
-    transition: none;
+    min-height: 320px;
   }
 }

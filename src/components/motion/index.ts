@@ -1,7 +1,5 @@
 export { useReducedMotion } from "./core/useReducedMotion";
 export { RedField } from "./backgrounds/RedField";
-export { LiquidInk } from "./backgrounds/LiquidInk";
-export { InkSplatter } from "./backgrounds/InkSplatter";
 export { NoiseGrain } from "./backgrounds/NoiseGrain";
 export { SignalPulse } from "./backgrounds/SignalPulse";
 export { SectionReveal } from "./transitions/SectionReveal";

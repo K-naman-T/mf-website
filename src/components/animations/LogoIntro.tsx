@@ -100,6 +100,10 @@ export function LogoIntro() {
     startRef.current = startIntro;
 
     const stopScroll = (event: Event) => event.preventDefault();
+    const startFromWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      startIntro(event);
+    };
 
     const ctx = gsap.context(() => {
       const navBrand = document.querySelector(".mf-nav-brand") as HTMLElement | null;
@@ -164,8 +168,10 @@ export function LogoIntro() {
     root.addEventListener("touchend", startIntro, { capture: true, passive: true });
     root.addEventListener("click", startIntro, { capture: true });
     root.addEventListener("touchmove", stopScroll, { passive: false });
+    root.addEventListener("wheel", startFromWheel, { capture: true, passive: false });
     window.addEventListener("pointerdown", startIntro, { capture: true });
     window.addEventListener("touchstart", startIntro, { capture: true, passive: true });
+    window.addEventListener("wheel", startFromWheel, { capture: true, passive: false });
     window.addEventListener("keydown", startIntro, { capture: true });
 
     return () => {
@@ -175,8 +181,10 @@ export function LogoIntro() {
       root.removeEventListener("touchend", startIntro, { capture: true });
       root.removeEventListener("click", startIntro, { capture: true });
       root.removeEventListener("touchmove", stopScroll);
+      root.removeEventListener("wheel", startFromWheel, { capture: true });
       window.removeEventListener("pointerdown", startIntro, { capture: true });
       window.removeEventListener("touchstart", startIntro, { capture: true });
+      window.removeEventListener("wheel", startFromWheel, { capture: true });
       window.removeEventListener("keydown", startIntro, { capture: true });
       if (unlockTimer) window.clearTimeout(unlockTimer);
       restoreScroll();

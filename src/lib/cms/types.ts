@@ -100,7 +100,6 @@ export const HomeContentSchema = z.object({
     headline: z.string().min(1),
     body: z.string().min(1),
     copyright: z.string().min(1),
-    status: z.string().min(1),
     columns: z.array(z.object({
       title: z.string().min(1),
       links: z.array(LinkSchema),
@@ -140,17 +139,11 @@ export const PageCardSchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
-export const PageOrnamentSchema = z.object({
-  asset: z.string().min(1),
-  placement: z.enum(["hero-right", "section-right", "section-corner", "section-pool"]),
-}).optional();
-
 export const PageSectionSchema = z.object({
   eyebrow: z.string().min(1).optional(),
   title: z.string().min(1),
   body: z.string().min(1).optional(),
   cards: z.array(PageCardSchema).optional(),
-  ornament: PageOrnamentSchema,
 });
 
 export const PageContentSchema = z.object({
@@ -160,7 +153,6 @@ export const PageContentSchema = z.object({
     eyebrow: z.string().min(1),
     title: z.array(z.string().min(1)).min(1),
     intro: z.string().min(1),
-    ornament: PageOrnamentSchema,
   }),
   sections: z.array(PageSectionSchema),
   cta: z.object({
@@ -183,6 +175,5 @@ export type LegalDocumentEntry = z.infer<typeof LegalDocumentEntrySchema>;
 export type IconCatalog = z.infer<typeof IconCatalogSchema>;
 export type IconEntry = z.infer<typeof IconEntrySchema>;
 export type PageCard = z.infer<typeof PageCardSchema>;
-export type PageOrnament = z.infer<typeof PageOrnamentSchema>;
 export type PageSection = z.infer<typeof PageSectionSchema>;
 export type PageContent = z.infer<typeof PageContentSchema>;

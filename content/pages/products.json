@@ -1,0 +1,38 @@
+{
+  "slug": "products",
+  "theme": "red",
+  "hero": {
+    "eyebrow": "PRODUCTS",
+    "title": ["OWNED", "SYSTEMS."],
+    "intro": "Standalone products from Metafloor. Details are coming soon."
+  },
+  "cta": {
+    "title": "PRODUCT DETAILS ARE BEING PREPARED."
+  },
+  "sections": [
+    {
+      "title": "PRODUCT LINE.",
+      "cards": [
+        {
+          "number": "01",
+          "title": "ORACLE",
+          "description": "Product details will be added here when ready."
+        },
+        {
+          "number": "02",
+          "title": "OUTBOUND",
+          "description": "Product details will be added here when ready."
+        },
+        {
+          "number": "03",
+          "title": "SHADOW",
+          "description": "Product details will be added here when ready."
+        }
+      ]
+    },
+    {
+      "title": "BUILT, NOT ANNOUNCED.",
+      "body": "We will publish product-specific details only when each page has something useful to say."
+    }
+  ]
+}

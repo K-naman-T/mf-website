@@ -4,7 +4,7 @@ import { getSiteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const staticRoutes = ["", "work", "capabilities", "design", "process", "about", "contact", "legal"];
+  const staticRoutes = ["", "services", "work", "products", "legal"];
   const legalRoutes = getLegalSlugs().map((slug) => `legal/${slug}`);
   const now = new Date();
 

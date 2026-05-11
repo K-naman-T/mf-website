@@ -1,8 +1,5 @@
-import { CmsRoutePage } from "@/components/sections/CmsRoutePage";
-import { getPageMetadata } from "@/lib/seo";
+import { redirect } from "next/navigation";
 
-export const metadata = getPageMetadata("capabilities");
-
-export default function CapabilitiesPage() {
-  return <CmsRoutePage slug="capabilities" />;
+export default function CapabilitiesRedirectPage() {
+  redirect("/services");
 }

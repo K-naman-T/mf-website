@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
+import { CookieNotice } from "@/components/layout/CookieNotice";
 import { IntroDoneProvider } from "@/components/motion/core/IntroDoneContext";
 import { OOPositionProvider } from "@/components/motion/core/OOPositionContext";
 import { getHomeContent } from "@/lib/cms/loader";
@@ -34,6 +35,7 @@ export default function RootLayout({
             <OOPositionProvider>
               <Navbar content={content.navigation} />
               {children}
+              <CookieNotice />
             </OOPositionProvider>
           </IntroDoneProvider>
         </ThemeProvider>

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
 import { SectionReveal } from "@/components/motion/transitions/SectionReveal";
-import { PageOrnament } from "@/components/sections/PageOrnament";
 import type { PageContent } from "@/lib/cms/types";
 
 interface CmsPageProps {
@@ -20,7 +19,6 @@ export function CmsPage({ content, ctaLabel, ctaHref }: CmsPageProps) {
     <div className={isDark ? "mf-page mf-page-dark" : "mf-page mf-page-red"}>
       <main className="mf-cms-main">
         <section className="mf-page-hero">
-          <PageOrnament ornament={content.hero.ornament} />
           <SectionReveal as="div" className="mf-page-hero-copy" distance={18}>
             <p className="mf-page-eyebrow">★ {content.hero.eyebrow}</p>
             <h1 className="mf-page-title">
@@ -36,7 +34,6 @@ export function CmsPage({ content, ctaLabel, ctaHref }: CmsPageProps) {
 
         {content.sections.map((section, sectionIndex) => (
           <SectionReveal as="section" className="mf-cms-section" delay={sectionIndex * 0.04} distance={22} key={`${section.title}-${sectionIndex}`}>
-            <PageOrnament ornament={section.ornament} />
             <div className="mf-section-heading">
               {section.eyebrow ? <p className="mf-page-eyebrow">★ {section.eyebrow}</p> : null}
               <h2>{section.title}</h2>

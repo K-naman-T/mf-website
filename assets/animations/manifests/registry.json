@@ -45,17 +45,6 @@
       "description": "Service icon scales 8% up, red pulse ring expands outward"
     },
     {
-      "id": "hero-ambient",
-      "type": "css-canvas",
-      "src": "/src/components/animations/MoltenAmbient.tsx",
-      "trigger": "idle",
-      "loop": true,
-      "repeatDelayMs": 0,
-      "reducedMotion": "static",
-      "placement": ["hero-bg"],
-      "description": "Three molten red blobs drift with orbital signal dots, canvas animation"
-    },
-    {
       "id": "loader-mark",
       "type": "canvas",
       "src": "/src/components/animations/LoaderMark.tsx",

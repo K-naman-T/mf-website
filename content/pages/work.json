@@ -4,11 +4,7 @@
   "hero": {
     "eyebrow": "WORK",
     "title": ["DOMAINS.", "WE'VE OPERATED IN."],
-    "intro": "Custom development. Past client work under NDA.",
-    "ornament": {
-      "asset": "/ornaments/molten-01.svg",
-      "placement": "hero-right"
-    }
+    "intro": "Custom development. Past client work under NDA."
   },
   "cta": {
     "title": "READY WHEN IT NEEDS TO SHIP."
@@ -16,19 +12,11 @@
   "sections": [
     {
       "title": "AREAS OF EXPERTISE.",
-      "body": "Prediction systems. Voice platforms. Industrial tools. Custom products across various domains. Past work stays under NDA — talk to us if you're working in one of these areas.",
-      "ornament": {
-        "asset": "/ornaments/molten-05.svg",
-        "placement": "section-right"
-      }
+      "body": "Prediction systems. Voice platforms. Industrial tools. Custom products across various domains. Past work stays under NDA — talk to us if you're working in one of these areas."
     },
     {
       "title": "STANDALONE PRODUCTS.",
-      "body": "ORACLE. OUTBOUND. SHADOW. Each one shipped and running. Each has its own page.",
-      "ornament": {
-        "asset": "/ornaments/molten-04.svg",
-        "placement": "section-corner"
-      }
+      "body": "ORACLE. OUTBOUND. SHADOW. Each one shipped and running. Each has its own page."
     }
   ]
 }
