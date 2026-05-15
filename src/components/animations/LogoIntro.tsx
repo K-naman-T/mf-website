@@ -159,7 +159,7 @@ export function LogoIntro() {
         );
       });
 
-      introTimeline.to(root, { backgroundColor: "rgba(240, 24, 32, 0)", duration: 0.3 }, 1.05);
+      introTimeline.to(root, { backgroundColor: "rgba(0, 0, 0, 0)", duration: 0.3 }, 1.05);
     }, root);
 
     root.addEventListener("pointerdown", startIntro, { capture: true });
