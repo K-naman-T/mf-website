@@ -36,7 +36,7 @@
     {
       "eyebrow": "02",
       "title": "COMPUTER VISION",
-      "description": "Vision pipelines for mining sites, low-light environments, dust, smoke, poor connectivity, and other places cameras should not work but have to.",
+      "description": "Vision pipelines for harsh real-world environments, low-light conditions, poor connectivity, and operations where reliability matters more than demos.",
       "icon": "vision-scan-eye",
       "href": "/services"
     },
@@ -50,7 +50,7 @@
     {
       "eyebrow": "04",
       "title": "R&D PRODUCTS",
-      "description": "Hyperspectral mineral mapping, mining safety pipelines, multilingual conversational AI, and products that compound from field constraints.",
+      "description": "Multilingual conversational AI, field-ready automation systems, and products shaped by real operational constraints.",
       "icon": "deep-tech-core",
       "href": "/products"
     }
