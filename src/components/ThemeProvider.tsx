@@ -34,6 +34,10 @@ export const ACCENTS: { value: Accent; label: string }[] = [
 
 const DEFAULT_ACCENT: Accent = "lime";
 
+function isAccent(value: string | null): value is Accent {
+  return ACCENTS.some((item) => item.value === value);
+}
+
 interface ThemeContextValue {
   theme: Theme;
   accent: Accent;
@@ -59,7 +63,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       document.documentElement.setAttribute("data-theme", "dark");
     }
 
-    if (ACCENTS.some((item) => item.value === storedAccent)) {
+    if (isAccent(storedAccent)) {
       setAccentState(storedAccent);
       document.documentElement.setAttribute("data-accent", storedAccent);
     } else {
