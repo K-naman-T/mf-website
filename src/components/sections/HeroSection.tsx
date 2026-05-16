@@ -44,10 +44,11 @@ export function HeroSection({ content }: HeroSectionProps) {
         </div>
 
         <div className="mf-hero-visual" aria-hidden="true">
-          <img
-            src="/brand/metafloor-full-logo.svg"
-            alt=""
+          <span
             className="mf-hero-logo"
+            style={{
+              backgroundColor: "var(--mf-red-core)",
+            }}
           />
         </div>
       </div>
