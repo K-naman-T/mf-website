@@ -44,8 +44,8 @@ export function getRootMetadata(): Metadata {
 export function getHomeMetadata(): Metadata {
   const home = getHomeContent();
   return {
-    title: `${home.hero.headline_line1} ${home.hero.headline_line2} ${home.hero.headline_line3}`,
-    description: home.hero.subheadline,
+    title: home.metadata.site_name,
+    description: home.metadata.description,
     alternates: { canonical: "/" },
   };
 }

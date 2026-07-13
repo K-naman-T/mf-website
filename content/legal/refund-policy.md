@@ -57,7 +57,7 @@ If a free trial is offered, it converts to a paid subscription at the end of the
 
 ## 5. Dispute Resolution
 
-If you believe a billing error has occurred, contact us within 7 days of the charge at signal@metafloor.in. We will investigate and resolve legitimate errors promptly.
+If you believe a billing error has occurred, contact us within 7 days of the charge at hello@oddfromyou.com. We will investigate and resolve legitimate errors promptly.
 
 ---
 
@@ -69,4 +69,4 @@ We handle exceptional circumstances — such as complete project failure due to 
 
 ## 7. Contact
 
-Billing questions and refund requests: signal@metafloor.in
+Billing questions and refund requests: hello@oddfromyou.com

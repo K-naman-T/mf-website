@@ -32,7 +32,7 @@ export const ACCENTS: { value: Accent; label: string }[] = [
   { value: "coral", label: "Coral" },
 ];
 
-const DEFAULT_ACCENT: Accent = "lime";
+const DEFAULT_ACCENT: Accent = "oxide";
 
 function isAccent(value: string | null): value is Accent {
   return ACCENTS.some((item) => item.value === value);
@@ -50,7 +50,7 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("red");
   const [accent, setAccentState] = useState<Accent>(DEFAULT_ACCENT);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setThemeState(stored);
       document.documentElement.setAttribute("data-theme", stored);
     } else {
-      document.documentElement.setAttribute("data-theme", "dark");
+      document.documentElement.setAttribute("data-theme", "red");
     }
 
     if (isAccent(storedAccent)) {

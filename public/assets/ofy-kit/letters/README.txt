@@ -1,0 +1,1 @@
+Smoothed SVG set derived from the traced 4th variation. Outlines were re-rendered and lightly smoothed for cleaner curves while preserving overall character shapes.\n

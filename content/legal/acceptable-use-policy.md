@@ -6,7 +6,7 @@
 
 ## 1. Purpose
 
-This Acceptable Use Policy ("AUP") defines acceptable conduct when using Metafloor's website, products, and services. By using our services, you agree to comply with this policy.
+This Acceptable Use Policy ("AUP") defines acceptable conduct when using OddFromYou's website, products, and services. By using our services, you agree to comply with this policy.
 
 ---
 
@@ -87,7 +87,7 @@ We reserve the right to:
 
 ## 4. Reporting Violations
 
-If you become aware of any violation of this policy, report it immediately to signal@metafloor.in with:
+If you become aware of any violation of this policy, report it immediately to hello@oddfromyou.com with:
 
 - Description of the violation
 - Evidence (if applicable)
@@ -103,4 +103,4 @@ We may update this policy at any time. Continued use of our services after chang
 
 ## 6. Contact
 
-Questions: signal@metafloor.in
+Questions: hello@oddfromyou.com

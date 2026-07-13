@@ -12,7 +12,7 @@ Cookies are small text files stored on your device (computer, phone, tablet) whe
 
 ## 2. How We Use Cookies
 
-Metafloor uses cookies to:
+OddFromYou uses cookies to:
 
 - Remember site preferences, such as theme and cookie choice
 - Provide essential site functionality
@@ -86,4 +86,4 @@ We may update this Cookie Policy periodically. Check this page for the latest ve
 
 ## 8. Contact
 
-Questions about our use of cookies: signal@metafloor.in
+Questions about our use of cookies: hello@oddfromyou.com

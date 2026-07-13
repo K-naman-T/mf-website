@@ -29,7 +29,7 @@ export function LogoReveal({ onComplete, duration = 2000, className = "" }: Logo
   return (
     <div className={`${styles.container} ${className}`}>
       <div className={`${styles.logoWrap} ${phase === "entering" ? styles.entering : ""} ${phase === "visible" ? styles.visible : ""}`}>
-        <svg viewBox="0 0 400 100" className={styles.logoSvg} aria-label="Metafloor">
+        <svg viewBox="0 0 400 100" className={styles.logoSvg} aria-label="OddFromYou">
           <g fill="#F01820">
             {/* OO Mark - 5 circles */}
             {[-60, -30, 0, 30, 60].map((x, i) => (

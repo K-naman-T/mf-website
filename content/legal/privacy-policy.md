@@ -6,9 +6,9 @@
 
 ## 1. Who We Are
 
-Metafloor ("we", "our", "us") operates the website metafloor.in. We build and ship AI-powered products and custom software solutions for businesses.
+OddFromYou ("we", "our", "us") operates the website oddfromyou.com. We build and ship AI-powered products and custom software solutions for businesses.
 
-We are a company registered in India. If you have questions about this Privacy Policy, contact us at signal@metafloor.in.
+We are a company registered in India. If you have questions about this Privacy Policy, contact us at hello@oddfromyou.com.
 
 ---
 
@@ -88,7 +88,7 @@ You have the right to:
 - **Portability** — receive your data in a structured format
 - **Object** — object to certain uses of your data
 
-To exercise any of these rights, email signal@metafloor.in. We will respond within 30 days.
+To exercise any of these rights, email hello@oddfromyou.com. We will respond within 30 days.
 
 ---
 
@@ -126,6 +126,6 @@ We may update this Privacy Policy from time to time. Changes will be posted on t
 
 If you have complaints about how we handle your data, contact:
 
-**Grievance Officer:** signal@metafloor.in
+**Grievance Officer:** hello@oddfromyou.com
 
 We aim to resolve complaints within 30 days.

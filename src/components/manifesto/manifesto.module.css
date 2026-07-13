@@ -1,0 +1,140 @@
+.manifestoEyebrow {
+  text-align: center;
+  font: 800 clamp(0.7rem, 1vw, 0.85rem)/1 "Inter", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FF0000;
+  margin: 0 0 0.5rem;
+  padding: 0 clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (min-width: 769px) {
+  .manifestHeroIntro {
+    max-width: 44ch;
+    margin-inline: auto;
+    transform: translateX(-1.5rem);
+  }
+}
+
+.beatDominant .gridTitle {
+  font-size: clamp(4.5rem, 7.5vw, 8rem);
+  line-height: 0.8;
+}
+
+.beatDominant .gridBody {
+  max-width: 42ch;
+  margin: 0.5rem auto 0;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+}
+
+.beatStatement .gridTitle {
+  font-size: clamp(2.8rem, 4vw, 4rem);
+  margin-bottom: 0.25rem;
+}
+
+.beatStatement .gridBody {
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  max-width: 48ch;
+  margin: 0 auto;
+}
+
+.beatNarrow :global(.heroGrid),
+.beatNarrow .heroGrid {
+  width: min(480px, 44vw) !important;
+}
+
+.beatNarrow .gridTitle {
+  margin-bottom: 1.5rem;
+}
+
+.beatNarrow .gridBody {
+  line-height: 1.7;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+}
+
+.beatList :global(.heroGrid),
+.beatList .heroGrid {
+  width: min(680px, 62vw) !important;
+}
+
+.beatList .gridTitle {
+  font-size: clamp(2.2rem, 3.2vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+.beatList .gridBody {
+  line-height: 2;
+  max-width: 60ch;
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+}
+
+.beatSeal :global(.heroGrid),
+.beatSeal .heroGrid {
+  width: min(500px, 46vw) !important;
+}
+
+.beatSeal .gridTitle {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.beatSeal .gridBody {
+  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  max-width: 40ch;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .manifestoEyebrow {
+    font-size: clamp(0.6rem, 2.5vw, 0.7rem);
+    padding: 0 1.1rem;
+  }
+
+  .manifestHeroIntro {
+    max-width: none;
+  }
+
+  .beatNarrow :global(.heroGrid),
+  .beatNarrow .heroGrid,
+  .beatList :global(.heroGrid),
+  .beatList .heroGrid,
+  .beatSeal :global(.heroGrid),
+  .beatSeal .heroGrid {
+    width: min(86vw, 350px) !important;
+  }
+
+  .beatDominant .gridTitle {
+    font-size: clamp(3.2rem, 14vw, 4.2rem);
+  }
+
+  .beatStatement .gridTitle {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .beatStatement .gridBody {
+    font-size: clamp(1rem, 4.5vw, 1.15rem);
+  }
+
+  .beatList .gridTitle {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .beatList .gridBody {
+    font-size: clamp(0.95rem, 4vw, 1.05rem);
+  }
+
+  .beatSeal .gridTitle {
+    font-size: clamp(2.4rem, 10vw, 3.2rem);
+  }
+}
+
+:global([data-theme="dark"]) .darkModeLogo {
+  filter: brightness(0) invert(1) sepia(0.35) hue-rotate(350deg) saturate(0.35) brightness(0.88);
+}
+:global([data-theme="dark"]) .darkModeToggle {
+  color: rgb(230, 218, 204);
+}
+:global([data-theme="dark"]) .darkModeToggle:hover {
+  color: rgb(230, 218, 204);
+}

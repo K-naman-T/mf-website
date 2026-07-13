@@ -1,8 +1,8 @@
-# Metafloor Animation Component Library
+# OddFromYou Animation Component Library
 
 ## Purpose
 
-Build a reusable motion system that makes Metafloor feel premium, industrial, and alive without interrupting native scrolling or turning the site into decorative noise.
+Build a reusable motion system that makes OddFromYou feel premium, industrial, and alive without interrupting native scrolling or turning the site into decorative noise.
 
 The library must support:
 
@@ -176,7 +176,7 @@ Avoid:
 
 ### `brand/`
 
-Metafloor-specific logo and loader animations.
+OddFromYou-specific logo and loader animations.
 
 Planned components:
 

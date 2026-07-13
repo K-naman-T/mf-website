@@ -6,7 +6,7 @@
 
 ## 1. General Disclaimer
 
-The information and services provided by Metafloor are offered "as is" without warranties of any kind, either express or implied. While we strive for accuracy and quality, we do not guarantee that the website, services, or products will be error-free, uninterrupted, or completely secure.
+The information and services provided by OddFromYou are offered "as is" without warranties of any kind, either express or implied. While we strive for accuracy and quality, we do not guarantee that the website, services, or products will be error-free, uninterrupted, or completely secure.
 
 ---
 
@@ -28,7 +28,7 @@ ORACLE prediction signals and SHADOW founder timing analysis are based on Vedic 
 
 ### 3.2 No Liability
 
-Metafloor is not responsible for any financial losses, missed opportunities, or other damages arising from reliance on astrological analysis or prediction signals. You use these services at your own discretion and risk.
+OddFromYou is not responsible for any financial losses, missed opportunities, or other damages arising from reliance on astrological analysis or prediction signals. You use these services at your own discretion and risk.
 
 ### 3.3 Accuracy
 
@@ -50,7 +50,7 @@ Every project we undertake is custom. While we commit to applying reasonable ski
 
 ## 6. Limitation of Liability
 
-To the maximum extent permitted by law, Metafloor, its founders, and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including but not limited to loss of profits, revenue, data, or business opportunities — arising from your use of our website or services.
+To the maximum extent permitted by law, OddFromYou, its founders, and its operators shall not be liable for any indirect, incidental, special, consequential, or punitive damages — including but not limited to loss of profits, revenue, data, or business opportunities — arising from your use of our website or services.
 
 ---
 

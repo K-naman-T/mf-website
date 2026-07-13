@@ -37,7 +37,7 @@ export function OOGlow({ width = 300, height = 120, className = "", pulse = true
     <motion.svg
       viewBox="0 0 700 280"
       role="img"
-      aria-label="Metafloor OO logo"
+      aria-label="OddFromYou OO logo"
       fill={color}
       className={className}
       style={{ width, height }}

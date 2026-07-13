@@ -96,4 +96,4 @@ Technical knowledge, skills, and experience retained in the unaided memory of pe
 
 ## 10. Contact
 
-For NDA-related questions: signal@metafloor.in
+For NDA-related questions: hello@oddfromyou.com

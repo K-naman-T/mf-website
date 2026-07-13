@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "@/components/ThemeProvider";
-import { MetafloorShortLogo } from "@/components/brand/MetafloorShortLogo";
+import { LogoMark } from "@/components/brand/LogoMark";
 import { OOGlow } from "@/components/brand/OOGlow";
 import { useEffect, useRef, useState } from "react";
 import { useOOPosition } from "@/components/motion/core/OOPositionContext";
@@ -29,13 +29,15 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
     }
   }, [isOO, setOOPosition]);
 
+  if (pathname === "/" || pathname === "/manifesto" || pathname.startsWith("/legal")) return null;
+
   return (
     <nav className={isDark ? "mf-nav mf-nav-dark" : "mf-nav mf-nav-red"}>
       <div className="mf-nav-inner">
         <Link href="/" className="mf-nav-brand">
           <div className="mf-nav-oo-wrapper" ref={isOO ? ooRef : undefined}>
             {pathname === "/" ? (
-              <MetafloorShortLogo theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+              <LogoMark theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
             ) : (
               <OOGlow width={88} height={36} pulse={true} />
             )}
@@ -102,7 +104,7 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
           <div className="mf-mobile-menu-inner">
             <div className="mf-mobile-menu-header">
               <Link href="/" className="mf-nav-brand" onClick={() => setMenuOpen(false)}>
-                <MetafloorShortLogo theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+                <LogoMark theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
               </Link>
               <button
                 type="button"

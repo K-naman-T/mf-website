@@ -9,6 +9,7 @@ export const NavigationSchema = z.object({
   links: z.array(NavigationLinkSchema),
   cta: z.object({
     label: z.string().min(1),
+    shortLabel: z.string().optional(),
     href: z.string().min(1),
   }),
 });
@@ -28,86 +29,66 @@ export const IconCatalogSchema = z.object({
   icons: z.array(IconEntrySchema),
 });
 
-export const HeroSchema = z.object({
-  eyebrow: z.string().min(1),
-  headline_line1: z.string().min(1),
-  headline_line2: z.string().min(1),
-  headline_line3: z.string().min(1),
-  subheadline: z.string().min(1),
-  cta_primary: z.string().min(1),
-  cta_secondary: z.string().min(1),
+export const ServiceIconSchema = z.object({
+  iconId: z.string().min(1),
+  label: z.string().min(1),
+  path: z.string().min(1),
 });
 
-export const SiteMetadataSchema = z.object({
+export const ServiceSectionSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+  icons: z.array(ServiceIconSchema),
+});
+
+export const BeatSchema = z.object({
+  heading: z.string().min(1),
+  body: z.string().min(1),
+});
+
+export const ManifestoContentSchema = z.object({
+  title: z.string().min(1),
+  eyebrow: z.string().min(1),
+  intro: z.string().min(1),
+  backLabel: z.string().min(1),
+  beats: z.array(BeatSchema),
+});
+
+export const HomeContactSchema = z.object({
+  heading: z.string().optional(),
+  email: z.string().min(1),
+  buttonText: z.string().optional(),
+});
+
+export const HomeMetadataSchema = z.object({
   site_name: z.string().min(1),
   tagline: z.string().min(1),
   site_url: z.string().url(),
   description: z.string().min(1),
 });
 
-export const HomeTileSchema = z.object({
-  eyebrow: z.string().min(1),
-  title: z.string().min(1),
-  description: z.string().min(1),
-  icon: z.string().min(1),
-  href: z.string().min(1),
-});
-
-export const HomeProblemSchema = z.object({
-  eyebrow: z.string().min(1),
-  title: z.string().min(1),
-  description: z.string().min(1),
-  icon: z.string().min(1),
-});
-
-export const HomeProcessStepSchema = z.object({
-  number: z.string().min(1),
-  title: z.string().min(1),
-  description: z.string().min(1),
-});
-
-export const HomeContactSchema = z.object({
-  email: z.string().min(1),
-  website: z.string().min(1),
-  tagline: z.string().min(1),
-});
-
 export const HomeContentSchema = z.object({
-  hero: HeroSchema,
+  hero: z.object({
+    heading: z.string().min(1),
+    body: z.string().min(1),
+  }),
+  services: z.array(ServiceSectionSchema),
   navigation: NavigationSchema,
-  problem: HomeProblemSchema,
-  capabilities: z.array(HomeTileSchema),
-  work: z.array(HomeTileSchema),
-  process: z.object({
-    eyebrow: z.string().min(1),
-    title: z.string().min(1),
-    description: z.string().min(1),
-    steps: z.array(HomeProcessStepSchema),
-    cta: z.string().min(1),
-  }),
-  homeSections: z.object({
-    capabilitiesEyebrow: z.string().min(1),
-    capabilitiesTitle: z.string().min(1),
-    workEyebrow: z.string().min(1),
-    workTitle: z.string().min(1),
-    primaryCtaLabel: z.string().min(1),
-    secondaryCtaLabel: z.string().min(1),
-  }),
+  cta: z.object({
+    label: z.string().min(1),
+    href: z.string().min(1),
+  }).default({ label: "SEND THE PROBLEM", href: "mailto:hello@oddfromyou.com" }),
   contact: HomeContactSchema,
   footer: z.object({
-    description: z.string().min(1),
-    ctaLabel: z.string().min(1),
-    headline: z.string().min(1),
-    body: z.string().min(1),
     copyright: z.string().min(1),
-    columns: z.array(z.object({
-      title: z.string().min(1),
-      links: z.array(LinkSchema),
-    })),
-    companyLinks: z.array(LinkSchema),
-    bottomLinks: z.array(LinkSchema),
+    links: z.array(LinkSchema),
+  }).default({ copyright: "© 2024 OddFromYou.", links: [] }),
+  metadata: HomeMetadataSchema.default({
+    site_name: "OddFromYou",
+    tagline: "We make the internet less forgettable.",
+    site_url: "https://oddfromyou.com",
+    description: "OddFromYou builds production-grade systems with design taste and engineering soul.",
   }),
-  metadata: SiteMetadataSchema,
 });
 
 export const LegalDocumentEntrySchema = z.object({
@@ -162,18 +143,17 @@ export const PageContentSchema = z.object({
 
 export type NavigationLink = z.infer<typeof NavigationLinkSchema>;
 export type Navigation = z.infer<typeof NavigationSchema>;
-export type Hero = z.infer<typeof HeroSchema>;
-export type SiteMetadata = z.infer<typeof SiteMetadataSchema>;
 export type HomeContent = z.infer<typeof HomeContentSchema>;
-export type HomeTile = z.infer<typeof HomeTileSchema>;
-export type HomeProblem = z.infer<typeof HomeProblemSchema>;
-export type HomeProcessStep = z.infer<typeof HomeProcessStepSchema>;
 export type HomeContact = z.infer<typeof HomeContactSchema>;
 export type LegalIndex = z.infer<typeof LegalIndexSchema>;
 export type LegalDocument = z.infer<typeof LegalDocumentSchema>;
 export type LegalDocumentEntry = z.infer<typeof LegalDocumentEntrySchema>;
 export type IconCatalog = z.infer<typeof IconCatalogSchema>;
 export type IconEntry = z.infer<typeof IconEntrySchema>;
+export type ServiceIcon = z.infer<typeof ServiceIconSchema>;
+export type ServiceSection = z.infer<typeof ServiceSectionSchema>;
+export type Beat = z.infer<typeof BeatSchema>;
+export type ManifestoContent = z.infer<typeof ManifestoContentSchema>;
 export type PageCard = z.infer<typeof PageCardSchema>;
 export type PageSection = z.infer<typeof PageSectionSchema>;
 export type PageContent = z.infer<typeof PageContentSchema>;

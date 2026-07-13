@@ -4,7 +4,7 @@ const cards = [
   {
     eyebrow: "01 / Identity",
     title: "Logo Reveal",
-    description: "A direct mark reveal using the actual Metafloor logo asset.",
+    description: "A direct mark reveal using the actual brand logo asset.",
   },
   {
     eyebrow: "02 / Ambient",

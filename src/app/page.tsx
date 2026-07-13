@@ -1,21 +1,10 @@
-import { LogoIntro } from "@/components/animations/LogoIntro";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { HomeSections } from "@/components/sections/HomeSections";
-import { getHomeContent } from "@/lib/cms/loader";
+import OfyArtHome from "@/components/home/OfyArtHome";
 import { getHomeMetadata } from "@/lib/seo";
+import { getHomeContent } from "@/lib/cms/loader";
 
 export const metadata = getHomeMetadata();
 
 export default function HomePage() {
   const content = getHomeContent();
-
-  return (
-    <div className="min-h-screen">
-      <LogoIntro />
-      <main>
-        <HeroSection content={content.hero} />
-        <HomeSections content={content} />
-      </main>
-    </div>
-  );
+  return <OfyArtHome content={content} />;
 }

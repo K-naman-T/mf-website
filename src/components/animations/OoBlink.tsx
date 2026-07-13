@@ -100,7 +100,7 @@ export function OoBlink({ repeatDelayMs = 10000, size = 32, className = "" }: Oo
       width={size * 2}
       height={size * 2}
       className={className}
-      aria-label="Metafloor OO signal blink"
+      aria-label="OddFromYou OO signal blink"
     />
   );
 }

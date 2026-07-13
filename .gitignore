@@ -55,7 +55,11 @@ next-env.d.ts
 # Cloudflare
 .cloudflared
 
+# Pi agent
+.pi/
+
 # Temp files
 /tmp/
 /tmp
 *.tmp
+.env*

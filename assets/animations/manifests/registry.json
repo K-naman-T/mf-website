@@ -20,7 +20,7 @@
       "repeatDelayMs": 0,
       "reducedMotion": "fade-only",
       "placement": ["hero"],
-      "description": "Full logo fade + blur clear on hero load, 0.8s"
+      "description": "OO mark fade + blur clear on hero load, 0.8s"
     },
     {
       "id": "cta-hover",

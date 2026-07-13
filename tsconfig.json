@@ -36,7 +36,7 @@
   ],
   "exclude": [
     "node_modules",
-    "metafloor-motion-snippets",
+    "ofy-motion-snippets",
     "mf-website"
   ]
 }

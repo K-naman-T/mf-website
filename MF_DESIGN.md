@@ -1,5 +1,5 @@
 ---
-name: Metafloor
+name: OddFromYou
 version: "2.0"
 description: Sovereign AI foundry — deterministic production systems. Bold industrial design system with dual Red Mode (vibrant red backgrounds) and Stealth Mode (pure black with red accents). High-contrast, unapologetic, built-to-run aesthetic.
 colors:
@@ -151,13 +151,13 @@ shapes:
   liquid-blob: "amorphous organic black shapes with soft edges, used as background decoration in hero sections and as floating elements. Can contain embedded star motifs. In Red Mode: black shapes on red. In Stealth Mode: red shapes on black."
 ---
 
-# DESIGN.md — Metafloor v2.0
+# DESIGN.md — OddFromYou v2.0
 
 **Sovereign AI Foundry • Deterministic Production Systems**
 
 ## Overview / Visual Theme & Atmosphere
 
-Metafloor builds the deterministic layer underneath probabilistic AI engines. We ship systems that run in production 24/7 — dirty data, Hinglish users, no GPU babysitting.
+OddFromYou builds the deterministic layer underneath probabilistic AI engines. We ship systems that run in production 24/7 — dirty data, Hinglish users, no GPU babysitting.
 
 The design language is **industrial, provocative, high-contrast, and zero-fluff**. It rejects polished SaaS gradients, rounded pastel UIs, and demo-ware aesthetics. Instead: raw red energy + black seriousness. Think brutalist tech manifesto meets modern developer tooling.
 
@@ -227,7 +227,7 @@ This is non-negotiable for all display/heading contexts. Inter is body/nav/label
 - **H2 / Section Titles:** `font-weight: 400`, uppercase, `line-height: 1.0`.
 - **Body:** `font-weight: 400`, Inter, generous line-height for technical copy.
 - **Labels / Buttons / Nav:** `font-weight: 600`, `letter-spacing: 0.12em`, uppercase. Inter only.
-- **Logo / Wordmark:** Teko or condensed, uppercase. "METAFLOOR™" treatment.
+- **Logo / Wordmark:** Teko or condensed, uppercase. "ODDFROMYOU" treatment.
 
 **Key Rules:**
 - Display headlines on mobile: use `font-size: clamp(3rem, 15vw, 8rem)` to fill screen width
@@ -251,7 +251,7 @@ The layout is a visible black grid. Gutters are `1px` black lines. This creates 
 - Feature/grid cells: full black border, no border-radius
 
 **Browser Chrome Motif:**
-On Work page: browser window shell with red top bar, traffic-light dots (red/yellow/green), address bar showing "metafloor.ai". This is a structural element, not decoration.
+On Work page: browser window shell with red top bar, traffic-light dots (red/yellow/green), address bar showing "oddfromyou.in". This is a structural element, not decoration.
 
 **Responsive Breakpoints:**
 - `sm`: 640px
@@ -301,7 +301,7 @@ On Work page: browser window shell with red top bar, traffic-light dots (red/yel
 - **All:** `28px` h-padding, `14px` v-padding, `0.1s` ease transition. No scale lifts.
 
 ### Navigation
-- Top bar: Logo left (two-star mark + "METAFLOOR™"), links (WORK, ABOUT, CONTACT), right: "INITIATE A SIGNAL" primary button.
+- Top bar: Logo left (two-star mark + "ODDFROMYOU"), links (WORK, ABOUT, CONTACT), right: "INITIATE A SIGNAL" primary button.
 - Red Mode: black text on red bg.
 - Stealth Mode: white text, red button.
 - Mobile: hamburger → full-screen overlay with same color logic.
@@ -317,7 +317,7 @@ On Work page: browser window shell with red top bar, traffic-light dots (red/yel
 - `8px` border-radius on outer container
 - Red (`#FF0000`) or dark (`#0A0A0A`) top bar
 - Traffic-light dots: `12px` circles, red `#FF0000`, yellow `#FFD700`, green `#00FF00` in a row
-- Address bar: `32px` height, shows "metafloor.ai" in label font
+- Address bar: `32px` height, shows "oddfromyou.in" in label font
 - Content area: scrollable with black border
 
 ### Hero Graphic
@@ -392,4 +392,4 @@ After each page, section, or major component is complete:
 
 ---
 
-*End of DESIGN.md — Metafloor v2.0*
+*End of DESIGN.md — OddFromYou v2.0*

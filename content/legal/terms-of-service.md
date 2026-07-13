@@ -6,13 +6,13 @@
 
 ## 1. Acceptance of Terms
 
-By accessing or using the Metafloor website and services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use our services.
+By accessing or using the OddFromYou website and services, you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not use our services.
 
 ---
 
 ## 2. Services Description
 
-Metafloor provides custom software development, AI-powered product development, and related consulting services ("Services"). Specific deliverables are outlined in a separate Statement of Work ("SOW") agreed upon before work begins.
+OddFromYou provides custom software development, AI-powered product development, and related consulting services ("Services"). Specific deliverables are outlined in a separate Statement of Work ("SOW") agreed upon before work begins.
 
 ---
 
@@ -60,20 +60,20 @@ All pricing is in Indian Rupees (INR) unless explicitly stated otherwise in the 
 
 Upon receipt of full payment, all intellectual property rights in the deliverables created specifically for the client transfer to the client, except for:
 
-- Pre-existing materials, tools, or frameworks owned by Metafloor
+- Pre-existing materials, tools, or frameworks owned by OddFromYou
 - Open-source components (governed by their respective licenses)
-- Metafloor's proprietary libraries and components
+- OddFromYou's proprietary libraries and components
 
-### 5.2 Metafloor IP
+### 5.2 OddFromYou IP
 
-Metafloor retains ownership of:
+OddFromYou retains ownership of:
 - Pre-existing know-how, methodologies, and tools
 - Reusable components and libraries developed during the project
 - General techniques and approaches
 
 ### 5.3 Product IP
 
-For products built by Metafloor (e.g., ORACLE, OUTBOUND), Metafloor retains full ownership. Client does not acquire any IP rights to Metafloor products unless explicitly agreed in writing.
+For products built by OddFromYou (e.g., ORACLE, OUTBOUND), OddFromYou retains full ownership. Client does not acquire any IP rights to OddFromYou products unless explicitly agreed in writing.
 
 ---
 
@@ -96,7 +96,7 @@ During the engagement and for 12 months after its termination, neither party wil
 
 ## 8. Warranties and Disclaimers
 
-### 8.1 Metafloor Warranties
+### 8.1 OddFromYou Warranties
 
 We warrant that:
 - Services will be performed with reasonable skill and care
@@ -166,4 +166,4 @@ We may update these Terms from time to time. Changes will be communicated via em
 
 ## 15. Contact
 
-Questions about these Terms: signal@metafloor.in
+Questions about these Terms: hello@oddfromyou.com
