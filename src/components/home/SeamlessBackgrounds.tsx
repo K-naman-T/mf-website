@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { animate } from "motion/react";
+import { VIEWPORT } from "@/lib/config";
 import styles from "./ofy-art-home.module.css";
 
 export interface BgImage {
@@ -51,7 +52,7 @@ export function SeamlessBackgrounds({
           style={{ opacity: i === 0 ? 1 : 0 }}
         >
           <picture className={styles.seamlessPicture}>
-            <source media="(max-width: 768px)" srcSet={img.mobile} />
+            <source media={`(max-width: ${VIEWPORT.tablet}px)`} srcSet={img.mobile} />
             <img
               src={img.desktop}
               alt=""

@@ -9,6 +9,7 @@ import { SeamlessBackgrounds, type BgImage } from "./SeamlessBackgrounds";
 import { useTheme } from "@/components/ThemeProvider";
 import { Footer } from "@/components/layout/Footer";
 import type { HomeContent, ServiceSection } from "@/lib/cms/types";
+import { QUERIES, VIEWPORT } from "@/lib/config";
 import styles from "./ofy-art-home.module.css";
 
 const BG_IMAGES_RED: BgImage[] = [
@@ -160,7 +161,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
   }, [activeIndex]);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia(QUERIES.mobile);
     setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
@@ -172,7 +173,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
       const video = videoRef.current;
       if (!video) return;
 
-      const isDesktop = () => window.innerWidth >= 1024;
+      const isDesktop = () => window.innerWidth >= VIEWPORT.desktop;
       const THRESHOLD = 1 / 48;
 
       const onPointerMove = (e: PointerEvent) => {

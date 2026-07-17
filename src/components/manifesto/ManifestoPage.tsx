@@ -7,6 +7,7 @@ import { WordReveal } from "@/components/motion/text/WordReveal";
 import { SeamlessBackgrounds } from "@/components/home/SeamlessBackgrounds";
 import { useTheme } from "@/components/ThemeProvider";
 import { Footer } from "@/components/layout/Footer";
+import { QUERIES } from "@/lib/config";
 import type { ManifestoContent, Navigation } from "@/lib/cms/types";
 import styles from "@/components/home/ofy-art-home.module.css";
 import mStyles from "./manifesto.module.css";
@@ -114,7 +115,7 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
+    const mq = window.matchMedia(QUERIES.mobile);
     setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
