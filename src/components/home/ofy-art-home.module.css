@@ -852,7 +852,7 @@
 }
 
 :global([data-theme="dark"]) .contactFigure {
-  filter: invert(1) grayscale(100%) contrast(1.3) sepia(100%) saturate(10000%) hue-rotate(350deg) brightness(70%);
+  filter: invert(1) grayscale(100%) contrast(1.5) sepia(100%) saturate(10000%) hue-rotate(325deg) brightness(70%);
   mix-blend-mode: screen;
 }
 
