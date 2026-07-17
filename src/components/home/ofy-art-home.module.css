@@ -852,7 +852,7 @@
 }
 
 :global([data-theme="dark"]) .contactFigure {
-  filter: invert(1) grayscale(100%) contrast(1.5);
+  filter: invert(1) grayscale(100%) contrast(1.8);
   mix-blend-mode: screen;
 }
 
@@ -860,7 +860,7 @@
   position: fixed;
   inset: 0;
   z-index: 1;
-  background: #7A3028;
+  background: #FF0000;
   mix-blend-mode: multiply;
   pointer-events: none;
 }
