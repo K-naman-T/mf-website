@@ -830,6 +830,14 @@
 }
 
 /* ── Contact figure video (art-directed, no interaction) ── */
+.contact {
+  background: #000;
+}
+
+:global([data-theme="red"]) .contact {
+  background: #FF0000;
+}
+
 .contactFigure {
   position: fixed;
   inset: 0;
