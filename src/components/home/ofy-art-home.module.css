@@ -860,8 +860,8 @@
   position: fixed;
   inset: 0;
   z-index: 1;
-  background: var(--mf-red-core, #B85A4A);
-  mix-blend-mode: color;
+  background: #7A3028;
+  mix-blend-mode: multiply;
   pointer-events: none;
 }
 
