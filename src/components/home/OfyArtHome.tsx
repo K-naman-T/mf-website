@@ -612,6 +612,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
             animate={activeIndex === 5 ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           />
+          <div className={styles.contactRedTint} aria-hidden="true" />
           <motion.div
             className={`${styles.contactContent} ${activeIndex === 5 ? styles.activeContent : ""} ${styles.contactComposition}`}
             variants={contactFadeVariants}

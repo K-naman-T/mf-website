@@ -852,8 +852,21 @@
 }
 
 :global([data-theme="dark"]) .contactFigure {
-  filter: invert(1) grayscale(100%) contrast(1.5) sepia(100%) saturate(10000%) hue-rotate(325deg) brightness(70%);
+  filter: invert(1) grayscale(100%) contrast(1.5);
   mix-blend-mode: screen;
+}
+
+.contactRedTint {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: var(--mf-red-core, #B85A4A);
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+:global([data-theme="red"]) .contactRedTint {
+  display: none;
 }
 
 /* ── Mobile Oo trigger ── */
