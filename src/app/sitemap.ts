@@ -4,7 +4,7 @@ import { getSiteUrl } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const staticRoutes = ["", "services", "work", "products", "legal"];
+  const staticRoutes = ["", "manifesto", "legal"];
   const legalRoutes = getLegalSlugs().map((slug) => `legal/${slug}`);
   const now = new Date();
 
@@ -12,6 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: route ? `${siteUrl}/${route}` : siteUrl,
     lastModified: now,
     changeFrequency: route.startsWith("legal") ? "yearly" : "monthly",
-    priority: route === "" ? 1 : route.startsWith("legal") ? 0.45 : 0.8,
+    priority: route === "" ? 1 : route === "manifesto" ? 0.9 : route.startsWith("legal") ? 0.45 : 0.8,
   }));
 }

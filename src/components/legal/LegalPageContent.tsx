@@ -6,7 +6,7 @@ import type { LegalDocument } from "@/lib/cms/types";
 import styles from "./legal.module.css";
 
 export function LegalPageContent({ document }: { document: LegalDocument }) {
-  const html = marked.parse(document.body);
+  const html = marked.parse(document.body, { async: false }) as string;
 
   return (
     <div className={styles.content}>

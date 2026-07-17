@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { WordReveal } from "@/components/motion/text/WordReveal";
 import { SeamlessBackgrounds } from "@/components/home/SeamlessBackgrounds";
@@ -10,12 +11,20 @@ import type { ManifestoContent, Navigation } from "@/lib/cms/types";
 import styles from "@/components/home/ofy-art-home.module.css";
 import mStyles from "./manifesto.module.css";
 
+// Single persistent plate — SeamlessBackgrounds fades non-active layers out.
+// Keep activeIndex pinned to 0 so the manifesto field never disappears mid-scroll.
 const BG_IMAGES_RED = [
-  { desktop: "/assets/ofy-brand/new-backgrounds/red/design-taste-mobile.png", mobile: "/assets/ofy-brand/new-backgrounds/red/design-taste-mobile.png" },
+  {
+    desktop: "/assets/ofy-brand/manifesto/manifesto-red-desktop.webp",
+    mobile: "/assets/ofy-brand/manifesto/manifesto-red-mobile.webp",
+  },
 ];
 
 const BG_IMAGES_DARK = [
-  { desktop: "/assets/ofy-brand/new-backgrounds/dark/design-taste-mobile.png", mobile: "/assets/ofy-brand/new-backgrounds/dark/design-taste-mobile.png" },
+  {
+    desktop: "/assets/ofy-brand/manifesto/manifesto-dark-desktop.webp",
+    mobile: "/assets/ofy-brand/manifesto/manifesto-dark-mobile.webp",
+  },
 ];
 
 const sectionContentVariants = {
@@ -124,7 +133,7 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
         <header className={`${styles.homeHeader}${headerHidden ? ` ${styles.homeHeaderHidden}` : ""}${isLightHeader ? ` ${styles.headerLightForeground}` : ""}`}>
           <div className={styles.headerInner}>
             <div className={styles.headerLeft}>
-              <a className={`${styles.headerBrand} mf-nav-brand`} href="/">
+              <Link className={`${styles.headerBrand} mf-nav-brand`} href="/">
                 <div className="mf-nav-oo-wrapper">
                   <img
                     className={`${styles.headerLogo}${theme === 'dark' ? ` ${mStyles.darkModeLogo}` : ''}`}
@@ -140,7 +149,7 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
                     className="mf-nav-o-target mf-nav-o-target-right"
                   />
                 </div>
-              </a>
+              </Link>
               <nav className={styles.headerNav}>
                 {navigation.links.map((link) => (
                   <a key={link.href} className={styles.headerLink} href={link.href === "#work" ? "/#work" : link.href}>
@@ -174,19 +183,19 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
                   </svg>
                 )}
               </button>
-              <a className={styles.headerCta} href="/#contact">
+              <Link className={styles.headerCta} href="/#contact">
                 <span className={styles.ctaFull}>{navigation.cta.label}</span>
                 {navigation.cta.shortLabel && (
                   <span className={styles.ctaShort}>{navigation.cta.shortLabel}</span>
                 )}
-              </a>
+              </Link>
             </div>
           </div>
         </header>
 
         <SeamlessBackgrounds
           images={theme === "red" ? BG_IMAGES_RED : BG_IMAGES_DARK}
-          activeIndex={activeIndex}
+          activeIndex={0}
         />
 
         <section className={`${styles.scene} ${styles.hero}`}>

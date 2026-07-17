@@ -34,7 +34,6 @@ export function SeamlessBackgrounds({
           { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
         );
       } else {
-        // Far away — snap instantly, no fade
         layer.style.opacity = "0";
       }
     });

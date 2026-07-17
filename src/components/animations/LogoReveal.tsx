@@ -38,7 +38,7 @@ export function LogoReveal({ onComplete, duration = 2000, className = "" }: Logo
             {/* Star above */}
             <polygon points="200,8 203,18 213,18 205,24 208,34 200,28 192,34 195,24 187,18 197,18" />
           </g>
-          {/* METAFLOOR text bars */}
+          {/* Wordmark bars — placeholder until full logo mark is wired */}
           <g fill="#FFFFFF" opacity={0.9}>
             {[0,1,2,3,4,5,6,7,8].map(i => (
               <rect key={i} x={60 + i * 28} y={60} width={20} height={6} rx={1} />

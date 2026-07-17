@@ -29,6 +29,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem("mf-theme");if(t==="red"||t==="dark")document.documentElement.setAttribute("data-theme",t);var a=localStorage.getItem("mf-accent");document.documentElement.setAttribute("data-accent",a||"oxide");}catch(e){}})();`,
+          }}
+        />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <ThemeProvider>
           <IntroDoneProvider>

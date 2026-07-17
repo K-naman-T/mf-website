@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { marked } from "marked";
 import {
   HomeContentSchema,
   ManifestoContentSchema,
@@ -31,11 +30,7 @@ function getIconMap(): Map<string, string> {
 
 export function getHomeContent(): HomeContent {
   const raw = fs.readFileSync(HOME_MD_PATH, "utf8");
-  const { data, content: bodyMd } = matter(raw);
-
-  if (bodyMd.trim()) {
-    marked.parse(bodyMd.trim());
-  }
+  const { data } = matter(raw);
 
   const iconMap = getIconMap();
 

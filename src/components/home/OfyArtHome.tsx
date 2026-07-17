@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useReducedMotion } from "motion/react";
 import { WordReveal } from "@/components/motion/text/WordReveal";
 import { motion } from "motion/react";
 import { LogoIntro } from "@/components/animations/LogoIntro";
@@ -60,6 +61,16 @@ const sectionContentVariants = {
   },
 };
 
+const contactFadeVariants = {
+  hidden: { opacity: 0, transition: { duration: 0.22, ease: [0.4, 0, 1, 1] as const } },
+  visible: { opacity: 1, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] as const } },
+};
+
+const contactChildFade = {
+  hidden: { opacity: 0 },
+  visible: (delay: number) => ({ opacity: 1, transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] as const } }),
+};
+
 const sectionClasses = [
   styles.tasteComposition,
   styles.serviceEngineering,
@@ -78,9 +89,22 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
   const [headerHidden, setHeaderHidden] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isLightHeader = theme === "red" && isMobile && (activeIndex === 2 || activeIndex === 4 || activeIndex === 5);
   const pageRef = useRef<HTMLDivElement>(null);
+
+  const navLinks = process.env.NODE_ENV === "production"
+    ? content.navigation.links.filter((l) => l.label !== "Work" && l.label !== "Manifesto")
+    : content.navigation.links;
+  const contactVideoRef = useRef<HTMLVideoElement>(null);
+  const reducedMotion = useReducedMotion();
+  const activeIndexRef = useRef(0);
+  const scrubPrevXRef = useRef(-1);
+  const scrubLatestRef = useRef(0);
+  const scrubSeekingRef = useRef(false);
+
+  useContactVideoScrub(contactVideoRef, reducedMotion);
 
   useEffect(() => {
     const el = pageRef.current;
@@ -99,7 +123,9 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           }
           const viewportH = el.clientHeight;
           const idx = Math.round(currentY / viewportH);
-          setActiveIndex(Math.min(idx, 5));
+          const clamped = Math.min(idx, 5);
+          setActiveIndex(clamped);
+          activeIndexRef.current = clamped;
           lastScrollY = currentY;
           ticking = false;
         });
@@ -126,12 +152,73 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
   }, []);
 
   useEffect(() => {
+    if (activeIndex === 5) {
+      scrubPrevXRef.current = -1;
+      scrubLatestRef.current = 0;
+      scrubSeekingRef.current = false;
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
     setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
+
+  function useContactVideoScrub(videoRef: React.RefObject<HTMLVideoElement | null>, reduced: boolean | null) {
+    useEffect(() => {
+      const video = videoRef.current;
+      if (!video) return;
+
+      const isDesktop = () => window.innerWidth >= 1024;
+      const THRESHOLD = 1 / 48;
+
+      const onPointerMove = (e: PointerEvent) => {
+        if (!isDesktop() || reduced || activeIndexRef.current !== 5) return;
+        if (!video.duration || !isFinite(video.duration)) return;
+        if (scrubPrevXRef.current < 0) { scrubPrevXRef.current = e.clientX; return; }
+        const delta = e.clientX - scrubPrevXRef.current;
+        scrubPrevXRef.current = e.clientX;
+        scrubLatestRef.current = Math.max(0, Math.min(scrubLatestRef.current + (delta / window.innerWidth) * 0.8 * video.duration, video.duration));
+        if (!scrubSeekingRef.current) {
+          scrubSeekingRef.current = true;
+          video.currentTime = scrubLatestRef.current;
+        }
+      };
+
+      const onSeeked = () => {
+        scrubSeekingRef.current = false;
+        const diff = Math.abs(video.currentTime - scrubLatestRef.current);
+        if (diff > THRESHOLD) {
+          scrubSeekingRef.current = true;
+          video.currentTime = scrubLatestRef.current;
+        }
+      };
+
+      const onMobilePlay = () => {
+        if (!isDesktop()) {
+          video.autoplay = true;
+          video.play().catch(() => {});
+        } else {
+          video.autoplay = false;
+          video.pause();
+        }
+      };
+
+      window.addEventListener("pointermove", onPointerMove);
+      video.addEventListener("seeked", onSeeked);
+      onMobilePlay();
+      window.addEventListener("resize", onMobilePlay);
+
+      return () => {
+        window.removeEventListener("pointermove", onPointerMove);
+        video.removeEventListener("seeked", onSeeked);
+        window.removeEventListener("resize", onMobilePlay);
+      };
+    }, [videoRef, reduced]);
+  }
 
   function renderServiceIcons(service: ServiceSection, isVisible: boolean) {
     return service.icons.map((icon) => (
@@ -378,7 +465,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
                 </div>
               </a>
               <nav className={styles.headerNav}>
-                {content.navigation.links.map((link) => (
+                {navLinks.map((link) => (
                   <a key={link.href} className={styles.headerLink} href={link.href}>
                     {link.label}
                   </a>
@@ -420,7 +507,62 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           </div>
         </header>
 
-        <SeamlessBackgrounds images={theme === "red" ? BG_IMAGES_RED : BG_IMAGES_DARK} activeIndex={activeIndex} />
+        {/* Mobile Oo trigger */}
+        <button
+          type="button"
+          className={styles.mobileTrigger}
+          onClick={() => setMobileMenuOpen(true)}
+          aria-label="Open menu"
+        >
+          <img
+            src="/brand/ofy-short-logo.svg"
+            alt="OddFromYou"
+            className={styles.mobileTriggerLogo}
+          />
+        </button>
+
+        {/* Mobile full-screen overlay */}
+        <motion.div
+          className={styles.mobileOverlay}
+          initial={{ clipPath: "circle(0% at 50% 24px)" }}
+          animate={mobileMenuOpen ? { clipPath: "circle(150% at 50% 24px)" } : { clipPath: "circle(0% at 50% 24px)" }}
+          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden={!mobileMenuOpen}
+          inert={mobileMenuOpen ? undefined : true}
+        >
+          <button
+            type="button"
+            className={styles.mobileOverlayClose}
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <line x1="6" y1="6" x2="18" y2="18" />
+              <line x1="18" y1="6" x2="6" y2="18" />
+            </svg>
+          </button>
+          <nav className={styles.mobileOverlayNav}>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={styles.mobileOverlayLink}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </a>
+            ))}
+            <a
+              href={content.navigation.cta.href}
+              className={styles.mobileOverlayCta}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {content.navigation.cta.label}
+            </a>
+          </nav>
+        </motion.div>
+
+        <SeamlessBackgrounds images={(theme === "red" ? BG_IMAGES_RED : BG_IMAGES_DARK).slice(0, -1)} activeIndex={activeIndex} />
 
         <section id="top" className={`${styles.scene} ${styles.hero}`}>
           <motion.div
@@ -456,24 +598,40 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           className={`${styles.scene} ${styles.contact}`}
           style={{ position: "relative" }}
         >
+          <motion.video
+            ref={contactVideoRef}
+            className={styles.contactFigure}
+            src="/video/contact-figure-scrub.mp4"
+            muted
+            playsInline
+            preload="auto"
+            tabIndex={-1}
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={activeIndex === 5 ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
           <motion.div
             className={`${styles.contactContent} ${activeIndex === 5 ? styles.activeContent : ""} ${styles.contactComposition}`}
-            variants={sectionContentVariants}
+            variants={contactFadeVariants}
             initial="hidden"
             animate={activeIndex === 5 ? "visible" : "hidden"}
           >
             <div className={styles.contactGrid}>
-              <WordReveal
-                as="h2"
+              <motion.h2
                 className={styles.gridTitle}
-                text={content.contact.heading ?? "Bring the unsolved part."}
-                active={activeIndex === 5}
-              />
+                variants={contactChildFade}
+                initial="hidden"
+                animate={activeIndex === 5 ? "visible" : "hidden"}
+                custom={0}
+              >
+                {content.contact.heading ?? "Bring the unsolved part."}
+              </motion.h2>
               <motion.a
                 className={styles.contactEmail}
                 href={`mailto:${content.contact.email}`}
                 custom={0.1}
-                variants={staggerItem}
+                variants={contactChildFade}
                 initial="hidden"
                 animate={activeIndex === 5 ? "visible" : "hidden"}
               >
@@ -484,7 +642,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
                 type="button"
                 onClick={scrollToTop}
                 custom={0.2}
-                variants={staggerItem}
+                variants={contactChildFade}
                 initial="hidden"
                 animate={activeIndex === 5 ? "visible" : "hidden"}
               >

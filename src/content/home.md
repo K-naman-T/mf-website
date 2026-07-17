@@ -47,8 +47,6 @@ navigation:
       label: "Work"
     - href: "/manifesto"
       label: "Manifesto"
-    - href: "/legal"
-      label: "Legal"
   cta:
     label: "Let's talk"
     shortLabel: "Talk"

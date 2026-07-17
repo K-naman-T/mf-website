@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { getLegalIndex, getHomeContent } from "@/lib/cms/loader";
 import { LegalPageShell } from "@/components/legal/LegalPageShell";
+import { getLegalIndexMetadata } from "@/lib/seo";
 import styles from "@/components/legal/legal.module.css";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Legal Documents",
-};
+export const metadata = getLegalIndexMetadata();
 
 export default function LegalIndexPage() {
   const index = getLegalIndex();

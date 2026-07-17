@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { useTheme } from "@/components/ThemeProvider";
 import { Footer } from "@/components/layout/Footer";
 import type { Navigation } from "@/lib/cms/types";
@@ -48,13 +49,13 @@ export function LegalPageShell({ navigation, children }: { navigation: Navigatio
       <header className={`${homeStyles.homeHeader}${headerHidden ? ` ${homeStyles.homeHeaderHidden}` : ""}${isLightHeader ? ` ${homeStyles.headerLightForeground}` : ""}`}>
         <div className={homeStyles.headerInner}>
           <div className={homeStyles.headerLeft}>
-            <a className={`${homeStyles.headerBrand} mf-nav-brand`} href="/">
+            <Link className={`${homeStyles.headerBrand} mf-nav-brand`} href="/">
               <div className="mf-nav-oo-wrapper">
                 <img className={homeStyles.headerLogo} src="/brand/ofy-short-logo.svg" alt="OddFromYou" />
                 <span id="mf-nav-o-target-1" className="mf-nav-o-target mf-nav-o-target-left" />
                 <span id="mf-nav-o-target-2" className="mf-nav-o-target mf-nav-o-target-right" />
               </div>
-            </a>
+            </Link>
             <nav className={homeStyles.headerNav}>
               {navigation.links.map((link) => (
                 <a key={link.href} className={homeStyles.headerLink} href={link.href === "#work" ? "/#work" : link.href}>
@@ -80,10 +81,10 @@ export function LegalPageShell({ navigation, children }: { navigation: Navigatio
                 </svg>
               )}
             </button>
-            <a className={homeStyles.headerCta} href="/#contact">
-              <span className={homeStyles.ctaFull}>Let's talk</span>
+            <Link className={homeStyles.headerCta} href="/#contact">
+              <span className={homeStyles.ctaFull}>Let&apos;s talk</span>
               <span className={homeStyles.ctaShort}>Talk</span>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
