@@ -599,6 +599,13 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           className={`${styles.scene} ${styles.contact}`}
           style={{ position: "relative" }}
         >
+          <motion.div
+            className={styles.contactRedBg}
+            aria-hidden="true"
+            initial={{ opacity: 0 }}
+            animate={activeIndex === 5 ? { opacity: 1 } : { opacity: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
           <motion.video
             ref={contactVideoRef}
             className={styles.contactFigure}
