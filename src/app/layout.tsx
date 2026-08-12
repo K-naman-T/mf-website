@@ -7,6 +7,7 @@ import { IntroDoneProvider } from "@/components/motion/core/IntroDoneContext";
 import { OOPositionProvider } from "@/components/motion/core/OOPositionContext";
 import { getHomeContent } from "@/lib/cms/loader";
 import { getOrganizationJsonLd, getRootMetadata, getWebsiteJsonLd } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = getRootMetadata();
 
@@ -44,6 +45,7 @@ export default function RootLayout({
             </OOPositionProvider>
           </IntroDoneProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
