@@ -1,0 +1,494 @@
+/* ── Process ribbon (live home) ─────────────────────────────
+   One in-flow section between the manifesto scene and the contact
+   scene. A wavy SVG ribbon runs down the left rail and draws itself
+   top→bottom as the page scrolls; a bright pulse rides its tip. Each
+   step row (icon on the rail + text) reveals as the ink tip passes it.
+
+   The section is free-scrolling (taller than the viewport) inside the
+   home's natural-flow scroller. */
+
+/* Shared horizontal geometry: --rail-x = the x (from the section's
+   content-box left edge) of the ribbon line. The rail is absolutely
+   positioned with its center there, and each row's icon column centers
+   its glyph on the same x. */
+.section {
+  --rail-x: clamp(3.2rem, 11vw, 9.5rem);
+  /* horizontal position of the drawn ribbon line, measured from the
+     section's content-box left edge (desktop: the --rail-x boundary) */
+  --rail-line-x: var(--rail-x);
+  /* node plate fills the section field so the ink rail reads as passing
+     *behind* the icon discs instead of slicing through their artwork */
+  --node-bg: #ff0000;
+  --ghost-ink: #000000;
+  /* end-of-ribbon CTA tag inverts the field: an ink tag with a red label
+     on the red field, a red tag with a black label on the dark field */
+  --tag-bg: #000000;
+  --tag-fg: #ff0000;
+  position: relative;
+  min-height: 100dvh;
+  overflow: clip;
+  background: #ff0000;
+  color: #000000;
+}
+
+:global([data-theme="dark"]) .section {
+  --node-bg: #000000;
+  --ghost-ink: #ff0000;
+  --tag-bg: #ff0000;
+  --tag-fg: #000000;
+  background: #000000;
+  color: #ff0000;
+}
+
+/* The section must be tall enough to give the ribbon room to scrub.
+   Reduced-motion users get the content at natural height instead. */
+.sectionTall {
+  min-height: 380vh;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.sectionHeader {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 44vh;
+  padding: 12vh 0 6vh;
+  padding-left: calc(var(--rail-x) + clamp(2rem, 5vw, 4.5rem));
+  box-sizing: border-box;
+}
+
+.eyebrow {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.62;
+  margin: 0 0 0.8rem;
+}
+
+.sectionTitle {
+  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.8rem, 7.5vw, 6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+  max-width: 12ch;
+}
+
+/* ── Rail ─────────────────────────────────────────────────
+   Ribbon centered on --rail-x, spanning the whole section height. */
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.railSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* The rail line (viewBox x=RAIL_X=100, the svg's horizontal center) must
+     land on --rail-x — the boundary between the icon column and the text
+     column. A 120px-wide box centered there keeps the stroke off the text on
+     desktop, where --rail-x is large. */
+  height: 100%;
+  width: 120px;
+  transform: translateX(calc(var(--rail-x) - 60px));
+  overflow: visible;
+}
+
+.track,
+.ink,
+.pulse {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.track {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  opacity: 0.22;
+}
+
+.ink {
+  stroke: currentColor;
+  stroke-width: 13;
+}
+
+.pulse {
+  stroke: currentColor;
+  stroke-width: 30;
+}
+
+/* ── Steps ────────────────────────────────────────────────
+   Each row is a grid: left rail gutter (the ribbon line runs here) +
+   fluid text column + a right zone that holds the enlarged glyph.
+   The text stays anchored to the rail; the icon becomes a large
+   presence on the right half of the row. */
+.steps {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.stepRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail-x) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  min-height: 84vh;
+  box-sizing: border-box;
+}
+
+.textCard {
+  display: block;
+  grid-column: 2;
+  max-width: 46ch;
+  padding: 4vh 0;
+  box-sizing: border-box;
+}
+
+/* Desktop: the glyph zone is the third grid column, holding the enlarged
+   right-half icon. */
+.glyphNode {
+  position: relative;
+  grid-column: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  /* give the swaying ribbon room to pass behind without clipping */
+  padding: 2vh 0;
+}
+
+.glyphZone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+.glyph {
+  width: clamp(170px, 24vw, 500px);
+  aspect-ratio: 1;
+  color: inherit;
+  display: block;
+}
+
+/* Desktop rows carry the enlarged icon on the right, so the ghost numeral
+   is a mobile-only device (turned on inside the mobile media query). */
+.ghostNum {
+  display: none;
+}
+
+.textCard {
+  display: block;
+  max-width: 54ch;
+  padding: 4vh 0 4vh clamp(1.5rem, 4vw, 3.5rem);
+  box-sizing: border-box;
+}
+
+.stepNumber {
+  display: block;
+  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.7rem;
+  opacity: 0.7;
+}
+
+.stepTitle {
+  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
+  font-weight: 400;
+  font-size: clamp(3rem, 7vw, 5.6rem);
+  line-height: 0.86;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.9rem;
+}
+
+.stepBody {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.62;
+  margin: 0;
+  max-width: 48ch;
+  opacity: 0.88;
+  color: currentColor;
+}
+
+/* Theme-aware body dimming so copy stays legible on both the red and
+   dark fields (white-ish in dark mode, near-black in red mode). */
+:global([data-theme="dark"]) .stepBody {
+  color: rgba(230, 218, 204, 0.86);
+}
+
+:global([data-theme="red"]) .stepBody {
+  color: rgba(0, 0, 0, 0.84);
+}
+
+/* Tail spacer after the last row: reserves scroll room so the final step's
+   reveal completes before the scroll range ends (rather than clamping at 1). */
+.tail {
+  height: 30vh;
+}
+
+/* ── End-of-ribbon CTA (swing tag) ──────────────────────
+   A "reach out" tag hangs at the end of the ribbon like a swing/luggage
+   tag: a thread drops from above, passes through a grommet at the tag's
+   top edge, and the whole tag gently pendulum-sways around that point.
+   The tag body inverts the section field (ink-filled plate with the field
+   color for its text) so it reads as a physical object against the
+   red/black background. */
+.hangOuter {
+  position: relative;
+  z-index: 3;
+  margin-top: 4vh;
+  /* center the tag on the ribbon line so the drawn ink ends at the tag's
+     grommet — the tag reads as strung onto the end of the ribbon */
+  margin-left: calc(var(--rail-line-x) - 5.5rem);
+  width: 11rem;
+  will-change: transform;
+}
+
+.hangInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* pendulum pivot at the top of the thread */
+  transform-origin: 50% 0;
+  animation: hang-sway 4.5s ease-in-out infinite;
+}
+
+@keyframes hang-sway {
+  0%,
+  100% {
+    transform: rotate(-2.4deg);
+  }
+  50% {
+    transform: rotate(2.4deg);
+  }
+}
+
+.hangString {
+  display: block;
+  width: 2px;
+  height: clamp(1.4rem, 3vh, 2.2rem);
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.tag {
+  position: relative;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: -1px;
+  padding: 0.85rem 0.5rem 0.95rem;
+  border-radius: 8px;
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  text-decoration: none;
+  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  /* a soft keyline + shadow makes the tag feel suspended, not flat */
+  box-shadow:
+    0 0 0 1px var(--tag-bg),
+    0 12px 24px rgba(0, 0, 0, 0.18);
+  transition: transform 0.2s ease;
+}
+
+/* Grommet: the punched hole at the tag's top edge where the thread
+   passes through. Field-colored center reads as a real hole. */
+.tag::before {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--node-bg);
+  box-shadow:
+    inset 0 0 0 2px var(--tag-bg),
+    0 0 0 1px var(--tag-bg);
+}
+
+.tag:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+
+.tag:active {
+  transform: translateY(1px);
+}
+
+/* Swaying a control is a decoration, not behavior: give motion-impaired
+   users a still tag. */
+@media (prefers-reduced-motion: reduce) {
+  .hangInner {
+    animation: none;
+  }
+  .tag:hover {
+    transform: none;
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    --rail-x: 3.4rem;
+    /* mobile rail svg fills the gutter, so the line runs down its middle */
+    --rail-line-x: calc(var(--rail-x) / 2);
+  }
+  .sectionTall {
+    min-height: 300vh;
+  }
+  /* Header text shares the step column's left edge so the whole section
+     reads as one vertical rhythm: rail gutter, then a single text column. */
+  .sectionHeader {
+    min-height: 34vh;
+    padding-top: 18vh;
+    padding-left: calc(var(--rail-x) + 0.9rem);
+    justify-content: flex-end;
+  }
+  .eyebrow {
+    font-size: 0.68rem;
+    margin-bottom: 0.7rem;
+  }
+  .sectionTitle {
+    font-size: clamp(2.6rem, 12vw, 4rem);
+    line-height: 0.92;
+  }
+  .railSvg {
+    /* --rail-x is small on mobile (3.4rem); keep the rail inside the icon
+       column so it never crosses into the text. The node plates sit on the
+       line, and their field-colored fill hides the rail behind the disc. */
+    width: var(--rail-x);
+    transform: translateX(0);
+  }
+  .stepRow {
+    grid-template-columns: var(--rail-x) minmax(0, 1fr);
+    min-height: 40vh;
+  }
+  /* Each step's icon becomes a small round node ON the rail: a
+     field-colored plate with a hairline ring. Because the plate shares the
+     section background, the rail passes *behind* it — so the ink never
+     slices through the icon artwork. The node is lifted onto the
+     number/title line so it reads as a timeline bead, not a floating dot. */
+  .glyphNode {
+    grid-column: auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--rail-x);
+    padding: 0;
+    transform: translateY(calc(-50% - 2.1rem));
+  }
+  .glyphZone {
+    width: 2.9rem;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: var(--node-bg);
+    box-shadow: 0 0 0 1px currentColor;
+  }
+  .glyph {
+    width: 1.6rem;
+  }
+  .textCard {
+    max-width: 34ch;
+    padding: 3vh 1.25rem 3vh 0.9rem;
+  }
+  /* Giant outlined numeral fills the row's right zone — the mobile
+     counterpart of the desktop enlarged glyph. Gives each step a
+     composed, full-width presence. */
+  .ghostNum {
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42%;
+    font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
+    font-size: clamp(6rem, 24vw, 8.5rem);
+    line-height: 0.8;
+    letter-spacing: 0.02em;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ghost-ink);
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.6;
+    text-align: center;
+  }
+  .stepNumber {
+    font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+    letter-spacing: 0.28em;
+    margin-bottom: 0.7rem;
+  }
+  .stepTitle {
+    font-size: clamp(2.7rem, 13.5vw, 4rem);
+    line-height: 0.88;
+    margin-bottom: 0.8rem;
+  }
+  .stepBody {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: none;
+  }
+  /* The tag hangs below the last step. On a narrow screen centering it on
+     the far-left rail would shove it off-screen, so align it to the text
+     column instead and let it size to its content. */
+  .hangOuter {
+    margin-left: calc(var(--rail-x) + 0.9rem);
+    width: max-content;
+    max-width: calc(100% - var(--rail-x) - 1.8rem);
+  }
+  .hangString {
+    height: clamp(1.2rem, 2.6vh, 1.9rem);
+  }
+  .tag {
+    font-size: clamp(1.2rem, 5.4vw, 1.6rem);
+    padding: 0.7rem 0.5rem 0.8rem;
+  }
+}
+
+/* Reduced motion: ribbon choreography is hidden and the section is a
+   natural-height stack of all steps (no tall scrubbing range). */
+@media (prefers-reduced-motion: reduce) {
+  .sectionTall {
+    min-height: 0;
+  }
+  .sectionHeader {
+    min-height: auto;
+    padding-top: 8rem;
+  }
+  .stepRow {
+    min-height: auto;
+    padding: 3vh 0;
+  }
+  .rail {
+    display: none;
+  }
+}

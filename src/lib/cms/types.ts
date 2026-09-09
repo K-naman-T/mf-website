@@ -33,6 +33,7 @@ export const ServiceIconSchema = z.object({
   iconId: z.string().min(1),
   label: z.string().min(1),
   path: z.string().min(1),
+  copy: z.string().min(1),
 });
 
 export const ServiceSectionSchema = z.object({
@@ -67,12 +68,36 @@ export const HomeMetadataSchema = z.object({
   description: z.string().min(1),
 });
 
+export const HomeLetterSchema = z.object({
+  dateline: z.string().min(1),
+  salutation: z.string().min(1),
+  stance: z.string().min(1),
+  paragraphs: z.array(z.string().min(1)).min(1),
+  signoff: z.string().min(1),
+  signature: z.string().min(1),
+});
+
+export const HomeProcessStepSchema = z.object({
+  number: z.string().min(1),
+  icon: z.string().optional(),
+  title: z.string().min(1),
+  body: z.string().min(1),
+});
+
+export const HomeProcessSchema = z.object({
+  eyebrow: z.string().min(1),
+  title: z.string().min(1),
+  steps: z.array(HomeProcessStepSchema).min(1),
+});
+
 export const HomeContentSchema = z.object({
   hero: z.object({
     heading: z.string().min(1),
     body: z.string().min(1),
   }),
+  letter: HomeLetterSchema,
   services: z.array(ServiceSectionSchema),
+  process: HomeProcessSchema,
   navigation: NavigationSchema,
   cta: z.object({
     label: z.string().min(1),
@@ -143,6 +168,9 @@ export const PageContentSchema = z.object({
 
 export type NavigationLink = z.infer<typeof NavigationLinkSchema>;
 export type Navigation = z.infer<typeof NavigationSchema>;
+export type HomeLetter = z.infer<typeof HomeLetterSchema>;
+export type HomeProcessStep = z.infer<typeof HomeProcessStepSchema>;
+export type HomeProcess = z.infer<typeof HomeProcessSchema>;
 export type HomeContent = z.infer<typeof HomeContentSchema>;
 export type HomeContact = z.infer<typeof HomeContactSchema>;
 export type LegalIndex = z.infer<typeof LegalIndexSchema>;

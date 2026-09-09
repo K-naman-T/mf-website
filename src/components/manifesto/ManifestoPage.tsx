@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { WordReveal } from "@/components/motion/text/WordReveal";
+import { RoughAnnotation } from "@/components/motion/text/RoughAnnotation";
 import { SeamlessBackgrounds } from "@/components/home/SeamlessBackgrounds";
 import { useTheme } from "@/components/ThemeProvider";
 import { Footer } from "@/components/layout/Footer";
+import { AppNavbar } from "@/components/layout/AppNavbar";
 import { QUERIES } from "@/lib/config";
 import type { ManifestoContent, Navigation } from "@/lib/cms/types";
 import styles from "@/components/home/ofy-art-home.module.css";
@@ -131,68 +133,10 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
       >
-        <header className={`${styles.homeHeader}${headerHidden ? ` ${styles.homeHeaderHidden}` : ""}${isLightHeader ? ` ${styles.headerLightForeground}` : ""}`}>
-          <div className={styles.headerInner}>
-            <div className={styles.headerLeft}>
-              <Link className={`${styles.headerBrand} mf-nav-brand`} href="/">
-                <div className="mf-nav-oo-wrapper">
-                  <img
-                    className={`${styles.headerLogo}${theme === 'dark' ? ` ${mStyles.darkModeLogo}` : ''}`}
-                    src="/brand/ofy-short-logo.svg"
-                    alt="OddFromYou"
-                  />
-                  <span
-                    id="mf-nav-o-target-1"
-                    className="mf-nav-o-target mf-nav-o-target-left"
-                  />
-                  <span
-                    id="mf-nav-o-target-2"
-                    className="mf-nav-o-target mf-nav-o-target-right"
-                  />
-                </div>
-              </Link>
-              <nav className={styles.headerNav}>
-                {navigation.links.map((link) => (
-                  <a key={link.href} className={styles.headerLink} href={link.href === "#work" ? "/#work" : link.href}>
-                    {link.label}
-                  </a>
-                ))}
-              </nav>
-            </div>
-            <div className={styles.headerRight}>
-              <button
-                className={`${styles.headerThemeToggle}${theme === 'dark' ? ` ${mStyles.darkModeToggle}` : ''}`}
-                onClick={toggleTheme}
-                aria-label={`Switch to ${theme === "red" ? "dark" : "red"} theme`}
-                type="button"
-              >
-                {theme === "red" ? (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                  </svg>
-                ) : (
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                  </svg>
-                )}
-              </button>
-              <Link className={styles.headerCta} href="/#contact">
-                <span className={styles.ctaFull}>{navigation.cta.label}</span>
-                {navigation.cta.shortLabel && (
-                  <span className={styles.ctaShort}>{navigation.cta.shortLabel}</span>
-                )}
-              </Link>
-            </div>
-          </div>
-        </header>
+        <AppNavbar
+          content={navigation}
+          hidden={headerHidden}
+        />
 
         <SeamlessBackgrounds
           images={theme === "red" ? BG_IMAGES_RED : BG_IMAGES_DARK}
@@ -216,12 +160,13 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
               >
                 {content.eyebrow}
               </motion.p>
-              <WordReveal
-                as="h1"
-                className={styles.gridTitle}
-                text={content.title}
-                active={activeIndex === 0}
-              />
+              <h1 className={styles.gridTitle}>
+                odd from{" "}
+                <RoughAnnotation type="circle" color={theme === "red" ? "#000000" : "#FF0000"} active={activeIndex === 0} delay={0.45}>
+                  them
+                </RoughAnnotation>
+                .
+              </h1>
               <motion.p
                 className={`${styles.gridBody} ${mStyles.manifestHeroIntro}`}
                 custom={0.15}
@@ -237,6 +182,8 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
 
         {content.beats.map((beat, i) => {
           const isLast = i === content.beats.length - 1;
+          const strokeColor = theme === "red" ? "#000000" : "#FF0000";
+
           return (
             <section key={i} className={styles.scene} style={isLast ? { position: "relative" } : undefined}>
               <motion.div
@@ -246,21 +193,71 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
                 animate={activeIndex === i + 1 ? "visible" : "hidden"}
               >
                 <div className={`${styles.heroGrid} ${beatClasses[i]}`}>
-                  <WordReveal
-                    as="h2"
-                    className={styles.gridTitle}
-                    text={beat.heading}
-                    active={activeIndex === i + 1}
-                  />
-                  <motion.p
-                    className={styles.gridBody}
-                    custom={0.1}
-                    variants={staggerItem}
-                    initial="hidden"
-                    animate={activeIndex === i + 1 ? "visible" : "hidden"}
-                  >
-                    {beat.body}
-                  </motion.p>
+                  {i === 0 && (
+                    <>
+                      <h2 className={styles.gridTitle}>{beat.heading}</h2>
+                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
+                        it is running out of{" "}
+                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
+                          difference
+                        </RoughAnnotation>
+                        .
+                      </motion.p>
+                    </>
+                  )}
+                  {i === 1 && (
+                    <>
+                      <h2 className={styles.gridTitle}>{beat.heading}</h2>
+                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
+                        the same grids. the same gradients. the same rounded promises. the same product wearing another product&apos;s clothes. it is also{" "}
+                        <RoughAnnotation type="strike-through" color={strokeColor} active={activeIndex === i + 1} delay={0.5}>
+                          forgettable
+                        </RoughAnnotation>
+                        .
+                      </motion.p>
+                    </>
+                  )}
+                  {i === 2 && (
+                    <>
+                      <h2 className={styles.gridTitle}>
+                        every worthwhile company contains an{" "}
+                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
+                          odd thing
+                        </RoughAnnotation>
+                        .
+                      </h2>
+                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
+                        {beat.body}
+                      </motion.p>
+                    </>
+                  )}
+                  {i === 3 && (
+                    <>
+                      <h2 className={styles.gridTitle}>
+                        we find the thing that is{" "}
+                        <RoughAnnotation type="underline" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
+                          yours
+                        </RoughAnnotation>
+                        .
+                      </h2>
+                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
+                        {beat.body}
+                      </motion.p>
+                    </>
+                  )}
+                  {i === 4 && (
+                    <>
+                      <h2 className={styles.gridTitle}>
+                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
+                          odd enough
+                        </RoughAnnotation>{" "}
+                        to be remembered.
+                      </h2>
+                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
+                        {beat.body}
+                      </motion.p>
+                    </>
+                  )}
                 </div>
               </motion.div>
               {isLast && <Footer />}

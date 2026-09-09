@@ -1,0 +1,196 @@
+/* Vice City Animated Neon Sign CSS Module */
+
+.neonContainer {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  transition: filter 0.3s ease;
+  overflow: visible !important;
+}
+
+.ambientHalo {
+  transform-origin: 50% 50%;
+  animation: ambientBreathe 4s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
+
+.mainTubes {
+  animation: neonHum 3.2s ease-in-out infinite alternate;
+  will-change: filter, opacity;
+}
+
+.flickerTube {
+  animation: tubeMicroFlicker 6.5s ease-in-out infinite;
+  will-change: opacity, filter;
+}
+
+/* Spark surge on hover or interactive trigger */
+.containerSurge {
+  transform: scale(1.025);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.containerSurge .mainTubes,
+.containerSurge .flickerTube {
+  filter: drop-shadow(0 0 16px #FF003C) drop-shadow(0 0 38px #FF003C) drop-shadow(0 0 75px rgba(255, 0, 60, 0.95)) !important;
+  transition: filter 0.15s ease-out;
+}
+
+.containerSurge .ambientHalo {
+  opacity: 0.75 !important;
+  transform: scale(1.15) !important;
+  transition: all 0.18s ease-out;
+}
+
+.containerSurge .whiteCores {
+  filter: drop-shadow(0 0 10px #FFFFFF) drop-shadow(0 0 20px #FFA6BA) !important;
+  transition: filter 0.15s ease-out;
+}
+
+/* Powered OFF state */
+.poweredOff .mainTubes,
+.poweredOff .flickerTube,
+.poweredOff .ambientHalo,
+.poweredOff .whiteCores {
+  opacity: 0.08 !important;
+  filter: none !important;
+  animation: none !important;
+  transition: opacity 0.4s ease-out, filter 0.4s ease-out;
+}
+
+/* Ignition sequence when turned back on */
+.igniting .mainTubes,
+.igniting .flickerTube {
+  animation: ignitionFlicker 1.4s ease-out forwards !important;
+}
+
+.igniting .ambientHalo {
+  animation: ignitionHalo 1.4s ease-out forwards !important;
+}
+
+@keyframes ambientBreathe {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 0.38;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes ignitionHalo {
+  0% { opacity: 0; transform: scale(0.85); }
+  3% { opacity: 0.35; transform: scale(1.05); }
+  6% { opacity: 0.05; transform: scale(0.9); }
+  10% { opacity: 0.5; transform: scale(1.1); }
+  13% { opacity: 0.08; transform: scale(0.95); }
+  18% { opacity: 0.6; transform: scale(1.12); }
+  24% { opacity: 0.2; transform: scale(1.0); }
+  28% { opacity: 0.45; transform: scale(1.05); }
+  72% { opacity: 0.4; }
+  74% { opacity: 0.2; }
+  76% { opacity: 0.5; }
+  100% { opacity: 0.35; transform: scale(1); }
+}
+
+@keyframes neonHum {
+  0% {
+    opacity: 0.94;
+    filter: drop-shadow(0 0 6px #FF003C) drop-shadow(0 0 18px rgba(255, 0, 60, 0.8)) drop-shadow(0 0 32px rgba(255, 0, 60, 0.4));
+  }
+  48% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #FF003C) drop-shadow(0 0 26px rgba(255, 0, 60, 0.95)) drop-shadow(0 0 50px rgba(255, 0, 60, 0.6));
+  }
+  50% {
+    opacity: 0.92;
+  }
+  52% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.96;
+    filter: drop-shadow(0 0 8px #FF003C) drop-shadow(0 0 22px rgba(255, 0, 60, 0.88)) drop-shadow(0 0 40px rgba(255, 0, 60, 0.5));
+  }
+}
+
+@keyframes tubeMicroFlicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  38% {
+    opacity: 1;
+  }
+  39% {
+    opacity: 0.25;
+    filter: drop-shadow(0 0 2px #FF003C);
+  }
+  40% {
+    opacity: 0.95;
+  }
+  41.5% {
+    opacity: 0.15;
+    filter: drop-shadow(0 0 1px #FF003C);
+  }
+  43% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  79% {
+    opacity: 0.4;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+
+@keyframes ignitionFlicker {
+  0% {
+    opacity: 0.05;
+    filter: none;
+  }
+  3% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 12px #FF003C);
+  }
+  6% {
+    opacity: 0.1;
+    filter: none;
+  }
+  10% {
+    opacity: 0.95;
+    filter: drop-shadow(0 0 22px #FF003C);
+  }
+  13% {
+    opacity: 0.2;
+    filter: none;
+  }
+  18% {
+    opacity: 1;
+    filter: drop-shadow(0 0 32px #FF003C);
+  }
+  24% {
+    opacity: 0.45;
+  }
+  28% {
+    opacity: 1;
+    filter: drop-shadow(0 0 35px #FF003C);
+  }
+  72% {
+    opacity: 0.98;
+  }
+  74% {
+    opacity: 0.7;
+  }
+  76% {
+    opacity: 1;
+    filter: drop-shadow(0 0 40px #FF003C);
+  }
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 30px #FF003C);
+  }
+}

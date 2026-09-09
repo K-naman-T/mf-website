@@ -1,0 +1,15 @@
+.dissolveRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 40; /* above scenes + heroContent (z 2) but below navbar (z 50) */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.dissolveCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+}

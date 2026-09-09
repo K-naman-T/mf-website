@@ -4,35 +4,15 @@
   "hero": {
     "eyebrow": "PRODUCTS",
     "title": ["OWNED", "SYSTEMS."],
-    "intro": "Standalone products from OddFromYou. Details are coming soon."
+    "intro": "Standalone products from OddFromYou. We publish a page when there is something useful to say."
   },
   "cta": {
-    "title": "PRODUCT DETAILS ARE BEING PREPARED."
+    "title": "HELLO@ODDFROMYOU.COM"
   },
   "sections": [
     {
-      "title": "PRODUCT LINE.",
-      "cards": [
-        {
-          "number": "01",
-          "title": "ORACLE",
-          "description": "Product details will be added here when ready."
-        },
-        {
-          "number": "02",
-          "title": "OUTBOUND",
-          "description": "Product details will be added here when ready."
-        },
-        {
-          "number": "03",
-          "title": "SHADOW",
-          "description": "Product details will be added here when ready."
-        }
-      ]
-    },
-    {
-      "title": "BUILT, NOT ANNOUNCED.",
-      "body": "We will publish product-specific details only when each page has something useful to say."
+      "title": "NOT ANNOUNCED YET.",
+      "body": "We will publish product-specific details only when each page has something useful to say. No placeholders."
     }
   ]
 }

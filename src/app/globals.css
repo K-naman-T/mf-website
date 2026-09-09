@@ -1,11 +1,36 @@
-@import url("https://fonts.googleapis.com/css2?family=Teko:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Teko:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+@theme {
+  --font-mono: "Courier Prime", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --color-main: var(--main);
+  --color-overlay: var(--overlay);
+  --color-bg: var(--bg);
+  --color-bw: var(--bw);
+  --color-blank: var(--blank);
+  --color-text: var(--text);
+  --color-mtext: var(--mtext);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ring-offset: var(--ring-offset);
+  --color-secondary-black: #212121;
+
+  --radius-base: 6px;
+  --shadow-shadow: var(--shadow);
+
+  --translate-boxShadowX: 3px;
+  --translate-boxShadowY: 3px;
+  --translate-reverseBoxShadowX: -3px;
+  --translate-reverseBoxShadowY: -3px;
+
+  --font-weight-base: 600;
+  --font-weight-heading: 700;
+}
 
 :root {
   --mf-nav-height: 96px;
+  --mf-nav-logo-width: 80px;
   --color-bg: #000000;
   --mf-red-hot: #D47B6C;
   --mf-red-core: #B85A4A;
@@ -15,13 +40,39 @@
   --color-bg-dark: #000000;
   --color-bg-surface-dark: #0A0A0A;
   --color-text-on-red: #000000;
-  --color-text-on-dark: #000000;
+  --color-text-on-dark: #FFFFFF;
   --color-text-secondary: #888888;
   --color-text-secondary-dark: #A0A0A0;
   --color-button-primary-red: #000000;
   --color-button-primary-dark: var(--mf-red-core);
   --color-border-subtle: #333333;
   --color-border-strong: #000000;
+
+  --btn-bg: #000000;
+  --btn-text: #f00307;
+  --btn-border: #f00307;
+  --btn-shadow: 2px 2px 0px 0px #000000;
+
+  --main: #000000;
+  --overlay: rgba(0, 0, 0, 0.8);
+  --bg: #dfe5f2;
+  --bw: #ffffff;
+  --blank: #000000;
+  --border: #000000;
+  --text: #000000;
+  --mtext: #ffffff;
+  --ring: #000000;
+  --ring-offset: #ffffff;
+
+  --border-radius: 6px;
+  --box-shadow-x: 3px;
+  --box-shadow-y: 3px;
+  --reverse-box-shadow-x: -3px;
+  --reverse-box-shadow-y: -3px;
+  --base-font-weight: 600;
+  --heading-font-weight: 700;
+
+  --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
 }
 
 [data-accent="oxide"] {
@@ -90,6 +141,12 @@
   --mf-red-shadow: #5C7128;
 }
 
+[data-accent="olive"] {
+  --mf-red-hot: #A8B865;
+  --mf-red-core: #8A9C45;
+  --mf-red-shadow: #5C7128;
+}
+
 [data-accent="coral"] {
   --mf-red-hot: #F09A84;
   --mf-red-core: #D87868;
@@ -101,6 +158,23 @@
   --color-text: var(--color-text-on-red);
   --color-border: var(--color-border-strong);
   --color-surface: var(--color-bg-red);
+
+  --btn-bg: #000000;
+  --btn-text: #f00307;
+  --btn-border: #f00307;
+  --btn-shadow: 2px 2px 0px 0px #000000;
+
+  --main: #000000;
+  --overlay: rgba(0, 0, 0, 0.8);
+  --bg: #f00307;
+  --bw: #000000;
+  --blank: #000000;
+  --border: #f00307;
+  --text: #f00307;
+  --mtext: #f00307;
+  --ring: #f00307;
+  --ring-offset: #000000;
+  --shadow: 2px 2px 0px 0px #000000;
 }
 
 [data-theme="dark"] {
@@ -108,9 +182,38 @@
   --color-text: var(--color-text-on-dark);
   --color-border: var(--color-border-subtle);
   --color-surface: var(--color-bg-surface-dark);
+
+  --btn-bg: #f00307;
+  --btn-text: #000000;
+  --btn-border: #000000;
+  --btn-shadow: 2px 2px 0px 0px #ffffff;
+
+  --main: #f00307;
+  --overlay: rgba(0, 0, 0, 0.8);
+  --bg: #000000;
+  --bw: #f00307;
+  --blank: #ffffff;
+  --border: #000000;
+  --text: #000000;
+  --mtext: #000000;
+  --ring: #000000;
+  --ring-offset: #f00307;
+  --shadow: 2px 2px 0px 0px #ffffff;
 }
 
 @layer base {
+  body,
+  body * {
+    transition: color 0.5s ease, background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body,
+    body * {
+      transition-duration: 0.01ms;
+    }
+  }
+
   *,
   *::before,
   *::after {
@@ -311,56 +414,58 @@ body > * {
   inset: 0;
   z-index: 2147483647;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #000;
-  color: #ff0000;
+  background: #000000;
   overflow: hidden;
   overscroll-behavior: contain;
   touch-action: none;
+  cursor: pointer;
+  opacity: 1;
+  will-change: opacity, background-color;
+}
+
+[data-theme="red"] .mf-logo-intro {
+  background: #FF0000;
+}
+
+[data-theme="dark"] .mf-logo-intro {
+  background: #000000;
 }
 
 .mf-logo-intro-stage {
   position: relative;
-  width: min(92vw, calc((100svh - clamp(96px, 14svh, 168px)) * 1274 / 622), 1440px);
-  aspect-ratio: 1274 / 622;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.mf-intro-letter {
-  position: absolute;
-  opacity: 1;
-  min-width: 0;
-  min-height: 0;
-  fill: #ff0000;
-  overflow: visible;
-  will-change: transform, opacity;
-  pointer-events: none;
-}
-
-.mf-intro-letter svg {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 100%;
-  overflow: visible;
+  max-width: min(900px, 94vw);
+  max-height: 82svh;
+  overflow: visible !important;
+  pointer-events: none;
 }
 
-.mf-intro-letter-o-1 { left: 0%; top: 12.22%; width: 19.86%; height: 38.91%; }
-.mf-intro-letter-d1 { left: 16.64%; top: 0.32%; width: 17.97%; height: 50.96%; }
-.mf-intro-letter-d2 { left: 33.59%; top: 0%; width: 14.36%; height: 50.8%; }
-.mf-intro-letter-F { left: 48.04%; top: 0%; width: 13.66%; height: 50.8%; }
-.mf-intro-letter-r { left: 58.87%; top: 13.02%; width: 10.83%; height: 37.78%; }
-.mf-intro-letter-o-2 { left: 66.56%; top: 12.38%; width: 19.47%; height: 38.59%; }
-.mf-intro-letter-m { left: 82.65%; top: 13.02%; width: 17.35%; height: 37.62%; }
-.mf-intro-letter-y { left: 19.54%; top: 51.29%; width: 21.66%; height: 48.71%; }
-.mf-intro-letter-o { left: 41.05%; top: 51.13%; width: 23.23%; height: 44.86%; }
-.mf-intro-letter-u { left: 64.21%; top: 51.13%; width: 20.72%; height: 47.27%; }
+.mf-intro-piece {
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
 
-@media (max-width: 700px) and (orientation: portrait) {
-  .mf-logo-intro-stage {
-    width: min(100vw, calc((100svh - 112px) * 1274 / 622));
-  }
+.mf-intro-prompt {
+  position: absolute;
+  bottom: clamp(24px, 5svh, 56px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: max-content;
+  max-width: 90vw;
+  pointer-events: auto;
+  z-index: 20;
+  transition: opacity 0.3s ease;
 }
 
 .mf-nav-wordmark {
@@ -2605,4 +2710,3 @@ body > * {
 .mf-cookie-dock-btn-primary:hover {
   opacity: 0.88;
 }
-

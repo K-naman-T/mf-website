@@ -1,0 +1,392 @@
+.trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--bw, #f00307);
+}
+
+/* Outer cell shown when the component is rendered standalone (demo). The
+   navbar trigger renders a compact icon only. */
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 220px;
+  height: 220px;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  background: color-mix(in srgb, currentColor 5%, transparent);
+  padding: 0.65rem;
+}
+
+.cellTitle {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: currentColor;
+  text-align: center;
+}
+
+/* Shared dot/circle primitives get a default color via currentColor. */
+.dot {
+  background: currentColor;
+}
+
+/* ── dots-grid ─────────────────────────────────────────────── */
+.dotsGrid {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+.dotsGrid .dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+.dotsGrid .dot:nth-child(1) { left: 0; top: 0; }
+.dotsGrid .dot:nth-child(2) { left: 26px; top: 0; }
+.dotsGrid .dot:nth-child(3) { left: 52px; top: 0; }
+.dotsGrid .dot:nth-child(4) { left: 0; top: 26px; }
+.dotsGrid .dot:nth-child(5) { left: 26px; top: 26px; }
+.dotsGrid .dot:nth-child(6) { left: 52px; top: 26px; }
+.dotsGrid .dot:nth-child(7) { left: 0; top: 52px; }
+.dotsGrid .dot:nth-child(8) { left: 26px; top: 52px; }
+.dotsGrid .dot:nth-child(9) { left: 52px; top: 52px; }
+
+/* ── text-morph ────────────────────────────────────────────── */
+.textMorph {
+  position: relative;
+  width: 84px;
+  height: 24px;
+}
+.textMorph .textClip {
+  position: relative;
+  width: 68px;
+  height: 24px;
+  overflow: hidden;
+}
+.textMorph .menuText,
+.textMorph .closeText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: currentColor;
+}
+.textMorph .circle {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: 2;
+  width: 8px;
+  height: 8px;
+  transform: translateY(-50%);
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+/* ── plus-morph ────────────────────────────────────────────── */
+.plusMorph {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+.plusMorph .bar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
+}
+.plusMorph .barH {
+  width: 30px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+}
+.plusMorph .barV {
+  width: 3px;
+  height: 30px;
+  transform: translate(-50%, -50%);
+}
+
+/* ── circle-pulse ──────────────────────────────────────────── */
+.circlePulse {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  overflow: visible;
+}
+.circlePulse .core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: currentColor;
+  z-index: 3;
+}
+.circlePulse .ring,
+.circlePulse .wave {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+}
+.circlePulse .wave {
+  border-color: color-mix(in srgb, currentColor 50%, transparent);
+}
+.circlePulse .particles {
+  position: absolute;
+  inset: 0;
+}
+.circlePulse .particle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  background: transparent;
+}
+
+/* ── cube-spin ─────────────────────────────────────────────── */
+.cubeSpin {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  perspective: 200px;
+}
+.cubeSpin .cube {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  transform-style: preserve-3d;
+}
+.cubeSpin .face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 2px solid color-mix(in srgb, currentColor 60%, transparent);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+.cubeSpin .faceFront { transform: translateZ(21px); }
+.cubeSpin .faceBack { transform: rotateY(180deg) translateZ(21px); }
+.cubeSpin .faceRight { transform: rotateY(90deg) translateZ(21px); }
+.cubeSpin .faceLeft { transform: rotateY(-90deg) translateZ(21px); }
+.plusSymbol,
+.xSymbol {
+  position: relative;
+  width: 26px;
+  height: 26px;
+}
+.plusSymbol .symH,
+.plusSymbol .symV,
+.xSymbol .symA,
+.xSymbol .symB,
+.cubeIcon .symH,
+.cubeIcon .symV,
+.cubeIcon .symA,
+.cubeIcon .symB {
+  position: absolute;
+  background: currentColor;
+}
+.plusSymbol .symH,
+.cubeIcon .symH {
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 3px;
+  transform: translate(-50%, -50%);
+}
+.plusSymbol .symV,
+.cubeIcon .symV {
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+.xSymbol .symA,
+.xSymbol .symB,
+.cubeIcon .symA,
+.cubeIcon .symB {
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 3px;
+  transform-origin: center;
+}
+.xSymbol .symA,
+.cubeIcon .symA {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.xSymbol .symB,
+.cubeIcon .symB {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.cubeIcon .symH,
+.cubeIcon .symV {
+  width: 100%;
+  height: 2px;
+}
+.cubeIcon .symV {
+  height: 100%;
+  width: 2px;
+}
+.cubeIcon .symA,
+.cubeIcon .symB {
+  width: 100%;
+  height: 2px;
+}
+
+/* ── stacked-circles ───────────────────────────────────────── */
+.stackedCircles {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+.stackedCircles .circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+/* ── rotating-circles ──────────────────────────────────────── */
+.rotatingCircles {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+.rotatingCircles .circle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+/* ── isometric-cube ────────────────────────────────────────── */
+.isometricCube {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  perspective: 1200px;
+}
+.isometricCube .cube {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  transform-style: preserve-3d;
+}
+.isometricCube .face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid color-mix(in srgb, currentColor 50%, transparent);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.isometricCube .faceFront { transform: translateZ(17px); }
+.isometricCube .faceBack { transform: rotateY(180deg) translateZ(17px); }
+.isometricCube .faceRight { transform: rotateY(90deg) translateZ(17px); }
+.isometricCube .faceLeft { transform: rotateY(-90deg) translateZ(17px); }
+.isometricCube .faceTop { transform: rotateX(90deg) translateZ(17px); }
+.isometricCube .faceBottom { transform: rotateX(-90deg) translateZ(17px); }
+.isometricCube .cubeIcon {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.isometricCube .cubeIcon .symH,
+.isometricCube .cubeIcon .symV {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
+}
+.isometricCube .cubeIcon .symH {
+  width: 100%;
+  height: 2px;
+  transform: translate(-50%, -50%);
+}
+.isometricCube .cubeIcon .symV {
+  width: 2px;
+  height: 100%;
+  transform: translate(-50%, -50%);
+}
+
+/* ── expanding-circles ─────────────────────────────────────── */
+.expandingCircles {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+.expandingCircles .circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background: currentColor;
+}
+.expandingCircles .circle.micro {
+  width: 5px;
+  height: 5px;
+}
+
+/* Disable pointer/hover affordances inside when it's used purely as a
+   controlled trigger (the parent button handles clicks). */
+.trigger :global(svg) {
+  display: none;
+}

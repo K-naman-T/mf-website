@@ -63,3 +63,15 @@ next-env.d.ts
 /tmp
 *.tmp
 .env*
+
+# Scratch & local dev artifacts
+scratch/
+shots/
+motion-films/
+.commandcode/
+.local-scripts/
+.pi-subagents/
+assets/icon-motions/
+SESSION.md
+active_plan
+.mcp.json

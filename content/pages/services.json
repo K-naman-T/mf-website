@@ -4,7 +4,7 @@
   "hero": {
     "eyebrow": "SERVICES",
     "title": ["WHAT", "WE BUILD."],
-    "intro": "Custom products, internal tools, AI systems, and interfaces built from constraint to launch."
+    "intro": "Three kinds of production work, plus custom. Fixed scope. Shipped."
   },
   "cta": {
     "title": "READY WHEN IT NEEDS TO SHIP."
@@ -15,33 +15,29 @@
       "cards": [
         {
           "number": "01",
-          "title": "CUSTOM DEVELOPMENT",
-          "description": "We build what you need: custom products, internal tools, platform work, and systems that do not fit a template."
+          "title": "PREDICTION",
+          "description": "You have data. You need a call: rank, flag, forecast, route. We build the path from ingest to a screen and the alerts around it. Dashboards, scoring services, internal tools. If nobody on your team would open it twice, it is not done."
         },
         {
           "number": "02",
-          "title": "SYSTEMS ENGINEERING",
-          "description": "Infrastructure, pipelines, integrations, and operational layers that need to run and stay running."
+          "title": "VOICE",
+          "description": "You need a product or an internal tool that listens and replies. We build the speech loop: capture, transcribe, decide, speak or act. Built for noisy audio and mixed language, not studio-mic English. You leave with a working interface, not a slide about agents."
         },
         {
           "number": "03",
-          "title": "AI INTERFACES",
-          "description": "Agentic workflows, computer vision, speech systems, and multimodal interfaces shaped around real constraints."
+          "title": "INDUSTRIAL",
+          "description": "The model is the easy part. The system around it is not. We build pipelines, adapters, and runtime glue so the thing that worked in a notebook still works on Monday. Logging, jobs, handoffs, the unglamorous path to it stayed up."
         },
         {
           "number": "04",
-          "title": "DESIGN TO DEPLOYMENT",
-          "description": "Strategy, interface design, engineering, launch, and iteration handled as one production sequence."
+          "title": "CUSTOM",
+          "description": "Brand, product, motion, a tool that is only yours. Same rule: one problem, one scope, one ship. If we cannot name the artifact in a sentence, we do not start."
         }
       ]
     },
     {
-      "title": "DOMAINS.",
-      "body": "We have worked across prediction systems, voice platforms, industrial tools, and other applied AI surfaces. Past work stays under NDA — talk to us if you are working in one of these areas."
-    },
-    {
       "title": "HOW ENGAGEMENTS WORK.",
-      "body": "You bring the problem. We map what is real, define the system, build, ship, and iterate from actual use."
+      "body": "You bring the constraint. We map what is real, cut what is theater, build, and ship. Work is scoped as a fixed build. Past client work stays under NDA. If you are in one of these areas, talk to us."
     }
   ]
 }

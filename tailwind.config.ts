@@ -22,6 +22,35 @@ const config: Config = {
         "border-subtle": "#333333",
         "border-strong": "#000000",
         "grid-line": "#000000",
+        main: "var(--main)",
+        overlay: "var(--overlay)",
+        bg: "var(--bg)",
+        bw: "var(--bw)",
+        blank: "var(--blank)",
+        text: "var(--text)",
+        mtext: "var(--mtext)",
+        border: "var(--border)",
+        ring: "var(--ring)",
+        ringOffset: "var(--ring-offset)",
+        secondaryBlack: "#212121",
+      },
+      borderRadius: {
+        none: "0px",
+        base: "6px",
+        browser: "8px",
+      },
+      boxShadow: {
+        shadow: "var(--shadow)",
+      },
+      translate: {
+        boxShadowX: "3px",
+        boxShadowY: "3px",
+        reverseBoxShadowX: "-3px",
+        reverseBoxShadowY: "-3px",
+      },
+      fontWeight: {
+        base: "600",
+        heading: "700",
       },
       fontFamily: {
         display: ["Teko", "Bebas Neue", "Anton", "Osazy", "system-ui", "sans-serif"],
@@ -43,10 +72,6 @@ const config: Config = {
       letterSpacing: {
         label: "0.12em",
         logo: "0.15em",
-      },
-      borderRadius: {
-        none: "0px",
-        browser: "8px",
       },
       spacing: {
         section: "120px",

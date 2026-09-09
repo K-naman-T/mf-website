@@ -1,0 +1,38 @@
+.nerveRoot {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  height: 600dvh;
+  isolation: isolate;
+}
+
+.nerveSvg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.nerveGuide {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:global([data-theme="red"]) .nerveGuide {
+  stroke: #000000;
+}
+
+:global([data-theme="dark"]) .nerveGuide {
+  stroke: #FF0000;
+}
+
+@media (max-width: 768px) {
+  .nerveGuide {
+    stroke-width: 16;
+  }
+}

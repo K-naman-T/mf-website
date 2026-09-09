@@ -37,7 +37,7 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
         <Link href="/" className="mf-nav-brand">
           <div className="mf-nav-oo-wrapper" ref={isOO ? ooRef : undefined}>
             {pathname === "/" ? (
-              <LogoMark theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+              <LogoMark theme={isDark ? "light" : "dark"} className="h-10 w-auto" />
             ) : (
               <OOGlow width={88} height={36} pulse={true} />
             )}
@@ -104,7 +104,7 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
           <div className="mf-mobile-menu-inner">
             <div className="mf-mobile-menu-header">
               <Link href="/" className="mf-nav-brand" onClick={() => setMenuOpen(false)}>
-                <LogoMark theme={isDark ? "light" : "dark"} className="h-7 w-auto" />
+                <LogoMark theme={isDark ? "light" : "dark"} className="h-10 w-auto" />
               </Link>
               <button
                 type="button"

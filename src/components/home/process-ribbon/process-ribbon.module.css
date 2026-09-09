@@ -1,0 +1,228 @@
+/* ── Process ribbon lab prototype ─────────────────────────────
+   One free-scrolling tall section. A wavy SVG ribbon runs down the
+   left rail and draws itself top→bottom as the user scrolls; a bright
+   pulse rides its tip. Each step row (icon on the rail + text) reveals
+   as the ink tip passes it. */
+
+/* Shared horizontal geometry:
+   --rail-x = the x (from the section's content-box left edge) of the
+   ribbon line. The rail is absolutely positioned with its center there,
+   and each row's icon column centers its glyph on the same x. */
+.section {
+  --rail-x: clamp(3.2rem, 11vw, 9.5rem);
+  position: relative;
+  min-height: 380vh; /* tall so scrolling has room to scrub the ribbon */
+  overflow: clip;
+}
+
+.inner {
+  position: relative;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+  box-sizing: border-box;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.sectionHeader {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-height: 44vh;
+  padding: 12vh 0 6vh;
+  padding-left: calc(var(--rail-x) + clamp(2rem, 5vw, 4.5rem));
+  box-sizing: border-box;
+}
+
+.eyebrow {
+  font-family: "Courier Prime", monospace, sans-serif;
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin: 0 0 0.8rem;
+}
+
+.sectionTitle {
+  font-family: "Teko", sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 7vw, 5.5rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0;
+  max-width: 12ch;
+}
+
+/* ── Rail ─────────────────────────────────────────────────
+   Ribbon centered on --rail-x, spanning the whole section height. */
+.rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.railSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* stretch full height; width sized so RAIL_X maps to --rail-x */
+  height: 100%;
+  width: 120px;
+  transform: translateX(calc(var(--rail-x) - 60px));
+  overflow: visible;
+}
+
+.track,
+.ink,
+.pulse {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.track {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  opacity: 0.22;
+}
+
+.ink {
+  stroke: currentColor;
+  stroke-width: 13;
+}
+
+.pulse {
+  stroke: currentColor;
+  stroke-width: 30;
+}
+
+/* ── Steps ────────────────────────────────────────────────
+   Each row is a grid: fixed icon column (its center = --rail-x) +
+   fluid text column. */
+.steps {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.stepRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--rail-x) minmax(0, 1fr);
+  align-items: center;
+  min-height: 84vh;
+  box-sizing: border-box;
+}
+
+.railCol {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rail-x);
+  /* give the swaying ribbon room to pass behind without clipping */
+  padding: 2vh 0;
+}
+
+.glyph {
+  width: clamp(72px, 7vw, 118px);
+  height: clamp(72px, 7vw, 118px);
+  color: inherit;
+  filter: drop-shadow(0 0 0 transparent);
+  will-change: transform, opacity;
+}
+
+.textCard {
+  display: block;
+  max-width: 54ch;
+  padding: 4vh 0 4vh clamp(1.5rem, 4vw, 3.5rem);
+  box-sizing: border-box;
+}
+
+.stepNumber {
+  font-family: "Courier Prime", monospace, sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.85rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  opacity: 0.7;
+}
+
+.stepTitle {
+  font-family: "Teko", sans-serif;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 5.5vw, 4.6rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.9rem;
+}
+
+.stepBody {
+  font-family: "Courier Prime", "Special Elite", "Courier New", monospace, sans-serif;
+  font-size: clamp(0.92rem, 1.15vw, 1.1rem);
+  line-height: 1.55;
+  text-transform: lowercase;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* Tail spacer after the last row: reserves scroll room so the final step's
+   reveal completes before the scroll range ends (rather than clamping at 1). */
+.tail {
+  height: 30vh;
+}
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .section {
+    --rail-x: 3.4rem;
+    min-height: 320vh;
+  }
+  .sectionHeader {
+    min-height: 62vh;
+    padding-top: 14vh;
+    padding-left: 0;
+    justify-content: flex-end;
+  }
+  .stepRow {
+    grid-template-columns: var(--rail-x) minmax(0, 1fr);
+    min-height: 56vh;
+  }
+  .glyph {
+    width: 3rem;
+    height: 3rem;
+  }
+  .textCard {
+    padding-left: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    min-height: auto;
+  }
+  .sectionHeader {
+    min-height: auto;
+    padding-top: 9rem;
+  }
+  .stepRow {
+    min-height: auto;
+    padding: 3vh 0;
+  }
+  .rail {
+    display: none;
+  }
+}

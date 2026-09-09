@@ -6,3 +6,4 @@ export { SectionReveal } from "./transitions/SectionReveal";
 export { DirectionalFillButton } from "./interactions/DirectionalFillButton";
 export { OOVisualizer } from "./brand/OOVisualizer";
 export { GlitchText } from "./text/GlitchText";
+export { RoughAnnotation } from "./text/RoughAnnotation";

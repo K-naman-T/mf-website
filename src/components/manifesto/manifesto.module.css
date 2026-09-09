@@ -1,8 +1,11 @@
 .manifestoEyebrow {
   text-align: center;
-  font: 800 clamp(0.7rem, 1vw, 0.85rem)/1 "Inter", sans-serif;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: "Courier Prime", "Special Elite", "Courier New", monospace, sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
   color: #FF0000;
   margin: 0 0 0.5rem;
   padding: 0 clamp(1rem, 2vw, 1.5rem);
@@ -17,14 +20,16 @@
 }
 
 .beatDominant .gridTitle {
-  font-size: clamp(4.5rem, 7.5vw, 8rem);
-  line-height: 0.8;
+  font-size: clamp(3.2rem, 5.5vw, 6rem);
+  line-height: 0.95;
+  text-transform: lowercase;
 }
 
 .beatDominant .gridBody {
   max-width: 42ch;
   margin: 0.5rem auto 0;
-  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  text-transform: lowercase;
 }
 
 .beatStatement .gridTitle {
