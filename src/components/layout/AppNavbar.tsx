@@ -153,8 +153,8 @@ export function AppNavbar({ content, hidden = false, onLogoClick }: AppNavbarPro
               aria-controls="mf-mobile-menu"
             >
               <span className={styles.mobileMenuMark}>
-                <span id="mf-nav-o-target-1" className="mf-nav-o-target mf-nav-o-target-left" aria-hidden="true" />
-                <span id="mf-nav-o-target-2" className="mf-nav-o-target mf-nav-o-target-right" aria-hidden="true" />
+                <span data-mf-nav-target="1" className="mf-nav-o-target mf-nav-o-target-left" aria-hidden="true" />
+                <span data-mf-nav-target="2" className="mf-nav-o-target mf-nav-o-target-right" aria-hidden="true" />
                 {logoMark}
               </span>
             </button>

@@ -24,9 +24,11 @@
      on the red field, a red tag with a black label on the dark field */
   --tag-bg: #000000;
   --tag-fg: #ff0000;
+  --hang-tag-h: clamp(4.2rem, 7vh, 5.2rem);
   position: relative;
   min-height: 100dvh;
-  overflow: clip;
+  overflow: visible;
+  z-index: 2;
   background: #ff0000;
   color: #000000;
 }
@@ -86,7 +88,7 @@
 .rail {
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: var(--hang-tag-h);
   left: 0;
   width: 100%;
   z-index: 1;
@@ -242,22 +244,22 @@
 }
 
 /* Tail spacer after the last row: reserves scroll room so the final step's
-   reveal completes before the scroll range ends (rather than clamping at 1). */
+   reveal completes, and gives the ribbon a clean descent down to the CTA joint. */
 .tail {
-  height: 30vh;
+  height: clamp(14rem, 28vh, 22rem);
 }
 
 /* ── End-of-ribbon CTA (swing tag) ──────────────────────
-   A "reach out" tag hangs at the end of the ribbon like a swing/luggage
-   tag: a thread drops from above, passes through a grommet at the tag's
-   top edge, and the whole tag gently pendulum-sways around that point.
-   The tag body inverts the section field (ink-filled plate with the field
-   color for its text) so it reads as a physical object against the
-   red/black background. */
+   A "reach out" tag hangs at the ACTUAL END of the ribbon like a
+   swing/luggage tag: the drawn ink arrives directly at the tag's grommet,
+   and the whole tag gently pendulum-sways around that point right as it
+   sticks out into the CTA section. */
 .hangOuter {
   position: relative;
   z-index: 3;
-  margin-top: 4vh;
+  margin-top: 0;
+  margin-bottom: 0;
+  height: var(--hang-tag-h);
   /* center the tag on the ribbon line so the drawn ink ends at the tag's
      grommet — the tag reads as strung onto the end of the ribbon */
   margin-left: calc(var(--rail-line-x) - 5.5rem);

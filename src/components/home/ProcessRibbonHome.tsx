@@ -180,13 +180,13 @@ export function ProcessRibbonHome({
   const raw: MotionValue<number> = reduced ? staticFull : scrollYProgress;
   const progress = useSpring(raw, { stiffness: 90, damping: 24, mass: 0.35 });
 
-  const railOpacity = useTransform(progress, [0, 0.05, 0.95, 1], [0, 1, 1, 0]);
-  const trackOpacity = useTransform(progress, [0, 0.05, 0.95, 1], [0.25, 0.25, 0.25, 0]);
+  const railOpacity = useTransform(progress, [0, 0.05], [0, 1]);
+  const trackOpacity = useTransform(progress, [0, 0.05], [0.22, 0.22]);
 
-  // End-of-ribbon CTA: fades in with a small drop once the ink has reached
-  // the last step and is entering the tail of the scroll range.
-  const tagOpacity = useTransform(progress, [0.72, 0.82], [0, 1]);
-  const tagDrop = useTransform(progress, [0.72, 0.82], [-24, 0]);
+  // End-of-ribbon CTA: drops in and sways as the ink reaches the actual end of
+  // the ribbon (after step 5 and the tail spacer, arriving at the CTA joint).
+  const tagOpacity = useTransform(progress, [0.90, 0.97], [0, 1]);
+  const tagDrop = useTransform(progress, [0.90, 0.97], [-24, 0]);
 
   // Ink draws top→bottom: Motion's pathLength (0..1) handles the dash math.
   const inkLength = useTransform(progress, [0, 1], [0, 1]);
@@ -263,8 +263,12 @@ export function ProcessRibbonHome({
         ))}
       </div>
 
-      {/* End-of-ribbon CTA: a swing tag hanging from the rail. It drops in as
-          the ink tip reaches the tail, then sways like it is suspended. */}
+      {/* Tail spacer: reserves scroll room after the last step so the ribbon
+          can draw gracefully down to the CTA joint. */}
+      <div className={styles.tail} aria-hidden="true" />
+
+      {/* End-of-ribbon CTA: a swing tag hanging from the rail at the ACTUAL end of the ribbon
+          which sticks out into CTA. It drops in as the ink tip reaches the very end. */}
       <motion.div
         className={styles.hangOuter}
         style={{
@@ -294,10 +298,6 @@ export function ProcessRibbonHome({
           </a>
         </div>
       </motion.div>
-
-      {/* Tail spacer: keeps the last step's reveal from being crammed
-          against the bottom of the scroll range. */}
-      <div className={styles.tail} aria-hidden="true" />
     </section>
   );
 }

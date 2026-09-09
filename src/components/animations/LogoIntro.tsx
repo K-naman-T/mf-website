@@ -82,6 +82,12 @@ export function LogoIntro() {
       document.body.style.removeProperty("overflow");
     };
 
+    const showAllNavBrands = () => {
+      document
+        .querySelectorAll<HTMLElement>("[data-mf-nav-brand]")
+        .forEach((b) => gsap.set(b, { opacity: 1 }));
+    };
+
     const finishIntro = () => {
       if (unlockTimer) {
         window.clearTimeout(unlockTimer);
@@ -92,6 +98,7 @@ export function LogoIntro() {
         autoTimer = null;
       }
       restoreScroll();
+      showAllNavBrands();
       introDone();
       setDone(true);
     };
@@ -108,8 +115,7 @@ export function LogoIntro() {
       if (entranceTimeline) entranceTimeline.kill();
       if (flightTimeline) flightTimeline.kill();
       restoreScroll();
-      const navBrand = document.querySelector<HTMLElement>("[data-mf-nav-brand]");
-      if (navBrand) gsap.set(navBrand, { opacity: 1 });
+      showAllNavBrands();
       gsap.to(root, {
         opacity: 0,
         duration: 0.18,
@@ -133,10 +139,17 @@ export function LogoIntro() {
 
       unlockTimer = window.setTimeout(finishIntro, 3200);
 
-      const navBrand = document.querySelector<HTMLElement>("[data-mf-nav-brand]");
-      const navImg = navBrand?.querySelector<HTMLImageElement>("img");
-      const target1 = document.getElementById("mf-nav-o-target-1");
-      const target2 = document.getElementById("mf-nav-o-target-2");
+      const brandCandidates = Array.from(
+        document.querySelectorAll<HTMLElement>("[data-mf-nav-brand]")
+      );
+      const navBrand =
+        brandCandidates.find((el) => {
+          const rect = el.getBoundingClientRect();
+          return rect.width > 0 && rect.height > 0;
+        }) ?? brandCandidates[0] ?? null;
+
+      const targetBoxEl =
+        navBrand?.querySelector<HTMLElement | SVGElement>("img, svg") ?? navBrand;
 
       const starLeftNode = root.querySelector<SVGGraphicsElement>("#intro-piece-o-left");
       const starRightNode = root.querySelector<SVGGraphicsElement>("#intro-piece-o-right");
@@ -145,6 +158,7 @@ export function LogoIntro() {
       const letterYNode = root.querySelector<SVGGraphicsElement>("#intro-piece-letter-y");
 
       if (!starLeftNode || !starRightNode) {
+        showAllNavBrands();
         finishIntro();
         return;
       }
@@ -161,21 +175,48 @@ export function LogoIntro() {
       let targetRightScreenY = 43.8;
       let targetScale = 0.13;
 
-      if (navImg) {
-        const imgRect = navImg.getBoundingClientRect();
-        targetLeftScreenX = imgRect.left + imgRect.width * (179 / 700);
-        targetLeftScreenY = imgRect.top + imgRect.height * (138 / 280);
-        targetRightScreenX = imgRect.left + imgRect.width * (510.5 / 700);
-        targetRightScreenY = imgRect.top + imgRect.height * (138 / 280);
-        targetScale = (imgRect.width / 700) / scaleX;
-      } else if (target1 && target2) {
-        const t1Rect = target1.getBoundingClientRect();
-        const t2Rect = target2.getBoundingClientRect();
-        targetLeftScreenX = t1Rect.left + t1Rect.width / 2;
-        targetLeftScreenY = t1Rect.top + t1Rect.height / 2;
-        targetRightScreenX = t2Rect.left + t2Rect.width / 2;
-        targetRightScreenY = t2Rect.top + t2Rect.height / 2;
-        targetScale = (t1Rect.width / 334) / scaleX;
+      let measured = false;
+      if (targetBoxEl) {
+        const rect = targetBoxEl.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          targetLeftScreenX = rect.left + rect.width * (179 / 700);
+          targetLeftScreenY = rect.top + rect.height * (138 / 280);
+          targetRightScreenX = rect.left + rect.width * (510.5 / 700);
+          targetRightScreenY = rect.top + rect.height * (138 / 280);
+          const computedScale = (rect.width / 700) / scaleX;
+          if (computedScale > 0 && Number.isFinite(computedScale)) {
+            targetScale = computedScale;
+          }
+          measured = true;
+        }
+      }
+
+      if (!measured) {
+        const target1 =
+          navBrand?.querySelector<HTMLElement>(".mf-nav-o-target-left") ??
+          document.getElementById("mf-nav-o-target-1");
+        const target2 =
+          navBrand?.querySelector<HTMLElement>(".mf-nav-o-target-right") ??
+          document.getElementById("mf-nav-o-target-2");
+        if (target1 && target2) {
+          const t1Rect = target1.getBoundingClientRect();
+          const t2Rect = target2.getBoundingClientRect();
+          if (t1Rect.width > 0 && t2Rect.width > 0) {
+            targetLeftScreenX = t1Rect.left + t1Rect.width / 2;
+            targetLeftScreenY = t1Rect.top + t1Rect.height / 2;
+            targetRightScreenX = t2Rect.left + t2Rect.width / 2;
+            targetRightScreenY = t2Rect.top + t2Rect.height / 2;
+            const computedScale = (t1Rect.width / 334) / scaleX;
+            if (computedScale > 0 && Number.isFinite(computedScale)) {
+              targetScale = computedScale;
+            }
+          }
+        }
+      }
+
+      // Safeguard: targetScale must be a valid, positive, non-zero number
+      if (!Number.isFinite(targetScale) || targetScale <= 0.05) {
+        targetScale = Math.max(0.08, targetScale || 0.13);
       }
 
       // Reset positions to formed state for clean relative measurement
@@ -204,7 +245,7 @@ export function LogoIntro() {
 
       const exitTl = gsap.timeline({
         onComplete: () => {
-          if (navBrand) gsap.set(navBrand, { opacity: 1 });
+          showAllNavBrands();
           gsap.to(root, {
             opacity: 0,
             duration: 0.22,
@@ -295,11 +336,9 @@ export function LogoIntro() {
       const brandCandidates = Array.from(
         document.querySelectorAll<HTMLElement>("[data-mf-nav-brand]")
       );
-      const navBrand =
-        brandCandidates.find((el) => {
-          const rect = el.getBoundingClientRect();
-          return rect.width > 0 && rect.height > 0;
-        }) ?? null;
+      brandCandidates.forEach((el) => {
+        gsap.set(el, { opacity: 0 });
+      });
 
       const starLeftNode = root.querySelector<SVGGraphicsElement>("#intro-piece-o-left");
       const starRightNode = root.querySelector<SVGGraphicsElement>("#intro-piece-o-right");
@@ -310,10 +349,6 @@ export function LogoIntro() {
       const letterNodes = [letterONode, letterFNode, letterYNode].filter(
         Boolean
       ) as SVGGraphicsElement[];
-
-      if (navBrand) {
-        gsap.set(navBrand, { opacity: 0 });
-      }
 
       // 1. Initial entrance setup
       if (starLeftNode && starRightNode) {
@@ -435,6 +470,7 @@ export function LogoIntro() {
       if (autoTimer) window.clearTimeout(autoTimer);
       if (entranceTimeline) entranceTimeline.kill();
       if (flightTimeline) flightTimeline.kill();
+      showAllNavBrands();
       restoreScroll();
       ctx.revert();
       startRef.current = () => {};
