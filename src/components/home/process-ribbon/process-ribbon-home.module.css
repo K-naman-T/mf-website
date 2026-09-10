@@ -46,6 +46,12 @@
    Reduced-motion users get the content at natural height instead. */
 .sectionTall {
   min-height: 380vh;
+  /* Flex column so the tail spacer absorbs any height the step stack leaves
+     unused (on mobile the min-height is taller than the content). That pins
+     the in-flow swing tag to the section bottom, exactly where the
+     absolutely-positioned rail's end sits. */
+  display: flex;
+  flex-direction: column;
 }
 
 /* ── Header ─────────────────────────────────────────────── */
@@ -247,6 +253,8 @@
    reveal completes, and gives the ribbon a clean descent down to the CTA joint. */
 .tail {
   height: clamp(14rem, 28vh, 22rem);
+  /* absorbs leftover height so the tag reaches the rail's end */
+  flex-grow: 1;
 }
 
 /* ── End-of-ribbon CTA (swing tag) ──────────────────────
@@ -459,16 +467,27 @@
     line-height: 1.6;
     max-width: none;
   }
-  /* The tag hangs below the last step. On a narrow screen centering it on
-     the far-left rail would shove it off-screen, so align it to the text
-     column instead and let it size to its content. */
+  /* The tag must stay strung on the ribbon end. Centering its grommet on the
+     far-left rail would shove half the tag off-screen, so hang it by a hole
+     near its left edge instead: the ribbon line meets the grommet and the
+     tag body swings out into the open field to the right. */
   .hangOuter {
-    margin-left: calc(var(--rail-x) + 0.9rem);
+    margin-left: calc(var(--rail-line-x) - 1rem);
     width: max-content;
-    max-width: calc(100% - var(--rail-x) - 1.8rem);
+    max-width: none;
+  }
+  .hangInner {
+    align-items: flex-start;
+    /* pendulum pivot moves onto the off-center grommet */
+    transform-origin: 1rem 0;
   }
   .hangString {
     height: clamp(1.2rem, 2.6vh, 1.9rem);
+    margin-left: calc(1rem - 1px);
+  }
+  .tag::before {
+    left: calc(1rem - 7px);
+    transform: none;
   }
   .tag {
     font-size: clamp(1.2rem, 5.4vw, 1.6rem);

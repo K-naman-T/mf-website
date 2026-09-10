@@ -17,6 +17,8 @@ interface ProcessRibbonHomeProps {
   eyebrow: string;
   title: string;
   steps: HomeProcessStep[];
+  /** Where the end-of-ribbon tag sends people — opens their mail client. */
+  email: string;
   /** The scroll container (home <main>). The ribbon scrubs against it. */
   scrollContainerRef: RefObject<HTMLElement | null>;
 }
@@ -119,6 +121,7 @@ export function ProcessRibbonHome({
   eyebrow,
   title,
   steps,
+  email,
   scrollContainerRef,
 }: ProcessRibbonHomeProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -278,22 +281,7 @@ export function ProcessRibbonHome({
       >
         <div className={styles.hangInner}>
           <span className={styles.hangString} aria-hidden="true" />
-          <a
-            className={styles.tag}
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              const scroller = scrollContainerRef.current;
-              const contact = scroller?.querySelector<HTMLElement>("#contact");
-              if (scroller && contact) {
-                scroller.scrollTo({
-                  top:
-                    contact.getBoundingClientRect().top + scroller.scrollTop,
-                  behavior: "smooth",
-                });
-              }
-            }}
-          >
+          <a className={styles.tag} href={`mailto:${email}`}>
             <span className={styles.tagText}>reach out</span>
           </a>
         </div>

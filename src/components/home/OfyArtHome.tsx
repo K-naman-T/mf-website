@@ -349,6 +349,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           eyebrow={process.eyebrow}
           title={process.title}
           steps={process.steps}
+          email={content.contact.email}
           scrollContainerRef={pageRef}
         />
 
