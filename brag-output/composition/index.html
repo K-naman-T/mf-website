@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>oddfromyou</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/music/audio-data-21s.js"></script>
+    <style>
+      @font-face {
+        font-family: "Teko";
+        font-style: normal;
+        font-weight: 400;
+        font-display: block;
+        src: url("assets/fonts/Teko-Regular.ttf") format("truetype");
+      }
+      @font-face {
+        font-family: "Teko";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("assets/fonts/Teko-Medium.ttf") format("truetype");
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000000;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000000;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .inner {
+        position: absolute;
+        inset: 0;
+      }
+      .grain {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 8;
+        opacity: 0.09;
+        background-image: repeating-radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 3px);
+        mix-blend-mode: overlay;
+      }
+      .marks {
+        position: absolute;
+        inset: 48px;
+        pointer-events: none;
+        z-index: 7;
+        border: 2px solid currentColor;
+        opacity: 0.22;
+      }
+      .label {
+        position: absolute;
+        top: 56px;
+        right: 72px;
+        left: auto;
+        z-index: 6;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      .scene-black {
+        background: #000000;
+        color: #ffffff;
+      }
+      .scene-red {
+        background: #ff0000;
+        color: #000000;
+      }
+      #audio-glow {
+        position: absolute;
+        inset: -12%;
+        z-index: 4;
+        pointer-events: none;
+        background: radial-gradient(circle at 50% 46%, rgba(255, 0, 0, 0.34), transparent 46%);
+        opacity: 0.28;
+      }
+      .oo {
+        width: 760px;
+        height: 304px;
+        display: block;
+      }
+      .oo-wrap {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 5;
+      }
+      .headline {
+        position: absolute;
+        top: 96px;
+        left: 88px;
+        right: 88px;
+        z-index: 6;
+        opacity: 0;
+        max-width: 1480px;
+        font-family: "Teko", sans-serif;
+        font-weight: 400;
+        font-size: 100px;
+        line-height: 1.06;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        color: #000000;
+      }
+      .headline span {
+        display: block;
+      }
+      .headline span + span {
+        margin-top: 10px;
+      }
+      .hero-art {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 62%;
+        z-index: 3;
+        overflow: hidden;
+      }
+      .hero-art img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center bottom;
+      }
+      .work-eyebrow {
+        position: absolute;
+        top: 64px;
+        left: 72px;
+        z-index: 6;
+        opacity: 0;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #000000;
+      }
+      .work-grid {
+        position: absolute;
+        left: 48px;
+        right: 48px;
+        top: 140px;
+        bottom: 56px;
+        display: flex;
+        gap: 4px;
+        z-index: 5;
+      }
+      .work-col {
+        position: relative;
+        flex: 1;
+        min-width: 0;
+        height: 100%;
+        background: #ff0000;
+        overflow: hidden;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .work-col img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center 30%;
+        display: block;
+      }
+      .work-label {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 20px 24px 28px;
+        background: #ff0000;
+        font-family: "Teko", sans-serif;
+        font-size: 48px;
+        font-weight: 500;
+        line-height: 1;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #000000;
+      }
+      .manifesto {
+        position: absolute;
+        left: 88px;
+        right: 88px;
+        top: 280px;
+        z-index: 6;
+        opacity: 0;
+        max-width: 1600px;
+        font-family: "Teko", sans-serif;
+        font-weight: 400;
+        font-size: 88px;
+        line-height: 1.08;
+        letter-spacing: 0.012em;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+      .manifesto span {
+        display: block;
+      }
+      .manifesto span + span {
+        margin-top: 14px;
+      }
+      .lockup {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        z-index: 6;
+      }
+      .lockup .oo {
+        width: 420px;
+        height: 168px;
+      }
+      .cta {
+        font-family: "Teko", sans-serif;
+        font-size: 52px;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #ffffff;
+        text-align: center;
+        line-height: 1;
+      }
+      .url {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: lowercase;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="21"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="audio-glow" aria-hidden="true"></div>
+
+      <section id="scene-mark" class="clip scene-black" data-start="0" data-duration="5.7" data-track-index="0">
+        <div id="s1-inner" class="inner">
+          <div class="marks" style="color: #ff0000"></div>
+          <p class="label" style="color: #888888">01 / mark</p>
+          <div class="oo-wrap">
+            <svg id="oo-mark" class="oo" viewBox="0 0 700 280" role="img" aria-label="oddfromyou" data-layout-allow-overflow="true">
+              <g id="o-red" data-layout-allow-overflow="true">
+                <path
+                  fill="#FF0000"
+                  fill-rule="evenodd"
+                  transform="translate(12 28)"
+                  d="M197.28 0.129317C257.639 -2.37486 357.111 31.3609 329.151 112.634C296.323 208.043 124.134 246.196 44.0571 201.171C-22.5053 163.741 -6.58047 96.6609 44.9872 54.198C88.1356 18.6569 142.372 2.40055 197.28 0.129317ZM80.5492 94.5894C87.3106 101.644 104.125 108 112.65 114.648C118.319 119.065 118.732 121.669 117.284 128.566C114.477 141.894 103.446 161.861 109.722 175.131C111.881 179.698 115.003 179.74 119.484 179.507C143.432 178.267 154.852 150.372 172.329 137.26C183.442 145.064 191.861 156.645 202.95 164.623C215.34 173.542 223.242 175.838 224.585 156.72C225.587 142.369 218.244 131.462 220.007 117.684C222.174 100.696 250.967 87.2099 262.249 75.729C275.295 62.4593 253.11 63.2414 244.351 63.7072C231.217 64.3978 218.414 69.689 206.274 70.8205C198.752 71.5193 197.887 70.313 194.474 63.9901C191.473 58.441 179.511 30.8367 175.702 29.0231C172.402 27.459 169.264 29.8134 166.805 31.8268C161.427 36.2361 155.143 49.3727 151.52 56.0117C149.352 59.9884 145.68 70.0384 142.615 72.3928C138.862 75.2797 123.495 74.3563 117.907 74.9137C103.882 76.303 88.3135 79.4645 75.6318 85.7291C75.3811 86.8772 79.4493 93.433 80.5411 94.5727L80.5492 94.5894Z"
+                />
+              </g>
+              <g id="o-white">
+                <path
+                  fill="#FFFFFF"
+                  fill-rule="evenodd"
+                  transform="translate(362 36)"
+                  d="M151.889 0.27362C205.937 -2.68069 286.752 17.8973 296.15 81.0904C307.19 155.284 208.178 200.299 147.472 203.712C93.665 206.74 9.76065 186.278 0.816018 122.794C-10.0125 46.018 89.4081 3.68749 151.889 0.27362ZM86.3924 175.512C88.0134 177.379 93.2561 177.999 95.6657 177.853C104.895 177.313 123.639 162.615 131.028 156.48C133.744 154.226 139.483 147.646 141.835 146.289C144.938 144.488 146.858 146.173 149.239 148.069C158.891 155.765 168.946 169.508 178.701 176.022C182.571 178.604 184.462 178.524 188.091 175.694C201.329 165.365 189.756 143.204 184.842 131.401C174.875 107.482 188.61 104.542 204.206 91.7186C209.208 87.6117 224.403 75.2693 213.37 70.7029C200.818 71.7168 187.266 75.0505 174.831 75.6705C164.726 76.1738 158.658 74.2991 154.007 64.9256C148.596 54.0129 147.953 39.2851 142.397 28.2338C141.689 26.8332 139.556 25.3087 138.038 26.2715C136.344 27.3438 126.837 42.9251 125.296 45.7773C118.71 57.9738 114.132 71.6366 107.254 83.7456C103.793 86.9042 84.1581 88.0421 78.3313 89.1436C71.088 90.5223 57.0175 94.6656 51.5266 99.4582C49.7085 101.041 48.584 101.946 49.0513 104.652C49.7742 108.846 67.6416 117.439 72.0226 118.833C81.1571 121.743 95.5561 119.671 94.5047 132.597C93.4751 145.21 87.5242 160.105 85.7937 172.907C85.5747 173.878 85.728 174.746 86.3924 175.512Z"
+                />
+              </g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-builders" class="clip scene-red" data-start="5" data-duration="5.7" data-track-index="1">
+        <div id="s2-inner" class="inner" style="opacity: 0">
+          <div class="marks" style="color: #000000"></div>
+          <p class="label" style="color: #000000">02 / studio</p>
+          <h1 id="hero-line" class="headline">
+            <span>we are a team of builders</span>
+            <span>with design &amp; engineering taste.</span>
+          </h1>
+          <div id="hero-art" class="hero-art">
+            <img src="assets/images/hero.png" alt="" width="1920" height="1080" />
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-work" class="clip scene-red" data-start="10" data-duration="6.7" data-track-index="2">
+        <div id="s3-inner" class="inner" style="opacity: 0">
+          <div class="marks" style="color: #000000"></div>
+          <p id="work-eyebrow" class="work-eyebrow">what we build</p>
+          <div class="work-grid">
+            <article id="col-pred" class="work-col">
+              <img src="assets/images/prediction.png" alt="" width="480" height="880" />
+              <span class="work-label">PREDICTION</span>
+            </article>
+            <article id="col-voice" class="work-col">
+              <img src="assets/images/voice.png" alt="" width="480" height="880" />
+              <span class="work-label">VOICE</span>
+            </article>
+            <article id="col-ind" class="work-col">
+              <img src="assets/images/industrial.png" alt="" width="480" height="880" />
+              <span class="work-label">INDUSTRIAL</span>
+            </article>
+            <article id="col-custom" class="work-col">
+              <img src="assets/images/custom.png" alt="" width="480" height="880" />
+              <span class="work-label">CUSTOM</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="scene-filter" class="clip scene-black" data-start="16" data-duration="5" data-track-index="3">
+        <div id="s4-inner" class="inner" style="opacity: 0">
+          <div class="marks" style="color: #ff0000"></div>
+          <p class="label" style="color: #888888">04 / filter</p>
+          <p id="manifesto" class="manifesto">
+            <span>if it could have come from anyone,</span>
+            <span>it is not for us.</span>
+          </p>
+          <div id="lockup" class="lockup" style="opacity: 0">
+            <svg class="oo" viewBox="0 0 700 280" role="img" aria-label="oddfromyou">
+              <path
+                fill="#FF0000"
+                fill-rule="evenodd"
+                transform="translate(12 28)"
+                d="M197.28 0.129317C257.639 -2.37486 357.111 31.3609 329.151 112.634C296.323 208.043 124.134 246.196 44.0571 201.171C-22.5053 163.741 -6.58047 96.6609 44.9872 54.198C88.1356 18.6569 142.372 2.40055 197.28 0.129317ZM80.5492 94.5894C87.3106 101.644 104.125 108 112.65 114.648C118.319 119.065 118.732 121.669 117.284 128.566C114.477 141.894 103.446 161.861 109.722 175.131C111.881 179.698 115.003 179.74 119.484 179.507C143.432 178.267 154.852 150.372 172.329 137.26C183.442 145.064 191.861 156.645 202.95 164.623C215.34 173.542 223.242 175.838 224.585 156.72C225.587 142.369 218.244 131.462 220.007 117.684C222.174 100.696 250.967 87.2099 262.249 75.729C275.295 62.4593 253.11 63.2414 244.351 63.7072C231.217 64.3978 218.414 69.689 206.274 70.8205C198.752 71.5193 197.887 70.313 194.474 63.9901C191.473 58.441 179.511 30.8367 175.702 29.0231C172.402 27.459 169.264 29.8134 166.805 31.8268C161.427 36.2361 155.143 49.3727 151.52 56.0117C149.352 59.9884 145.68 70.0384 142.615 72.3928C138.862 75.2797 123.495 74.3563 117.907 74.9137C103.882 76.303 88.3135 79.4645 75.6318 85.7291C75.3811 86.8772 79.4493 93.433 80.5411 94.5727L80.5492 94.5894Z"
+              />
+              <path
+                fill="#FFFFFF"
+                fill-rule="evenodd"
+                transform="translate(362 36)"
+                d="M151.889 0.27362C205.937 -2.68069 286.752 17.8973 296.15 81.0904C307.19 155.284 208.178 200.299 147.472 203.712C93.665 206.74 9.76065 186.278 0.816018 122.794C-10.0125 46.018 89.4081 3.68749 151.889 0.27362ZM86.3924 175.512C88.0134 177.379 93.2561 177.999 95.6657 177.853C104.895 177.313 123.639 162.615 131.028 156.48C133.744 154.226 139.483 147.646 141.835 146.289C144.938 144.488 146.858 146.173 149.239 148.069C158.891 155.765 168.946 169.508 178.701 176.022C182.571 178.604 184.462 178.524 188.091 175.694C201.329 165.365 189.756 143.204 184.842 131.401C174.875 107.482 188.61 104.542 204.206 91.7186C209.208 87.6117 224.403 75.2693 213.37 70.7029C200.818 71.7168 187.266 75.0505 174.831 75.6705C164.726 76.1738 158.658 74.2991 154.007 64.9256C148.596 54.0129 147.953 39.2851 142.397 28.2338C141.689 26.8332 139.556 25.3087 138.038 26.2715C136.344 27.3438 126.837 42.9251 125.296 45.7773C118.71 57.9738 114.132 71.6366 107.254 83.7456C103.793 86.9042 84.1581 88.0421 78.3313 89.1436C71.088 90.5223 57.0175 94.6656 51.5266 99.4582C49.7085 101.041 48.584 101.946 49.0513 104.652C49.7742 108.846 67.6416 117.439 72.0226 118.833C81.1571 121.743 95.5561 119.671 94.5047 132.597C93.4751 145.21 87.5242 160.105 85.7937 172.907C85.5747 173.878 85.728 174.746 86.3924 175.512Z"
+              />
+            </svg>
+            <p class="cta">bring us the part that doesn&apos;t fit.</p>
+            <p class="url">oddfromyou.com</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="grain" aria-hidden="true"></div>
+
+      <audio
+        id="bg-music"
+        data-start="0"
+        data-duration="21"
+        data-track-index="10"
+        data-volume="0.28"
+        data-automation="{&quot;version&quot;:1,&quot;lanes&quot;:[{&quot;target&quot;:&quot;volume&quot;,&quot;points&quot;:[{&quot;t&quot;:0,&quot;v&quot;:0},{&quot;t&quot;:0.4,&quot;v&quot;:0.28},{&quot;t&quot;:19.8,&quot;v&quot;:0.28},{&quot;t&quot;:21,&quot;v&quot;:0}]}]}"
+        src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3"
+      ></audio>
+      <audio
+        id="sfx-drop"
+        data-start="0.5"
+        data-duration="0.11"
+        data-track-index="11"
+        data-volume="0.55"
+        src="assets/sfx/interface/drop_001.ogg"
+      ></audio>
+      <audio
+        id="sfx-plate"
+        data-start="10.93"
+        data-duration="0.18"
+        data-track-index="12"
+        data-volume="0.5"
+        src="assets/sfx/impact/impactSoft_medium_001.ogg"
+      ></audio>
+      <audio
+        id="sfx-bong"
+        data-start="16.8"
+        data-duration="0.15"
+        data-track-index="13"
+        data-volume="0.45"
+        src="assets/sfx/interface/bong_001.ogg"
+      ></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const glow = document.getElementById("audio-glow");
+      const audio = window.AUDIO_DATA;
+
+      tl.fromTo(
+        "#o-red",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", transformOrigin: "50% 50%" },
+        0.5
+      );
+      tl.fromTo(
+        "#o-white",
+        { opacity: 0, scale: 0.9 },
+        { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", transformOrigin: "50% 50%" },
+        1.09
+      );
+      tl.fromTo("#s1-inner", { opacity: 1 }, { opacity: 0, duration: 0.7, ease: "power2.inOut" }, 5.0);
+
+      tl.fromTo(
+        "#s2-inner",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.7, ease: "power2.inOut", immediateRender: false },
+        5.0
+      );
+      tl.fromTo(
+        "#hero-line",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", immediateRender: false },
+        5.25
+      );
+      tl.fromTo(
+        "#hero-art",
+        { scale: 1.0 },
+        { scale: 1.045, duration: 5.5, ease: "none", transformOrigin: "50% 100%", immediateRender: false },
+        5.0
+      );
+      tl.fromTo(
+        "#s2-inner",
+        { opacity: 1 },
+        { opacity: 0, duration: 0.7, ease: "power2.inOut", immediateRender: false },
+        10.0
+      );
+
+      tl.fromTo(
+        "#s3-inner",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.7, ease: "power2.inOut", immediateRender: false },
+        10.0
+      );
+      tl.fromTo(
+        "#work-eyebrow",
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", immediateRender: false },
+        10.35
+      );
+      // beat-grid: plate 1 at 10.93s, plate 2 at 11.46s, plate 3 at 12.02s, plate 4 at 12.55s
+      const plates = ["#col-pred", "#col-voice", "#col-ind", "#col-custom"];
+      const plateTimes = [10.93, 11.46, 12.02, 12.55];
+      plates.forEach(function (sel, i) {
+        tl.fromTo(
+          sel,
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false },
+          plateTimes[i]
+        );
+      });
+      tl.fromTo(
+        "#s3-inner",
+        { opacity: 1 },
+        { opacity: 0, duration: 0.7, ease: "power2.inOut", immediateRender: false },
+        16.0
+      );
+
+      tl.fromTo(
+        "#s4-inner",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.7, ease: "power2.inOut", immediateRender: false },
+        16.0
+      );
+      tl.fromTo(
+        "#manifesto",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", immediateRender: false },
+        16.25
+      );
+      // beat-locked: 17.47s manifesto hold
+      tl.fromTo(
+        "#manifesto",
+        { opacity: 1 },
+        { opacity: 0, duration: 0.4, ease: "power2.inOut", immediateRender: false },
+        18.85
+      );
+      tl.fromTo(
+        "#lockup",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power3.out", immediateRender: false },
+        18.95
+      );
+
+      function sampleAudio() {
+        if (!audio || !glow) return;
+        const t = tl.time();
+        const f = Math.min(audio.totalFrames - 1, Math.max(0, Math.round(t * audio.fps)));
+        const rms = audio.rms[f] || 0;
+        const bass = audio.bass[f] || 0;
+        gsap.set(glow, {
+          opacity: 0.2 + bass * 0.22,
+          scale: 1 + rms * 0.045,
+        });
+      }
+      tl.eventCallback("onUpdate", sampleAudio);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+      sampleAudio();
+    </script>
+  </body>
+</html>
