@@ -14,7 +14,6 @@ import type { HomeProcessStep } from "@/lib/cms/types";
 import styles from "./process-ribbon.module.css";
 
 interface ProcessRibbonProps {
-  eyebrow: string;
   title: string;
   steps: HomeProcessStep[];
 }
@@ -106,7 +105,7 @@ function StepRow({ step, index, progress, at }: StepRowProps) {
   );
 }
 
-export function ProcessRibbon({ eyebrow, title, steps }: ProcessRibbonProps) {
+export function ProcessRibbon({ title, steps }: ProcessRibbonProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
 
@@ -184,7 +183,6 @@ export function ProcessRibbon({ eyebrow, title, steps }: ProcessRibbonProps) {
   return (
     <section ref={sectionRef} className={styles.section}>
       <header className={styles.sectionHeader}>
-        <p className={styles.eyebrow}>{eyebrow}</p>
         <h2 className={styles.sectionTitle}>{title}</h2>
       </header>
 

@@ -15,11 +15,7 @@ export default function ProcessRibbonPage() {
         <Link href="/">← home</Link>
         <span>process ribbon · lab</span>
       </nav>
-      <ProcessRibbon
-        eyebrow={process.eyebrow}
-        title={process.title}
-        steps={process.steps}
-      />
+      <ProcessRibbon title={process.title} steps={process.steps} />
     </main>
   );
 }

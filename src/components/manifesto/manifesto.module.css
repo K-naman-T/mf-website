@@ -143,3 +143,22 @@
 :global([data-theme="dark"]) .darkModeToggle:hover {
   color: rgb(230, 218, 204);
 }
+
+/* --- rail (RailToc, adapted from Rare UI): the manifesto's own table of contents --- */
+.manifestoRail {
+  position: fixed;
+  left: clamp(0.85rem, 2.6vw, 2.25rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  color: var(--main);
+  --rail: color-mix(in oklab, var(--main) 60%, var(--bg));
+}
+
+@media (max-width: 768px) {
+  .manifestoRail {
+    display: none;
+  }
+}
+
+/* --- the Rare UI / Skiper UI credit lives in the site footer, next to the copyright --- */

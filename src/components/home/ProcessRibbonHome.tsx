@@ -1,10 +1,16 @@
 "use client";
 
-import { type RefObject, useLayoutEffect, useRef, useState } from "react";
+import {
+  type CSSProperties,
+  type RefObject,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import {
   motion,
-  useReducedMotion,
-  useScroll,
+  useMotionValue,
   useSpring,
   useTransform,
   type MotionValue,
@@ -14,7 +20,6 @@ import type { HomeProcessStep } from "@/lib/cms/types";
 import styles from "./process-ribbon/process-ribbon-home.module.css";
 
 interface ProcessRibbonHomeProps {
-  eyebrow: string;
   title: string;
   steps: HomeProcessStep[];
   /** Where the end-of-ribbon tag sends people — opens their mail client. */
@@ -61,138 +66,216 @@ function wavePathD(): string {
 
 const PATH_D = wavePathD();
 
-interface StepRowProps {
-  step: HomeProcessStep;
-  index: number;
-  /** smoothed section progress 0..1 */
-  progress: MotionValue<number>;
-  /** fraction of the section where this row's icon sits */
-  at: number;
+/** Portion of a step's scroll band spent fading in, and again fading out.
+    The two windows meet at the band edge, so exactly one step is on screen at
+    a time — never two copies of the copy stacked on each other. */
+const FADE_SHARE = 0.36;
+
+interface StepBand {
+  keys: number[];
+  opacity: number[];
+  y: number[];
 }
 
-function StepRow({ step, index, progress, at }: StepRowProps) {
-  // Row ramps in over the window immediately before the ink tip arrives.
-  const from = Math.max(0, at - 0.09);
-  const to = Math.min(1, at);
-  const opacity = useTransform(progress, [from, to], [0, 1]);
-  const y = useTransform(progress, [from, to], [30, 0]);
-  const scale = useTransform(progress, [from, to], [0.92, 1]);
+/**
+ * The step stack is pinned for the whole section, so steps hand over one at a
+ * time: each card owns an equal band of the section's scroll, rises into it,
+ * holds, then drifts up and out as the next one takes over. The first card is
+ * already standing when the section locks; the last one stays until the tag
+ * lands.
+ */
+function stepBand(index: number, count: number): StepBand {
+  if (count <= 1) {
+    return { keys: [0, 1], opacity: [1, 1], y: [0, 0] };
+  }
+  const span = 1 / count;
+  const from = index * span;
+  const to = from + span;
+  const fade = span * FADE_SHARE;
+
+  if (index === 0) {
+    return { keys: [to - fade, to], opacity: [1, 0], y: [0, -22] };
+  }
+  if (index === count - 1) {
+    return { keys: [from, from + fade], opacity: [0, 1], y: [26, 0] };
+  }
+  return {
+    keys: [from, from + fade, to - fade, to],
+    opacity: [0, 1, 1, 0],
+    y: [26, 0, 0, -22],
+  };
+}
+
+interface StepCardProps {
+  step: HomeProcessStep;
+  index: number;
+  count: number;
+  /** smoothed section progress 0..1 */
+  progress: MotionValue<number>;
+}
+
+function StepCard({ step, index, count, progress }: StepCardProps) {
+  const band = useMemo(() => stepBand(index, count), [index, count]);
+  const opacity = useTransform(progress, band.keys, band.opacity);
+  const y = useTransform(progress, band.keys, band.y);
 
   return (
-    <div className={styles.stepRow} data-row={index}>
-      {/* Giant step numeral — fills the row's open space on mobile so each
-          step reads as a composed screen, not a floating text block. */}
-      <span className={styles.ghostNum} aria-hidden="true">
-        {step.number}
-      </span>
+    <motion.article className={styles.card} style={{ opacity, y }}>
+      <div className={styles.textCard}>
+        {/* Giant outlined numeral — a mobile device, set behind the step copy */}
+        <span className={styles.ghostNum} aria-hidden="true">
+          {step.number}
+        </span>
 
-      {/* Text — anchored to the left rail column */}
-      <motion.article className={styles.textCard} style={{ opacity, y }}>
-        <span className={styles.stepNumber}>{step.number}</span>
-        <h3 className={styles.stepTitle}>{step.title}</h3>
-        <p className={styles.stepBody}>{step.body}</p>
-      </motion.article>
+        <div className={styles.textBlock}>
+          <span className={styles.stepNumber}>{step.number}</span>
+          <h3 className={styles.stepTitle}>{step.title}</h3>
+          <p className={styles.stepBody}>{step.body}</p>
+        </div>
 
-      {/* Enlarged glyph — right half of the row, filled by the ink tip */}
-      <div className={styles.glyphNode}>
-        <motion.div
-          className={styles.glyphZone}
-          style={{ opacity, scale, y }}
-          aria-hidden="true"
-        >
-          <svg
-            viewBox="0 0 512 512"
-            className={styles.glyph}
-            focusable="false"
-          >
-            <g transform="translate(0 512) scale(0.02 -0.02)" fill="currentColor">
-              {PROCESS_GLYPHS[STEP_GLYPHS[index]!].paths.map((d, pi) => (
-                <path key={pi} d={d} />
-              ))}
-            </g>
-          </svg>
-        </motion.div>
+        {/* Enlarged glyph — the right half of the stage on desktop, the bead
+            on the ribbon beside the step number on mobile. */}
+        <div className={styles.glyphNode} aria-hidden="true">
+          <div className={styles.glyphZone}>
+            <svg viewBox="0 0 512 512" className={styles.glyph} focusable="false">
+              <g transform="translate(0 512) scale(0.02 -0.02)" fill="currentColor">
+                {PROCESS_GLYPHS[STEP_GLYPHS[index]!].paths.map((d, pi) => (
+                  <path key={pi} d={d} />
+                ))}
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
-    </div>
+    </motion.article>
   );
 }
 
 export function ProcessRibbonHome({
-  eyebrow,
   title,
   steps,
   email,
   scrollContainerRef,
 }: ProcessRibbonHomeProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduced = useReducedMotion();
+  const stageRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  const tagRef = useRef<HTMLDivElement>(null);
 
-  // Scroll-progress value (0..1 of the section's full passage) at which each
-  // row's center reaches the viewport middle — i.e. where the ink tip must be
-  // for that row to read as "reached". Derived from measured geometry once the
-  // rows have laid out; re-measured on resize/content changes.
-  const [stepAt, setStepAt] = useState<number[]>([]);
+  // The ribbon is taller than the window and streams upward as it draws, so
+  // the ink tip travels down the locked stage instead of the whole ribbon
+  // sliding past. Travel is measured: rail length minus how far down the stage
+  // the tip must end (the tag's grommet).
+  const [travel, setTravel] = useState(0);
+
+  // Section-anchored progress, driven off the scroller's own scroll position
+  // against measured pixel bounds — not Motion's viewport-relative offsets,
+  // which shift the moment a mobile address bar hides and make the pin look
+  // like it reverses. The bounds are the sticky stage's own range, so progress
+  // reaches 1 exactly as the stage bottoms out and the tag lands.
+  const progress = useMotionValue(0);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    const scroller = scrollContainerRef.current;
-    if (!section || !scroller) return;
-    const measure = () => {
-      const vh = scroller.clientHeight;
-      const rect = section.getBoundingClientRect();
-      // sTop = the section's top in the scroller's scroll space.
-      const sTop = rect.top + scroller.scrollTop;
-      const H = rect.height;
-      const scrollable = Math.max(1, H - vh);
-      const rows = Array.from(
-        section.querySelectorAll<HTMLElement>(`[data-row]`),
-      );
-      if (!rows.length) return;
-      setStepAt(
-        rows.map((row) => {
-          const r = row.getBoundingClientRect();
-          const centerFromSectionTop = r.top - sTop + r.height / 2;
-          // scroll position (px) that puts this row center at viewport middle
-          const scrollAtCenter = centerFromSectionTop - vh / 2;
-          return Math.min(1, Math.max(0, scrollAtCenter / scrollable));
-        }),
-      );
+    const stage = stageRef.current;
+    const rail = railRef.current;
+    const tag = tagRef.current;
+    // The scroller is the home's <main>, which this section sits directly in.
+    // Prefer the prop, but fall back to the DOM: a parent's ref is not
+    // guaranteed to be attached by the time a child's layout effect runs.
+    const scroller: HTMLElement | null =
+      scrollContainerRef.current ?? section?.parentElement ?? null;
+    if (!scroller || !section || !stage || !rail || !tag) return;
+
+    let start = 0;
+    let range = 1;
+    let anchored = false;
+    let lastWidth = 0;
+    let ticking = false;
+
+    const applyProgress = () => {
+      const p = (scroller.scrollTop - start) / range;
+      progress.set(p < 0 ? 0 : p > 1 ? 1 : p);
     };
+
+    const measure = () => {
+      const sRect = section.getBoundingClientRect();
+      const cRect = scroller.getBoundingClientRect();
+      const nextStart = sRect.top - cRect.top + scroller.scrollTop;
+      // While the stage is locked, hold the anchor. A mobile address bar
+      // sliding in or out rescales the viewport-height scenes above this one,
+      // which moves its absolute position by ~60px — re-anchoring mid-pin
+      // would yank the ribbon backwards. Off the lock, re-anchor freely.
+      const stageTop = stage.getBoundingClientRect().top;
+      const locked = stageTop <= 0.5 && sRect.bottom >= stage.offsetHeight - 0.5;
+      const width = scroller.clientWidth;
+      const resized = width !== lastWidth;
+      lastWidth = width;
+      if (!anchored || !locked || resized) {
+        start = nextStart;
+        anchored = true;
+      }
+      range = Math.max(1, sRect.height - stage.offsetHeight);
+      // The tag's grommet is where the ink must land: the ribbon streams up by
+      // everything beyond it, and the step deck holds the tag's own height plus
+      // a gap as bottom padding.
+      const gap = 24;
+      setTravel(Math.max(0, rail.offsetHeight - tag.offsetTop));
+      stage.style.setProperty(
+        "--tag-zone",
+        `${stage.offsetHeight - tag.offsetTop + gap}px`,
+      );
+      applyProgress();
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        applyProgress();
+        ticking = false;
+      });
+    };
+
     measure();
+    scroller.addEventListener("scroll", onScroll, { passive: true });
     const ro = new ResizeObserver(measure);
     ro.observe(section);
+    ro.observe(stage);
+    ro.observe(rail);
     window.addEventListener("resize", measure);
     return () => {
+      scroller.removeEventListener("scroll", onScroll);
       ro.disconnect();
       window.removeEventListener("resize", measure);
     };
-  }, [scrollContainerRef, steps.length]);
+  }, [progress, scrollContainerRef, steps.length]);
 
-  // Section-anchored progress inside the scroller. "start start → end end"
-  // maps progress 0..1 to the section's full passage through the viewport,
-  // matching the stepAt measurement above.
-  const { scrollYProgress } = useScroll({
-    container: scrollContainerRef,
-    target: sectionRef,
-    offset: ["start start", "end end"],
+  // Reduced motion needs no branch in the render here: the media query stops
+  // the lock, hides the rail and pins every card and the tag at rest, so the
+  // scrub values below are simply never seen. Branching on it would desync
+  // server and client markup.
+  const smoothed = useSpring(progress, {
+    stiffness: 90,
+    damping: 24,
+    mass: 0.35,
   });
 
-  // Reduced motion: content is visible without scrubbing. The motion value is
-  // created unconditionally so hook order stays stable across renders.
-  const staticFull = useTransform(() => 1);
-  const raw: MotionValue<number> = reduced ? staticFull : scrollYProgress;
-  const progress = useSpring(raw, { stiffness: 90, damping: 24, mass: 0.35 });
-
-  const railOpacity = useTransform(progress, [0, 0.05], [0, 1]);
-  const trackOpacity = useTransform(progress, [0, 0.05], [0.22, 0.22]);
-
-  // End-of-ribbon CTA: drops in and sways as the ink reaches the actual end of
-  // the ribbon (after step 5 and the tail spacer, arriving at the CTA joint).
-  const tagOpacity = useTransform(progress, [0.90, 0.97], [0, 1]);
-  const tagDrop = useTransform(progress, [0.90, 0.97], [-24, 0]);
+  const railOpacity = useTransform(smoothed, [0, 0.03], [0, 1]);
+  const trackOpacity = useTransform(smoothed, [0, 0.03], [0.22, 0.22]);
 
   // Ink draws top→bottom: Motion's pathLength (0..1) handles the dash math.
-  const inkLength = useTransform(progress, [0, 1], [0, 1]);
+  const inkLength = useTransform(smoothed, [0, 1], [0, 1]);
+
+  // The ribbon streams up by the measured travel as the ink length grows, so
+  // the drawn tip walks down the locked stage at p·travel instead of the rail
+  // running off the top.
+  const railY = useTransform(smoothed, [0, 1], [0, -travel]);
+
+  // End-of-ribbon CTA: the tag is strung on the grommet the ink tip lands on,
+  // and drops in as the tip arrives.
+  const tagOpacity = useTransform(smoothed, [0.93, 0.995], [0, 1]);
+  const tagDrop = useTransform(smoothed, [0.93, 0.995], [-22, 0]);
 
   // Pulse rides the ink tip. With pathLength normalized to 1, a dash of 0.05
   // whose offset = inkLength - 0.05 keeps the dash head glued just ahead of
@@ -204,88 +287,90 @@ export function ProcessRibbonHome({
     strokeDashoffset: pulseOffset,
   };
 
-  const tall = reduced ? "" : styles.sectionTall;
-
   return (
     <section
       ref={sectionRef}
       data-home-scene
       data-process-ribbon
-      className={`${styles.section} ${tall}`}
-      aria-label="how we work"
+      className={styles.section}
+      style={{ "--steps": steps.length } as CSSProperties}
+      aria-label="engagements"
     >
-      <div className={styles.sectionHeader}>
-        <p className={styles.eyebrow}>{eyebrow}</p>
-        <h2 className={styles.sectionTitle}>{title}</h2>
-      </div>
-
-      {/* Ribbon rail behind everything, left column */}
-      <div className={styles.rail} aria-hidden="true">
-        <svg
-          viewBox={`0 0 ${VB_W} ${VB_H}`}
-          preserveAspectRatio="none"
-          className={styles.railSvg}
-          suppressHydrationWarning
-        >
-          {/* ghost track (full path, faint) */}
-          <motion.path
-            d={PATH_D}
-            pathLength={1}
-            className={styles.track}
-            style={{ opacity: trackOpacity }}
-            suppressHydrationWarning
-          />
-          {/* ink drawn by scroll */}
-          <motion.path
-            d={PATH_D}
-            pathLength={1}
-            className={styles.ink}
-            style={{ pathLength: inkLength, opacity: railOpacity }}
-            suppressHydrationWarning
-          />
-          {/* pulse riding the ink tip */}
-          <motion.path
-            d={PATH_D}
-            pathLength={1}
-            className={styles.pulse}
-            style={pulseStyle}
-            suppressHydrationWarning
-          />
-        </svg>
-      </div>
-
-      <div className={styles.steps}>
-        {steps.map((step, index) => (
-          <StepRow
-            key={step.number}
-            step={step}
-            index={index}
-            progress={progress}
-            at={stepAt[index] ?? (index + 0.5) / steps.length}
-          />
-        ))}
-      </div>
-
-      {/* Tail spacer: reserves scroll room after the last step so the ribbon
-          can draw gracefully down to the CTA joint. */}
-      <div className={styles.tail} aria-hidden="true" />
-
-      {/* End-of-ribbon CTA: a swing tag hanging from the rail at the ACTUAL end of the ribbon
-          which sticks out into CTA. It drops in as the ink tip reaches the very end. */}
-      <motion.div
-        className={styles.hangOuter}
-        style={{
-          opacity: tagOpacity,
-          y: tagDrop,
-        }}
-      >
-        <div className={styles.hangInner}>
-          <span className={styles.hangString} aria-hidden="true" />
-          <a className={styles.tag} href={`mailto:${email}`}>
-            <span className={styles.tagText}>reach out</span>
-          </a>
+      <div ref={stageRef} className={styles.stage}>
+        {/* Ribbon rail behind everything, left column */}
+        <div className={styles.rail} aria-hidden="true">
+          <motion.div
+            ref={railRef}
+            className={styles.railTrack}
+            style={{ y: railY }}
+          >
+            <svg
+              viewBox={`0 0 ${VB_W} ${VB_H}`}
+              preserveAspectRatio="none"
+              className={styles.railSvg}
+              suppressHydrationWarning
+            >
+              {/* ghost track (full path, faint) */}
+              <motion.path
+                d={PATH_D}
+                pathLength={1}
+                className={styles.track}
+                style={{ opacity: trackOpacity }}
+                suppressHydrationWarning
+              />
+              {/* ink drawn by scroll */}
+              <motion.path
+                d={PATH_D}
+                pathLength={1}
+                className={styles.ink}
+                style={{ pathLength: inkLength, opacity: railOpacity }}
+                suppressHydrationWarning
+              />
+              {/* pulse riding the ink tip */}
+              <motion.path
+                d={PATH_D}
+                pathLength={1}
+                className={styles.pulse}
+                style={pulseStyle}
+                suppressHydrationWarning
+              />
+            </svg>
+          </motion.div>
         </div>
-      </motion.div>
+
+        <header className={styles.sectionHeader}>
+          <h2 className={styles.sectionTitle}>{title}</h2>
+        </header>
+
+        {/* Locked deck: every step is stacked in the same slot and cross-fades
+            in and out as the scroll runs. */}
+        <div className={styles.deck}>
+          {steps.map((step, index) => (
+            <StepCard
+              key={step.number}
+              step={step}
+              index={index}
+              count={steps.length}
+              progress={smoothed}
+            />
+          ))}
+        </div>
+
+        {/* End-of-ribbon CTA: an ink tag on the red field (a red tag with a
+            black label on the dark field), strung on the ribbon's last inch. */}
+        <motion.div
+          ref={tagRef}
+          className={styles.hangOuter}
+          style={{ opacity: tagOpacity, y: tagDrop }}
+        >
+          <div className={styles.hangInner}>
+            <span className={styles.hangString} aria-hidden="true" />
+            <a className={styles.tag} href={`mailto:${email}`}>
+              <span className={styles.tagText}>reach out</span>
+            </a>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

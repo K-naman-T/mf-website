@@ -43,6 +43,7 @@ export const ServiceSectionSchema = z.object({
 });
 
 export const BeatSchema = z.object({
+  rail: z.string().min(1).optional(),
   heading: z.string().min(1),
   body: z.string().min(1),
 });
@@ -68,13 +69,15 @@ export const HomeMetadataSchema = z.object({
   description: z.string().min(1),
 });
 
-export const HomeLetterSchema = z.object({
-  dateline: z.string().min(1),
-  salutation: z.string().min(1),
-  stance: z.string().min(1),
-  paragraphs: z.array(z.string().min(1)).min(1),
-  signoff: z.string().min(1),
-  signature: z.string().min(1),
+export const HomeManifestoSchema = z.object({
+  /** the claim the whole section argues for */
+  statement: z.string().min(1),
+  /** phrase inside `statement` that takes the hand-drawn mark */
+  mark: z.string().min(1),
+  /** supporting clauses, one per ledger row */
+  clauses: z.array(z.string().min(1)).min(1),
+  /** punchline under the statement */
+  closing: z.string().min(1),
 });
 
 export const HomeProcessStepSchema = z.object({
@@ -85,7 +88,6 @@ export const HomeProcessStepSchema = z.object({
 });
 
 export const HomeProcessSchema = z.object({
-  eyebrow: z.string().min(1),
   title: z.string().min(1),
   steps: z.array(HomeProcessStepSchema).min(1),
 });
@@ -95,7 +97,7 @@ export const HomeContentSchema = z.object({
     heading: z.string().min(1),
     body: z.string().min(1),
   }),
-  letter: HomeLetterSchema,
+  manifesto: HomeManifestoSchema,
   services: z.array(ServiceSectionSchema),
   process: HomeProcessSchema,
   navigation: NavigationSchema,
@@ -168,7 +170,7 @@ export const PageContentSchema = z.object({
 
 export type NavigationLink = z.infer<typeof NavigationLinkSchema>;
 export type Navigation = z.infer<typeof NavigationSchema>;
-export type HomeLetter = z.infer<typeof HomeLetterSchema>;
+export type HomeManifesto = z.infer<typeof HomeManifestoSchema>;
 export type HomeProcessStep = z.infer<typeof HomeProcessStepSchema>;
 export type HomeProcess = z.infer<typeof HomeProcessSchema>;
 export type HomeContent = z.infer<typeof HomeContentSchema>;

@@ -1,41 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { motion } from "motion/react";
-import { WordReveal } from "@/components/motion/text/WordReveal";
+import { ScrollText } from "@/components/motion/text/ScrollText";
 import { RoughAnnotation } from "@/components/motion/text/RoughAnnotation";
-import { SeamlessBackgrounds } from "@/components/home/SeamlessBackgrounds";
-import { useTheme } from "@/components/ThemeProvider";
-import { Footer } from "@/components/layout/Footer";
+import { RailToc, type RailTocItem } from "@/components/ui/rail-toc";
 import { AppNavbar } from "@/components/layout/AppNavbar";
-import { QUERIES } from "@/lib/config";
+import { Footer } from "@/components/layout/Footer";
+import { useTheme } from "@/components/ThemeProvider";
 import type { ManifestoContent, Navigation } from "@/lib/cms/types";
 import styles from "@/components/home/ofy-art-home.module.css";
 import mStyles from "./manifesto.module.css";
 
-// Single persistent plate — SeamlessBackgrounds fades non-active layers out.
-// Keep activeIndex pinned to 0 so the manifesto field never disappears mid-scroll.
-const BG_IMAGES_RED = [
-  {
-    desktop: "/assets/ofy-brand/manifesto/manifesto-red-desktop.webp",
-    mobile: "/assets/ofy-brand/manifesto/manifesto-red-mobile.webp",
-  },
-];
-
-const BG_IMAGES_DARK = [
-  {
-    desktop: "/assets/ofy-brand/manifesto/manifesto-dark-desktop.webp",
-    mobile: "/assets/ofy-brand/manifesto/manifesto-dark-mobile.webp",
-  },
-];
-
 const sectionContentVariants = {
   hidden: {
     opacity: 0,
-    y: 0,
-    scale: 0.98,
-    filter: "blur(12px)",
+    y: 18,
+    scale: 0.99,
+    filter: "blur(6px)",
     transition: { duration: 0.22, ease: [0.4, 0, 1, 1] as const },
   },
   visible: {
@@ -49,7 +31,11 @@ const sectionContentVariants = {
 
 const staggerItem = {
   hidden: { opacity: 0, y: 8 },
-  visible: (delay: number) => ({ opacity: 1, y: 0, transition: { duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] as const } }),
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, delay, ease: [0.16, 1, 0.3, 1] as const },
+  }),
 };
 
 const beatClasses = [
@@ -68,10 +54,19 @@ interface ManifestoPageProps {
 export default function ManifestoPage({ content, navigation }: ManifestoPageProps) {
   const [headerHidden, setHeaderHidden] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-  const isLightHeader = theme === "red" && isMobile;
+  const { theme } = useTheme();
   const pageRef = useRef<HTMLDivElement>(null);
+
+  const sceneCount = content.beats.length + 1;
+
+  // The rail is the argument's table of contents: the opening beat plus one line per beat.
+  const railItems: RailTocItem[] = [
+    { id: "manifesto-hero", label: content.title },
+    ...content.beats.map((beat, i) => ({
+      id: `manifesto-beat-${i + 1}`,
+      label: beat.rail ?? `Beat ${i + 1}`,
+    })),
+  ];
 
   useEffect(() => {
     const el = pageRef.current;
@@ -90,7 +85,7 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
           }
           const viewportH = el.clientHeight;
           const idx = Math.round(currentY / viewportH);
-          setActiveIndex(Math.min(idx, 5));
+          setActiveIndex(Math.min(idx, sceneCount - 1));
           lastScrollY = currentY;
           ticking = false;
         });
@@ -114,157 +109,145 @@ export default function ManifestoPage({ content, navigation }: ManifestoPageProp
       el.removeEventListener("scroll", onScroll);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, []);
-
-  useEffect(() => {
-    const mq = window.matchMedia(QUERIES.mobile);
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  }, [sceneCount]);
 
   return (
-    <>
-      <motion.main
-        ref={pageRef}
-        className={styles.page}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7 }}
-      >
-        <AppNavbar
-          content={navigation}
-          hidden={headerHidden}
-        />
+    <motion.main
+      ref={pageRef}
+      className={styles.page}
+      style={{ background: "var(--bg)" }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.7 }}
+    >
+      <AppNavbar content={navigation} hidden={headerHidden} />
 
-        <SeamlessBackgrounds
-          images={theme === "red" ? BG_IMAGES_RED : BG_IMAGES_DARK}
-          activeIndex={0}
-        />
+      <div className={mStyles.manifestoRail}>
+        <RailToc items={railItems} containerRef={pageRef} title="Manifesto" />
+      </div>
 
-        <section className={`${styles.scene} ${styles.hero}`}>
-          <motion.div
-            className={`${styles.heroContent} ${activeIndex === 0 ? styles.activeContent : ""}`}
-            variants={sectionContentVariants}
-            initial="hidden"
-            animate={activeIndex === 0 ? "visible" : "hidden"}
+      <section id="manifesto-hero" className={`${styles.scene} ${styles.hero}`}>
+        <motion.div
+          className={`${styles.heroContent} ${activeIndex === 0 ? styles.activeContent : ""}`}
+          variants={sectionContentVariants}
+          initial="hidden"
+          animate={activeIndex === 0 ? "visible" : "hidden"}
+        >
+          <div className={styles.heroGrid}>
+            <motion.p
+              className={mStyles.manifestoEyebrow}
+              custom={0}
+              variants={staggerItem}
+              initial="hidden"
+              animate={activeIndex === 0 ? "visible" : "hidden"}
+            >
+              {content.eyebrow}
+            </motion.p>
+            <h1 className={styles.gridTitle}>
+              odd from{" "}
+              <RoughAnnotation
+                type="circle"
+                color={theme === "red" ? "#000000" : "#FF0000"}
+                active={activeIndex === 0}
+                delay={0.45}
+              >
+                them
+              </RoughAnnotation>
+              .
+            </h1>
+            <motion.p
+              className={`${styles.gridBody} ${mStyles.manifestHeroIntro}`}
+              custom={0.15}
+              variants={staggerItem}
+              initial="hidden"
+              animate={activeIndex === 0 ? "visible" : "hidden"}
+            >
+              {content.intro}
+            </motion.p>
+          </div>
+        </motion.div>
+      </section>
+
+      {content.beats.map((beat, i) => {
+        const isLast = i === content.beats.length - 1;
+        const isActive = activeIndex === i + 1;
+        const strokeColor = theme === "red" ? "#000000" : "#FF0000";
+
+        return (
+          <section
+            key={beat.heading}
+            id={`manifesto-beat-${i + 1}`}
+            className={styles.scene}
+            style={isLast ? { position: "relative" } : undefined}
           >
-            <div className={styles.heroGrid}>
-              <motion.p
-                className={mStyles.manifestoEyebrow}
-                custom={0}
-                variants={staggerItem}
-                initial="hidden"
-                animate={activeIndex === 0 ? "visible" : "hidden"}
-              >
-                {content.eyebrow}
-              </motion.p>
-              <h1 className={styles.gridTitle}>
-                odd from{" "}
-                <RoughAnnotation type="circle" color={theme === "red" ? "#000000" : "#FF0000"} active={activeIndex === 0} delay={0.45}>
-                  them
-                </RoughAnnotation>
-                .
-              </h1>
-              <motion.p
-                className={`${styles.gridBody} ${mStyles.manifestHeroIntro}`}
-                custom={0.15}
-                variants={staggerItem}
-                initial="hidden"
-                animate={activeIndex === 0 ? "visible" : "hidden"}
-              >
-                {content.intro}
-              </motion.p>
-            </div>
-          </motion.div>
-        </section>
-
-        {content.beats.map((beat, i) => {
-          const isLast = i === content.beats.length - 1;
-          const strokeColor = theme === "red" ? "#000000" : "#FF0000";
-
-          return (
-            <section key={i} className={styles.scene} style={isLast ? { position: "relative" } : undefined}>
-              <motion.div
-                className={`${styles.heroContent} ${activeIndex === i + 1 ? styles.activeContent : ""}`}
-                variants={sectionContentVariants}
-                initial="hidden"
-                animate={activeIndex === i + 1 ? "visible" : "hidden"}
-              >
-                <div className={`${styles.heroGrid} ${beatClasses[i]}`}>
-                  {i === 0 && (
-                    <>
-                      <h2 className={styles.gridTitle}>{beat.heading}</h2>
-                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
-                        it is running out of{" "}
-                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
-                          difference
-                        </RoughAnnotation>
-                        .
-                      </motion.p>
-                    </>
-                  )}
-                  {i === 1 && (
-                    <>
-                      <h2 className={styles.gridTitle}>{beat.heading}</h2>
-                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
-                        the same grids. the same gradients. the same rounded promises. the same product wearing another product&apos;s clothes. it is also{" "}
-                        <RoughAnnotation type="strike-through" color={strokeColor} active={activeIndex === i + 1} delay={0.5}>
-                          forgettable
-                        </RoughAnnotation>
-                        .
-                      </motion.p>
-                    </>
-                  )}
-                  {i === 2 && (
-                    <>
-                      <h2 className={styles.gridTitle}>
-                        every worthwhile company contains an{" "}
-                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
-                          odd thing
-                        </RoughAnnotation>
-                        .
-                      </h2>
-                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
-                        {beat.body}
-                      </motion.p>
-                    </>
-                  )}
-                  {i === 3 && (
-                    <>
-                      <h2 className={styles.gridTitle}>
-                        we find the thing that is{" "}
-                        <RoughAnnotation type="underline" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
-                          yours
-                        </RoughAnnotation>
-                        .
-                      </h2>
-                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
-                        {beat.body}
-                      </motion.p>
-                    </>
-                  )}
-                  {i === 4 && (
-                    <>
-                      <h2 className={styles.gridTitle}>
-                        <RoughAnnotation type="circle" color={strokeColor} active={activeIndex === i + 1} delay={0.45}>
-                          odd enough
-                        </RoughAnnotation>{" "}
-                        to be remembered.
-                      </h2>
-                      <motion.p className={styles.gridBody} custom={0.1} variants={staggerItem} initial="hidden" animate={activeIndex === i + 1 ? "visible" : "hidden"}>
-                        {beat.body}
-                      </motion.p>
-                    </>
-                  )}
-                </div>
-              </motion.div>
-              {isLast && <Footer />}
-            </section>
-          );
-        })}
-      </motion.main>
-    </>
+            <motion.div
+              className={`${styles.heroContent} ${isActive ? styles.activeContent : ""}`}
+              variants={sectionContentVariants}
+              initial="hidden"
+              animate={isActive ? "visible" : "hidden"}
+            >
+              <div className={`${styles.heroGrid} ${beatClasses[i]}`}>
+                <h2 className={styles.gridTitle}>
+                  <ScrollText text={beat.heading} active={isActive} />
+                </h2>
+                {i === 0 && (
+                  <motion.p
+                    className={styles.gridBody}
+                    custom={0.1}
+                    variants={staggerItem}
+                    initial="hidden"
+                    animate={isActive ? "visible" : "hidden"}
+                  >
+                    it is running out of{" "}
+                    <RoughAnnotation
+                      type="circle"
+                      color={strokeColor}
+                      active={isActive}
+                      delay={0.45}
+                    >
+                      difference
+                    </RoughAnnotation>
+                    .
+                  </motion.p>
+                )}
+                {i === 1 && (
+                  <motion.p
+                    className={styles.gridBody}
+                    custom={0.1}
+                    variants={staggerItem}
+                    initial="hidden"
+                    animate={isActive ? "visible" : "hidden"}
+                  >
+                    the same grids. the same gradients. the same rounded promises. the same
+                    product wearing another product&apos;s clothes. it is also{" "}
+                    <RoughAnnotation
+                      type="strike-through"
+                      color={strokeColor}
+                      active={isActive}
+                      delay={0.5}
+                    >
+                      forgettable
+                    </RoughAnnotation>
+                    .
+                  </motion.p>
+                )}
+                {i > 1 && (
+                  <motion.p
+                    className={styles.gridBody}
+                    custom={0.1}
+                    variants={staggerItem}
+                    initial="hidden"
+                    animate={isActive ? "visible" : "hidden"}
+                  >
+                    {beat.body}
+                  </motion.p>
+                )}
+              </div>
+            </motion.div>
+            {isLast && <Footer />}
+          </section>
+        );
+      })}
+    </motion.main>
   );
 }

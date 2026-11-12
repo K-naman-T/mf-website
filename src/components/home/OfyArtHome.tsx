@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { RoughAnnotation } from "@/components/motion/text/RoughAnnotation";
+import { DitheringShader } from "@/components/ui/dithering-shader";
 import { motion } from "motion/react";
 import { LogoIntro } from "@/components/animations/LogoIntro";
 import { useIsIntroDone } from "@/components/motion/core/IntroDoneContext";
@@ -17,6 +18,132 @@ import styles from "./ofy-art-home.module.css";
 // ribbon(3) / contact(4). Scenes flow naturally; the ribbon is a tall
 // scroll-through section between manifesto and contact.
 const CONTACT_SCENE_INDEX = 4;
+const MANIFESTO_SCENE_INDEX = 2;
+
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+const EASE_IN = [0.4, 0, 1, 1] as const;
+
+/** Word-level fold: every word is a paper panel hinged on its baseline and
+    standing up out of the page, one after another. The parent keeps the
+    perspective so the sheet reads as one surface. */
+const foldPanel = {
+  hidden: {
+    rotateX: -96,
+    y: 10,
+    opacity: 0,
+    transition: { duration: 0.24, ease: EASE_IN },
+  },
+  visible: (delay: number) => ({
+    rotateX: 0,
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.72, delay, ease: EASE_OUT },
+  }),
+};
+
+/** Clause strips fold down from their own crease, hinged on the top edge. */
+const foldStrip = {
+  hidden: {
+    rotateX: -88,
+    opacity: 0,
+    transition: { duration: 0.22, ease: EASE_IN },
+  },
+  visible: (delay: number) => ({
+    rotateX: 0,
+    opacity: 1,
+    transition: { duration: 0.66, delay, ease: EASE_OUT },
+  }),
+};
+
+/** The crease each strip unfolds along draws itself out from the right. */
+const creaseDraw = {
+  hidden: {
+    scaleX: 0,
+    opacity: 0,
+    transition: { duration: 0.2, ease: EASE_IN },
+  },
+  visible: (delay: number) => ({
+    scaleX: 1,
+    opacity: 0.55,
+    transition: { duration: 0.8, delay, ease: EASE_OUT },
+  }),
+};
+
+/** The roll rises into the scene from the fold below the sheet. */
+const waveRoll = {
+  hidden: {
+    y: "22%",
+    opacity: 0,
+    transition: { duration: 0.5, ease: EASE_IN },
+  },
+  visible: {
+    y: "0%",
+    opacity: 1,
+    transition: { duration: 1.5, delay: 0.35, ease: EASE_OUT },
+  },
+};
+
+const closingRise = {
+  hidden: { opacity: 0, y: 16, transition: { duration: 0.22, ease: EASE_IN } },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay, ease: EASE_OUT },
+  }),
+};
+
+/** Split the claim into reveal units: plain words, plus the marked phrase kept
+    whole so the hand-drawn ring never breaks across a line. */
+function statementUnits(
+  text: string,
+  mark: string,
+): Array<{ text: string; marked: boolean }> {
+  const at = mark ? text.indexOf(mark) : -1;
+  if (at === -1) {
+    return text.split(/\s+/).map((word) => ({ text: word, marked: false }));
+  }
+  const before = text.slice(0, at).trim();
+  const after = text.slice(at + mark.length).trim();
+  return [
+    ...(before ? before.split(/\s+/).map((word) => ({ text: word, marked: false })) : []),
+    { text: mark, marked: true },
+    ...(after ? after.split(/\s+/).map((word) => ({ text: word, marked: false })) : []),
+  ];
+}
+
+interface ManifestoStatementProps {
+  text: string;
+  mark: string;
+  active: boolean;
+}
+
+function ManifestoStatement({ text, mark, active }: ManifestoStatementProps) {
+  const reduced = useReducedMotion();
+  const units = statementUnits(text, mark);
+
+  return (
+    <>
+      {units.map((unit, i) => (
+        <Fragment key={`${unit.text}-${i}`}>
+          <motion.span
+            className={styles.foldPanel}
+            custom={reduced ? 0 : 0.04 + i * 0.055}
+            variants={foldPanel}
+            initial="hidden"
+            animate={active ? "visible" : "hidden"}
+          >
+            {unit.marked ? (
+              <span className={styles.statementMark}>{unit.text}</span>
+            ) : (
+              unit.text
+            )}
+          </motion.span>
+          {i < units.length - 1 ? " " : null}
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 const HERO_BG = {
   red: {
@@ -31,28 +158,21 @@ const HERO_BG = {
 
 const WORK_ART = {
   red: [
-    "/assets/ofy-brand/work/red/prediction.png",
-    "/assets/ofy-brand/work/red/voice.png",
-    "/assets/ofy-brand/work/red/industrial.png",
-    "/assets/ofy-brand/work/red/custom.png",
+    "/assets/ofy-brand/work/red/decision.webp",
+    "/assets/ofy-brand/work/red/connected.webp",
+    "/assets/ofy-brand/work/red/conversation.webp",
+    "/assets/ofy-brand/work/red/operations.webp",
+    "/assets/ofy-brand/work/red/commerce.webp",
+    "/assets/ofy-brand/work/red/brand.webp",
   ],
   dark: [
-    "/assets/ofy-brand/work/dark/prediction.png",
-    "/assets/ofy-brand/work/dark/voice.png",
-    "/assets/ofy-brand/work/dark/industrial.png",
-    "/assets/ofy-brand/work/dark/custom.png",
+    "/assets/ofy-brand/work/dark/decision.webp",
+    "/assets/ofy-brand/work/dark/connected.webp",
+    "/assets/ofy-brand/work/dark/conversation.webp",
+    "/assets/ofy-brand/work/dark/operations.webp",
+    "/assets/ofy-brand/work/dark/commerce.webp",
+    "/assets/ofy-brand/work/dark/brand.webp",
   ],
-} as const;
-
-const MANIFESTO_WALL = {
-  red: {
-    desktop: "/assets/ofy-brand/manifesto/wall-red.png",
-    mobile: "/assets/ofy-brand/manifesto/wall-red-mobile.png",
-  },
-  dark: {
-    desktop: "/assets/ofy-brand/manifesto/wall-dark.png",
-    mobile: "/assets/ofy-brand/manifesto/wall-dark-mobile.png",
-  },
 } as const;
 
 const CONTACT_BG = {
@@ -82,7 +202,7 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openWork, setOpenWork] = useState<number | null>(null);
-  const [manifestoCarved, setManifestoCarved] = useState(false);
+  const [manifestoActive, setManifestoActive] = useState(false);
   const { theme } = useTheme();
   const isIntroDone = useIsIntroDone();
   const pageRef = useRef<HTMLDivElement>(null);
@@ -196,13 +316,14 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
   }, [isMobile, activeIndex]);
 
   useEffect(() => {
-    if (reducedMotion || activeIndex === 2) setManifestoCarved(true);
+    // The claim animates in while its scene holds the viewport midline, and
+    // resets on exit so re-entering the section replays it.
+    setManifestoActive(reducedMotion || activeIndex === MANIFESTO_SCENE_INDEX);
   }, [activeIndex, reducedMotion]);
 
   const strokeColor = theme === "red" ? "#000000" : "#FF0000";
   const heroBg = HERO_BG[theme === "dark" ? "dark" : "red"];
   const workArt = WORK_ART[theme === "dark" ? "dark" : "red"];
-  const manifestoWall = MANIFESTO_WALL[theme === "dark" ? "dark" : "red"];
   const contactBg = CONTACT_BG[theme === "dark" ? "dark" : "red"];
 
   return (
@@ -302,51 +423,98 @@ export default function OfyArtHome({ content }: OfyArtHomeProps) {
           </div>
         </section>
 
+        {/* Manifesto: one claim set huge, three supporting clauses ruled off
+            like a ledger, the punchline under the claim. No letter, no orb. */}
         <section
           id="manifesto"
           data-home-scene
           className={`${styles.scene} ${styles.manifestoScene}`}
           aria-labelledby="home-manifesto-title"
         >
-          <div
-            className={styles.manifestoStage}
-            data-carved={manifestoCarved ? "true" : "false"}
-          >
-            <div className={styles.manifestoWall} aria-hidden="true">
-              <img
-                className={`${styles.manifestoWallArt} ${styles.manifestoWallArtDesktop}`}
-                src={manifestoWall.desktop}
-                alt=""
-              />
-              <img
-                className={`${styles.manifestoWallArt} ${styles.manifestoWallArtMobile}`}
-                src={manifestoWall.mobile}
-                alt=""
-              />
+            {/* The sheet's roll: the project's dithered wave, rising out of
+                the bottom of the sheet and filling the open half of the
+                composition. The clauses and the punchline are knocked out of
+                it in the alternate colour, on a solid bed so they always
+                read. A plain ink swell sits underneath as the fallback for
+                machines without WebGL2. */}
+            <div className={styles.manifestoWave} aria-hidden="true">
+              <motion.div
+                className={styles.manifestoWaveRoll}
+                variants={waveRoll}
+                initial="hidden"
+                animate={manifestoActive ? "visible" : "hidden"}
+              >
+                <div className={styles.waveFallback} />
+                {manifestoActive && (
+                  <DitheringShader
+                    className={styles.waveShader}
+                    style={{ position: "absolute", inset: 0 }}
+                    width="100%"
+                    height="100%"
+                    shape="wave"
+                    type="8x8"
+                    pxSize={5}
+                    speed={0.5}
+                    morph={0.9}
+                    colorBack={theme === "dark" ? "#000000" : "#ff0000"}
+                    colorFront={theme === "dark" ? "#ff0000" : "#000000"}
+                  />
+                )}
+              </motion.div>
             </div>
-            <article className={styles.letter}>
-              <h2 id="home-manifesto-title" className={styles.letterSalutation}>
-                {content.letter.salutation}
-              </h2>
-              <p className={styles.letterThesis}>{content.letter.stance}</p>
-              {content.letter.paragraphs.map((graph) => (
-                <p key={graph} className={styles.letterGraph}>
-                  {graph}
-                </p>
+          <div
+            className={styles.manifestoGrid}
+            data-active={manifestoActive ? "true" : "false"}
+          >
+            <h2 id="home-manifesto-title" className={styles.manifestoStatement}>
+              <ManifestoStatement
+                text={content.manifesto.statement}
+                mark={content.manifesto.mark}
+                active={manifestoActive}
+              />
+            </h2>
+
+            <div className={styles.manifestoClauses}>
+              {content.manifesto.clauses.map((clause, i) => (
+                <div key={clause} className={styles.manifestoClause}>
+                  <motion.span
+                    className={styles.clauseCrease}
+                    aria-hidden="true"
+                    custom={reducedMotion ? 0 : 0.58 + i * 0.17}
+                    variants={creaseDraw}
+                    initial="hidden"
+                    animate={manifestoActive ? "visible" : "hidden"}
+                  />
+                  <motion.p
+                    className={styles.clauseText}
+                    custom={reducedMotion ? 0 : 0.64 + i * 0.17}
+                    variants={foldStrip}
+                    initial="hidden"
+                    animate={manifestoActive ? "visible" : "hidden"}
+                  >
+                    {clause}
+                  </motion.p>
+                </div>
               ))}
-              <p className={styles.letterSignoff}>
-                {content.letter.signoff}
-                <em>{content.letter.signature}</em>
-              </p>
-            </article>
+            </div>
+
+            <motion.p
+              className={styles.manifestoClosing}
+              custom={reducedMotion ? 0 : 1.16}
+              variants={closingRise}
+              initial="hidden"
+              animate={manifestoActive ? "visible" : "hidden"}
+            >
+              {content.manifesto.closing}
+            </motion.p>
           </div>
         </section>
 
-        {/* Process ribbon — one tall in-flow scene. The wavy rail draws itself
-            down the left as the page scrolls; each step row (glyph + text)
-            reveals as the ink tip passes it. */}
+        {/* Engagements ribbon — one viewport-locked scene. The wavy rail
+            streams upward through the left gutter as the ink draws, and the
+            step cards (title, copy, glyph) hand over one at a time until the
+            reach-out tag lands on the ribbon's end. */}
         <ProcessRibbonHome
-          eyebrow={process.eyebrow}
           title={process.title}
           steps={process.steps}
           email={content.contact.email}

@@ -33,6 +33,34 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.credit {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  opacity: 0.5;
+  margin: 0.35rem 0 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.credit a:hover {
+  opacity: 1;
+}
+
+[data-theme="red"] .credit {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .credit {
+  color: rgba(230, 218, 204, 0.7);
+}
+
 .links {
   display: flex;
   flex-direction: row;

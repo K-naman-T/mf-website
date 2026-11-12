@@ -51,7 +51,7 @@ export function getHomeContent(): HomeContent {
 
   const merged = {
     hero: data.hero,
-    letter: data.letter,
+    manifesto: data.manifesto,
     services,
     process: data.process,
     navigation: data.navigation,

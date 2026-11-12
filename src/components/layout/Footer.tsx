@@ -22,6 +22,18 @@ export function Footer() {
             <img className={styles.logo} src="/brand/ofy-short-logo.svg" alt="" />
           </Link>
           <p className={styles.copyright}>&copy; OddFromYou. All rights reserved.</p>
+          {/* Rare UI and Skiper UI license their free components with an attribution
+              requirement — keep this visible link wherever those components ship. */}
+          <p className={styles.credit}>
+            rail &amp; dot-matrix components by{" "}
+            <a href="https://rareui.com" target="_blank" rel="noreferrer">
+              Rare UI
+            </a>
+            {" · "}kinetic type adapted from{" "}
+            <a href="https://skiper-ui.com" target="_blank" rel="noreferrer">
+              Skiper UI
+            </a>
+          </p>
         </div>
         <nav className={styles.links}>
           {links.map((link) => (
