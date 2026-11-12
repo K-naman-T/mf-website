@@ -418,6 +418,7 @@ body > * {
   align-items: center;
   justify-content: center;
   background: #000000;
+  color: #FF0000;
   overflow: hidden;
   overscroll-behavior: contain;
   touch-action: none;
@@ -428,10 +429,32 @@ body > * {
 
 [data-theme="red"] .mf-logo-intro {
   background: #FF0000;
+  color: #000000;
 }
 
 [data-theme="dark"] .mf-logo-intro {
   background: #000000;
+  color: #FF0000;
+}
+
+.mf-logo-intro-svg {
+  filter: drop-shadow(0 0 45px rgba(255, 0, 0, 0.45));
+}
+
+[data-theme="red"] .mf-logo-intro-svg {
+  filter: drop-shadow(0 0 45px rgba(0, 0, 0, 0.28));
+}
+
+/* The logo is server-rendered but GSAP owns the entrance; keep the pieces
+   invisible until hydration starts the timeline. */
+.mf-logo-intro .mf-intro-piece {
+  opacity: 0;
+}
+
+@media (scripting: none) {
+  .mf-logo-intro {
+    display: none;
+  }
 }
 
 .mf-logo-intro-stage {

@@ -19,7 +19,7 @@ export default function RootLayout({
   const jsonLd = [getOrganizationJsonLd(), getWebsiteJsonLd()];
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="dark" data-accent="oxide" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -27,13 +27,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Teko:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
-      </head>
-      <body className="antialiased">
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("mf-theme");if(t==="red"||t==="dark")document.documentElement.setAttribute("data-theme",t);var a=localStorage.getItem("mf-accent");document.documentElement.setAttribute("data-accent",a||"oxide");}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("mf-theme");document.documentElement.setAttribute("data-theme",t==="red"?"red":"dark");var a=localStorage.getItem("mf-accent");document.documentElement.setAttribute("data-accent",a||"oxide");}catch(e){}})();`,
           }}
         />
+      </head>
+      <body className="antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <ThemeProvider>
           <IntroDoneProvider>

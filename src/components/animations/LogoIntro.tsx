@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type SyntheticEvent } from "react";
-import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { useIntroDone, useIsIntroDone } from "@/components/motion/core/IntroDoneContext";
-import { useTheme } from "@/components/ThemeProvider";
 
 // The canonical OddFromYou short OFY logo SVG paths (dual star-in-oval "Oo" eyes + traced OFY letters)
 const STAR_LEFT_D =
@@ -26,30 +24,11 @@ const PATH_Y =
 export function LogoIntro() {
   const rootRef = useRef<HTMLDivElement>(null);
   const startRef = useRef<(event?: Event | SyntheticEvent) => void>(() => {});
-  const [mounted, setMounted] = useState(false);
   const [done, setDone] = useState(false);
   const introDone = useIntroDone();
   const isIntroDone = useIsIntroDone();
-  const { theme } = useTheme();
-
-  // Theme-aware palette:
-  // Red theme: Full black logo (#000000) on red background (#FF0000)
-  // Dark theme: Red logo (#FF0000) on black background (#000000)
-  const isRed = theme === "red";
-  const bgColor = isRed ? "#FF0000" : "#000000";
-  const logoColor = isRed ? "#000000" : "#FF0000";
-  const fadeBg = isRed ? "rgba(255, 0, 0, 0)" : "rgba(0, 0, 0, 0)";
-  const shadowFilter = isRed
-    ? "drop-shadow(0 0 45px rgba(0, 0, 0, 0.28))"
-    : "drop-shadow(0 0 45px rgba(255, 0, 0, 0.45))";
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
     if (isIntroDone) {
       setDone(true);
       return;
@@ -63,6 +42,12 @@ export function LogoIntro() {
 
     const root = rootRef.current;
     if (!root) return;
+
+    // The theme is already on the document before this effect runs (the
+    // blocking script in the layout sets it), so the exit fade matches the
+    // colour the intro actually painted with.
+    const isRed = document.documentElement.getAttribute("data-theme") === "red";
+    const fadeBg = isRed ? "rgba(255, 0, 0, 0)" : "rgba(0, 0, 0, 0)";
 
     let entranceTimeline: gsap.core.Timeline | null = null;
     let flightTimeline: gsap.core.Timeline | null = null;
@@ -475,19 +460,16 @@ export function LogoIntro() {
       ctx.revert();
       startRef.current = () => {};
     };
-  }, [introDone, isIntroDone, mounted, isRed, fadeBg]);
+  }, [introDone, isIntroDone]);
 
-  if (done || !mounted) return null;
+  if (done) return null;
 
-  return createPortal(
+  return (
     <div
       className="mf-logo-intro"
       ref={rootRef}
       role="presentation"
       aria-label="OddFromYou Short OFY Logo Intro"
-      style={{
-        backgroundColor: bgColor,
-      }}
       onPointerDown={(event) => startRef.current(event)}
       onPointerUp={(event) => startRef.current(event)}
       onTouchStart={(event) => startRef.current(event)}
@@ -497,12 +479,9 @@ export function LogoIntro() {
       <div className="mf-logo-intro-stage">
         <svg
           viewBox="-20 15 700 520"
-          className="w-[92vw] max-w-[620px] max-h-[72vh] h-auto select-none overflow-visible"
+          className="mf-logo-intro-svg w-[92vw] max-w-[620px] max-h-[72vh] h-auto select-none overflow-visible"
           role="img"
           aria-label="OddFromYou Short OFY Logo with Stars"
-          style={{
-            filter: shadowFilter,
-          }}
         >
           {/* Piece 1: Left Star O */}
           <g
@@ -511,7 +490,7 @@ export function LogoIntro() {
           >
             <path
               d={STAR_LEFT_D}
-              fill={logoColor}
+              fill="currentColor"
               transform="translate(12 28)"
               fillRule="evenodd"
             />
@@ -524,7 +503,7 @@ export function LogoIntro() {
           >
             <path
               d={STAR_RIGHT_D}
-              fill={logoColor}
+              fill="currentColor"
               transform="translate(362 36)"
               fillRule="evenodd"
             />
@@ -535,7 +514,7 @@ export function LogoIntro() {
             id="intro-piece-letter-o"
             className="mf-intro-piece mf-intro-letter"
           >
-            <path d={PATH_O} fill={logoColor} fillRule="evenodd" />
+            <path d={PATH_O} fill="currentColor" fillRule="evenodd" />
           </g>
 
           {/* Piece 4: Letter F (Flies off on exit) */}
@@ -543,7 +522,7 @@ export function LogoIntro() {
             id="intro-piece-letter-f"
             className="mf-intro-piece mf-intro-letter"
           >
-            <path d={PATH_F} fill={logoColor} />
+            <path d={PATH_F} fill="currentColor" />
           </g>
 
           {/* Piece 5: Letter Y (Flies off on exit) */}
@@ -551,11 +530,10 @@ export function LogoIntro() {
             id="intro-piece-letter-y"
             className="mf-intro-piece mf-intro-letter"
           >
-            <path d={PATH_Y} fill={logoColor} />
+            <path d={PATH_Y} fill="currentColor" />
           </g>
         </svg>
       </div>
-    </div>,
-    document.body
+    </div>
   );
 }

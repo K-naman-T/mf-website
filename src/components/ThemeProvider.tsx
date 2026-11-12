@@ -50,7 +50,7 @@ interface ThemeContextValue {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("red");
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [accent, setAccentState] = useState<Accent>(DEFAULT_ACCENT);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       setThemeState(stored);
       document.documentElement.setAttribute("data-theme", stored);
     } else {
-      document.documentElement.setAttribute("data-theme", "red");
+      document.documentElement.setAttribute("data-theme", "dark");
     }
 
     if (isAccent(storedAccent)) {
