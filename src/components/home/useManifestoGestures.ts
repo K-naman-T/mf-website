@@ -35,6 +35,7 @@ export function useManifestoGestures(
     let wheelConsumed = false;
     let nativeDirection = 0;
     let nativeUntil = 0;
+    let skipEntryUntil = 0;
     let touch: { x: number; y: number; handled: boolean } | undefined;
 
     const rest = (index: number) => {
@@ -205,6 +206,17 @@ export function useManifestoGestures(
         unlock();
       }
 
+      const crossedDown = !locked && !leaving && previousOffset > 0 && distance <= 0;
+      const crossedUp = !locked && !leaving && previousOffset < 0 && distance >= 0;
+      if ((crossedDown || crossedUp) && now >= skipEntryUntil) {
+        // A fast scroll can jump over the 2px alignment window. Catch the
+        // crossing itself and pin at the edge the reader came from, instead of
+        // letting the off-screen position mark every beat as already read.
+        enter(crossedDown ? 1 : -1);
+        if (now - wheelTime <= WHEEL_GAP) wheelConsumed = true;
+        return;
+      }
+
       const movingToward = now <= nativeUntil && Math.sign(previousOffset) === nativeDirection
         && Math.sign(previousOffset - distance) === nativeDirection;
       if (movingToward) {
@@ -218,14 +230,20 @@ export function useManifestoGestures(
       }
 
       previousOffset = distance;
-      if (!locked && Math.abs(distance) <= ALIGNMENT_TOLERANCE) lock();
-      if (distance >= scroller.clientHeight) rest(0);
-      else if (distance <= -section.offsetHeight) rest(count - 1);
+      if (!locked && Math.abs(distance) <= ALIGNMENT_TOLERANCE) {
+        enter(previousOffset >= 0 ? 1 : -1);
+      }
     };
 
-    const onClick = () => {
+    const onClick = (event: MouseEvent) => {
       nativeDirection = 0;
       pinUntil = 0;
+      const target = event.target instanceof Element ? event.target.closest("a") : null;
+      const href = target?.getAttribute("href") ?? "";
+      // A deliberate in-page CTA/anchor jump may cross the pinned scene; let it through.
+      if (href.startsWith("#") || href.startsWith("/#")) {
+        skipEntryUntil = performance.now() + 2000;
+      }
     };
 
     onScroll();
