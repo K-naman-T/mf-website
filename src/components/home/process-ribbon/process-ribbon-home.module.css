@@ -1,16 +1,3 @@
-/* ── Process ribbon (live home) ─────────────────────────────
-   One viewport-locked scene between the manifesto and the contact
-   scenes. The stage is sticky for the section's whole scroll range:
-   a wavy SVG ribbon streams upward through the left rail as it
-   draws, with a bright pulse glued to its tip, while the step cards
-   — title, copy and enlarged glyph — hand over one at a time, each
-   rising in and drifting out inside its own slice of the scroll.
-
-   Geometry: the section is one stage tall plus --steps × --step-scroll
-   of scroll room; the rail is exactly that tall and translated by the
-   measured travel (rail length − where the ink tip must end) so the
-   tip walks down the locked stage at p·travel. */
-
 .section {
   /* Shared horizontal geometry: --rail-x = the x (from the section's
      content-box left edge) of the ribbon line. The rail is absolutely
@@ -20,20 +7,8 @@
   /* horizontal position of the drawn ribbon line, measured from the
      section's content-box left edge (desktop: the --rail-x boundary) */
   --rail-line-x: var(--rail-x);
-  /* node plate fills the stage field so the ink rail reads as passing
-     *behind* the icon discs instead of slicing through their artwork */
-  --node-bg: #ff0000;
-  --ghost-ink: #000000;
-  /* end-of-ribbon CTA tag inverts the field: an ink tag with a red label
-     on the red field, a red tag with a black label on the dark field */
-  --tag-bg: #000000;
-  --tag-fg: #ff0000;
-  /* room held under the step deck for the tag: measured on the client from
-     the tag's own box, so the title, the step and the tag never claim the
-     same band at any stage height */
-  --tag-zone: clamp(6rem, 16vh, 11rem);
-  /* the tag hangs just above the stage floor, where the ink lands */
-  --tag-bottom: clamp(1.25rem, 4vh, 2.75rem);
+  --field: #ff0000;
+  --deck-bottom: clamp(2.75rem, 12svh, 8rem);
   /* steps and scroll room per step; --steps is set inline from the CMS,
      the fallback keeps the height valid before hydration */
   --steps: 5;
@@ -42,18 +17,13 @@
      appears to reverse. Desktop has no dynamic chrome, so svh === vh there. */
   --step-scroll: 62svh;
   position: relative;
-  height: calc(100svh + var(--steps) * var(--step-scroll));
+  height: calc(138dvh + (var(--steps) + 1) * var(--step-scroll));
   z-index: 2;
-  background: #ff0000;
   color: #000000;
 }
 
 :global([data-theme="dark"]) .section {
-  --node-bg: #000000;
-  --ghost-ink: #ff0000;
-  --tag-bg: #ff0000;
-  --tag-fg: #000000;
-  background: #000000;
+  --field: #000000;
   color: #ff0000;
 }
 
@@ -61,34 +31,35 @@
 .stage {
   position: sticky;
   top: 0;
-  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   isolation: isolate;
+}
+
+.surface {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  background: var(--field);
   /* the stage is a stack of real bands — title, then the step deck — so the
      title can never sit on top of a step, whatever the screen height */
   display: flex;
   flex-direction: column;
 }
 
-/* ── Rail ─────────────────────────────────────────────────
-   Ribbon centered on --rail-x. The track is as tall as the whole
-   section and streams upward; the stage clips it to one screen. */
-.rail {
+.closingLayer {
   position: absolute;
   inset: 0;
-  z-index: 1;
+}
+
+.contactAnchor {
+  position: absolute;
+  inset: auto 0 0;
+  height: 100dvh;
   pointer-events: none;
 }
 
-.railTrack {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: calc(100svh + var(--steps) * var(--step-scroll));
-  will-change: transform;
-}
-
+/* The zipper samples the original ribbon curve in the left gutter. */
 .railSvg {
   position: absolute;
   top: 0;
@@ -97,62 +68,18 @@
      land on --rail-x — the boundary between the rail gutter and the text
      column. A 120px-wide box centered there keeps the stroke off the text on
      desktop, where --rail-x is large. */
-  height: 100%;
+  height: calc(100svh + var(--steps) * var(--step-scroll));
   width: 120px;
   transform: translateX(calc(var(--rail-x) - 60px));
-  overflow: visible;
-}
-
-.track,
-.ink,
-.pulse {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.track {
-  stroke: currentColor;
-  stroke-width: 2.5;
-  opacity: 0.22;
-}
-
-.ink {
-  stroke: currentColor;
-  stroke-width: 13;
-}
-
-.pulse {
-  stroke: currentColor;
-  stroke-width: 30;
-}
-
-/* ── Header ─────────────────────────────────────────────── */
-.sectionHeader {
-  position: relative;
-  flex: 0 0 auto;
-  z-index: 3;
-  padding: clamp(4.5rem, 13vh, 7rem) clamp(1rem, 4vw, 3rem) 0
-    calc(var(--rail-x) + clamp(2rem, 5vw, 4.5rem));
-  box-sizing: border-box;
-}
-
-.sectionTitle {
-  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
-  font-weight: 400;
-  font-size: clamp(2.4rem, 4.2vw, 4rem);
-  line-height: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  margin: 0;
-  max-width: 18ch;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* ── Step deck ────────────────────────────────────────────
    Every step is stacked in the same slot: the rail gutter, the text
    column, then the enlarged glyph filling the right half. Only the
    card whose band the scroll is in is at full opacity. The deck owns
-   the stage band between the title and the tag's swing zone. */
+   the stage band between the title and the stage floor. */
 .deck {
   position: relative;
   flex: 1 1 auto;
@@ -160,6 +87,10 @@
   box-sizing: border-box;
   z-index: 2;
   pointer-events: none;
+  /* The zipper re-clips this layer every scroll frame. Promoting the deck
+     keeps its text and glyphs cached, so the moving cut only re-clips the
+     layer instead of re-rasterising the deck. */
+  transform: translateZ(0);
 }
 
 .card {
@@ -169,9 +100,7 @@
   grid-template-columns: var(--rail-x) minmax(0, 1fr);
   align-items: center;
   box-sizing: border-box;
-  /* the bottom pad is the tag's swing zone: the step always centres above
-     the grommet the ink lands on */
-  padding: 2vh clamp(1rem, 4vw, 3.5rem) var(--tag-zone) 0;
+  padding: 2vh clamp(1rem, 4vw, 3.5rem) var(--deck-bottom) 0;
 }
 
 /* Step content: the copy on the left half, the enlarged glyph filling the
@@ -188,36 +117,27 @@
 
 .textBlock {
   max-width: 46ch;
-}
-
-.stepNumber {
-  display: block;
-  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
-  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  margin-bottom: 0.7rem;
-  opacity: 0.7;
+  opacity: var(--step-opacity, 0);
+  clip-path: var(--step-clip, inset(0 0 100% 0));
 }
 
 .stepTitle {
   font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
   font-weight: 400;
-  font-size: clamp(3rem, 7vw, 5.6rem);
+  font-size: clamp(4.5rem, 9.5vw, 9rem);
   line-height: 0.86;
   text-transform: uppercase;
   letter-spacing: 0.01em;
-  margin: 0 0 0.9rem;
+  margin: 0 0 1rem;
 }
 
 .stepBody {
   font-family: "Inter", system-ui, sans-serif;
-  font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
   font-weight: 400;
   line-height: 1.62;
   margin: 0;
-  max-width: 48ch;
-  opacity: 0.88;
+  max-width: 52ch;
   color: currentColor;
 }
 
@@ -241,194 +161,107 @@
 }
 
 .glyphZone {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .glyph {
-  width: clamp(170px, 24vw, 500px);
+  width: clamp(220px, 30vw, 640px);
   aspect-ratio: 1;
   color: inherit;
   display: block;
 }
 
-/* The enlarged icon carries each desktop step on its right, so the ghost
-   numeral is a mobile-only device (turned on inside the mobile media query). */
-.ghostNum {
-  display: none;
-}
-
-/* ── End-of-ribbon CTA (swing tag) ──────────────────────
-   A "reach out" tag hangs where the drawn ink arrives, like a
-   swing/luggage tag: the grommet meets the ribbon end and the whole
-   tag gently pendulum-sways around that point as it drops in. */
-.hangOuter {
+.glyphPixels {
   position: absolute;
-  bottom: var(--tag-bottom);
-  left: calc(var(--rail-line-x) - 5.5rem);
-  width: 11rem;
-  z-index: 3;
-  will-change: transform;
+  top: 0;
+  left: 0;
+  image-rendering: pixelated;
+  opacity: 0;
 }
 
-.hangInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* pendulum pivot at the top of the thread */
-  transform-origin: 50% 0;
-  animation: hang-sway 4.5s ease-in-out infinite;
-}
-
-@keyframes hang-sway {
-  0%,
-  100% {
-    transform: rotate(-2.4deg);
-  }
-  50% {
-    transform: rotate(2.4deg);
-  }
-}
-
-.hangString {
-  display: block;
-  width: 2px;
-  height: clamp(1.4rem, 3vh, 2.2rem);
-  background: currentColor;
-  border-radius: 1px;
-}
-
-.tag {
-  position: relative;
-  display: block;
+.pressLayer,
+.zipper {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  box-sizing: border-box;
-  margin-top: -1px;
-  padding: 0.85rem 0.5rem 0.95rem;
-  border-radius: 8px;
-  background: var(--tag-bg);
-  color: var(--tag-fg);
-  text-decoration: none;
-  font-family: "Bebas Neue", "Teko", "Anton", sans-serif;
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  line-height: 1;
-  text-align: center;
-  cursor: pointer;
-  /* a soft keyline + shadow makes the tag feel suspended, not flat */
-  box-shadow:
-    0 0 0 1px var(--tag-bg),
-    0 12px 24px rgba(0, 0, 0, 0.18);
-  transition: transform 0.2s ease;
+  height: 100%;
+  pointer-events: none;
 }
 
-/* Grommet: the punched hole at the tag's top edge where the thread
-   passes through. Field-colored center reads as a real hole. */
-.tag::before {
-  content: "";
-  position: absolute;
-  top: -7px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--node-bg);
-  box-shadow:
-    inset 0 0 0 2px var(--tag-bg),
-    0 0 0 1px var(--tag-bg);
+.zipper {
+  z-index: 5;
 }
 
-.tag:hover {
-  transform: translateY(-2px) rotate(-1deg);
+.zipTape {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 15;
+  opacity: 0.25;
 }
 
-.tag:active {
-  transform: translateY(1px);
-}
-
-/* Swaying a control is a decoration, not behavior: give motion-impaired
-   users a still tag. */
-@media (prefers-reduced-motion: reduce) {
-  .hangInner {
-    animation: none;
-  }
-  .tag:hover {
-    transform: none;
-  }
+.zipStitches {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  stroke-dasharray: 2 3;
+  opacity: 0.75;
 }
 
 /* ── Mobile ─────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .section {
-    --rail-x: 3.4rem;
+    --rail-x: 2.9rem;
     /* the rail line runs down the middle of the gutter */
-    --rail-line-x: calc(var(--rail-x) / 2);
+    --rail-line-x: calc(var(--rail-x) / 2 + 2px);
     --step-scroll: 70svh;
-    --tag-zone: clamp(5rem, 12vh, 7rem);
-    --tag-bottom: 1.25rem;
+    --mobile-content-left: calc(var(--rail-x) + 0.9rem);
+    --mobile-content-right: clamp(1.05rem, 5vw, 2.25rem);
   }
-  .sectionHeader {
-    padding: clamp(4.5rem, 12vh, 6rem) 1.15rem 0
-      calc(var(--rail-x) + 0.75rem);
-  }
-  .sectionTitle {
-    font-size: clamp(1.9rem, 8.6vw, 2.8rem);
-    line-height: 0.92;
-    max-width: 16ch;
-  }
-  /* The rail keeps the desktop box width — 120px against the same 200-unit
-     viewBox — so the sway, the stroke weight and the draw all read exactly
-     as they do on desktop instead of collapsing into a straight rule. The
-     wave stays inside the gutter; the surplus box simply overhangs it. */
+  /* Reduce the sway to leave room for both rows of teeth inside the gutter. */
   .railSvg {
-    width: 120px;
-    transform: translateX(calc(var(--rail-line-x) - 60px));
+    width: 86px;
+    transform: translateX(calc(var(--rail-line-x) - 43px));
   }
   .card {
     grid-template-columns: minmax(0, 1fr);
-    padding: 1.5vh 1.15rem var(--tag-zone) calc(var(--rail-x) + 0.75rem);
+    align-items: center;
+    padding: 0 var(--mobile-content-right) var(--deck-bottom) var(--mobile-content-left);
   }
-  /* Mobile step: the glyph carries the step beside the number and title, and
-     the copy runs full width underneath — no outlined numeral ghosting
-     behind the text, and no bead sitting on the ribbon. */
   .textCard {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      "num   icon"
-      "title icon"
-      "body  body";
-    align-items: center;
-    column-gap: 1.1rem;
+      "icon"
+      "title"
+      "body";
+    align-items: start;
+    row-gap: clamp(0.65rem, 2.2svh, 1.5rem);
     padding-left: 0;
     box-sizing: border-box;
   }
   .textBlock {
     display: contents;
   }
-  .ghostNum {
-    display: none;
-  }
-  .stepNumber {
-    grid-area: num;
-    font-size: clamp(0.95rem, 3.6vw, 1.1rem);
-    letter-spacing: 0.28em;
-    margin-bottom: 0.55rem;
+  .stepTitle,
+  .stepBody {
+    clip-path: var(--step-clip, inset(0 0 100% 0));
   }
   .stepTitle {
     grid-area: title;
-    font-size: clamp(2.8rem, 14vw, 4rem);
+    font-size: clamp(3.6rem, 21vw, 6.5rem);
     line-height: 0.88;
-    margin-bottom: 0.85rem;
+    margin: 0;
+    opacity: var(--step-opacity, 0);
   }
   .glyphNode {
     grid-area: icon;
+    justify-self: end;
     display: block;
-    align-self: center;
-    width: clamp(3.5rem, 26vw, 5rem);
+    align-self: start;
+    width: clamp(6rem, 38vw, 11rem);
     min-width: 0;
   }
   .glyphZone {
@@ -444,44 +277,21 @@
   }
   .stepBody {
     grid-area: body;
-    max-width: none;
-  }
-  .stepBody {
-    font-size: 0.95rem;
-    line-height: 1.58;
-    max-width: none;
-  }
-  /* The tag must stay strung on the ribbon end. Centering its grommet on the
-     far-left rail would shove half the tag off-screen, so hang it by a hole
-     near its left edge instead: the ribbon line meets the grommet and the
-     tag body swings out into the open field to the right. */
-  .hangOuter {
-    left: calc(var(--rail-line-x) - 1rem);
-    width: max-content;
-  }
-  .hangInner {
-    align-items: flex-start;
-    /* pendulum pivot moves onto the off-center grommet */
-    transform-origin: 1rem 0;
-  }
-  .hangString {
-    height: clamp(1.2rem, 2.6vh, 1.9rem);
-    margin-left: calc(1rem - 1px);
-  }
-  .tag::before {
-    left: calc(1rem - 7px);
-    transform: none;
-  }
-  .tag {
+    margin-top: 0;
     font-size: clamp(1.2rem, 5.4vw, 1.6rem);
-    padding: 0.7rem 0.5rem 0.8rem;
+    line-height: 1.45;
+    max-width: 44ch;
+    opacity: var(--step-opacity, 0);
   }
 }
 
-/* Reduced motion: no locking and no scrubbing — the section collapses to a
-   natural-height stack of every step, with the ribbon dropped entirely. The
-   overrides also cover the pre-hydration paint, when the scrub styles have
-   not been applied yet. */
+@media (max-width: 768px) and (max-height: 530px) {
+  .card { padding-top: 1.35rem; }
+  .stepTitle { font-size: 2.75rem; }
+  .glyphNode { width: 5.5rem; }
+}
+
+/* Reduced motion puts every step in natural document flow. */
 @media (prefers-reduced-motion: reduce) {
   .section {
     height: auto;
@@ -492,15 +302,21 @@
     height: auto;
     overflow: visible;
   }
-  .rail {
+  .surface {
+    height: auto;
+    clip-path: none !important;
+  }
+  .closingLayer {
+    position: static;
+  }
+
+  .railSvg,
+  .zipper,
+  .pressLayer {
     display: none;
   }
-  .sectionHeader {
-    position: static;
-    padding: 8rem 0 2rem;
-    margin-left: 1.5rem;
-  }
   .deck {
+    opacity: 1 !important;
     position: static;
     flex: none;
     padding-bottom: 0;
@@ -514,12 +330,16 @@
     padding: 4vh 1.5rem;
   }
   .card,
-  .hangOuter {
+  .textBlock,
+  .stepTitle,
+  .stepBody,
+  .glyphNode,
+  .glyph {
     opacity: 1 !important;
+    clip-path: none !important;
     transform: none !important;
   }
-  .hangOuter {
-    position: static;
-    margin: 1rem 0 4rem;
+  .glyphPixels {
+    display: none;
   }
 }

@@ -1,0 +1,19 @@
+# Local tooling and job logs (contains FIFOs; never upload)
+/.pi-bgrun
+/.vercel
+/.env*
+/.git
+
+# Build output
+/.next
+/node_modules
+
+# Root design sources only — public/assets and public/brand must ship.
+/assets
+/brand
+/mockups
+/docs
+/brag-output
+/ofy-motion-snippets
+/new_backgrounds
+/test-results

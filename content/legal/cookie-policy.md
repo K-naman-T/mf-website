@@ -1,89 +1,78 @@
 # Cookie Policy
 
-**Last updated: May 2026**
+**Last updated: 26 November 2026**
 
 ---
 
-## 1. What Are Cookies
+## 1. Cookies and Browser Storage
 
-Cookies are small text files stored on your device (computer, phone, tablet) when you visit a website. They help websites remember your preferences and understand how you interact with the site.
+Cookies are small files a website can place on your device. Browser storage — `localStorage` and `sessionStorage` — is a similar mechanism that keeps data in your browser without sending it with every request.
 
----
-
-## 2. How We Use Cookies
-
-OddFromYou uses cookies to:
-
-- Remember site preferences, such as theme and cookie choice
-- Provide essential site functionality
-- Understand site usage only if privacy-respecting analytics are added and permitted
+This policy explains what oddfromyou.com uses. It should be read with our [Privacy Policy](https://www.oddfromyou.com/legal/privacy-policy).
 
 ---
 
-## 3. Types of Cookies We Use
+## 2. What We Use
 
-### Essential Cookies
+**We do not set cookies on this website.**
 
-These are required for the website to function. They cannot be disabled without affecting site performance.
+We use three items of essential `localStorage`:
 
-- **Preference storage** — remembers theme and cookie notice choices
-- **Security and platform storage** — may be used by our hosting platform for basic site delivery and protection
+- **`mf-theme`** — stores your light (red) or dark theme choice, so the site stays in the theme you chose.
+- **`mf-accent`** — stores your accent-colour choice, so the palette you chose is kept.
+- **`mf-cookie-choice`** — stores the fact that you have seen the cookie notice, so it is not shown again.
 
-### Analytics Cookies
+These items stay in your browser. They are not sent to us with each request, are not used to identify you across sites, and are not used for analytics or advertising. They are strictly necessary to remember your preferences. You can delete them through your browser settings; doing so resets your theme and shows the notice again.
 
-These help us understand how visitors use our site. Data is anonymized and aggregated.
-
-- **Page views** — which pages are visited
-- **Time on site** — how long visitors stay
-- **Referral source** — how visitors arrived at the site
-
-We do not currently use advertising trackers. If analytics are added, we intend to use privacy-respecting analytics and avoid third-party advertising cookies.
-
-### Functional Cookies
-
-These remember your preferences.
-
-- **Theme preference** — dark or light mode
-- **Cookie notice preference** — essential-only or accepted choice
+We do not use analytics cookies, advertising cookies, social-media pixels, session-replay tools, or cross-site tracking.
 
 ---
 
-## 4. Third-Party Cookies
+## 3. Third-Party Requests
 
-Some third-party services we use may set their own cookies:
+Some parts of the page are delivered by third parties:
 
-- **Hosting and infrastructure** — our deployment provider may use technical storage for security, performance, or routing
-- **Embedded content** — if we later embed videos or other third-party content
+- **Vercel** hosts the site and processes request and log data to deliver and protect it. Vercel may use strictly necessary technical storage for security, routing, and delivery. Its privacy notice explains its practices.
+- **Google Fonts** serves the typefaces. Your browser sends a request to Google for the font files and stylesheet, which discloses your IP address, browser details, and the page you are visiting. Google does not receive your name or email from us. Google's privacy policy governs its handling of that request.
+- Links to other websites are governed by those websites' cookie and privacy policies.
 
-We do not control third-party cookies. Review the respective third-party privacy policies for details.
+We do not control third-party storage, but we choose providers that commit to appropriate safeguards and do not use them for advertising on our site.
 
 ---
 
-## 5. Managing Cookies
+## 4. Managing Storage
 
-You can control cookies through your browser settings:
+You can clear or block storage through your browser:
 
-- **Chrome:** Settings → Privacy and Security → Cookies
-- **Firefox:** Settings → Privacy & Security → Cookies
-- **Safari:** Preferences → Privacy → Cookies
+- **Chrome:** Settings → Privacy and security → Third-party cookies / Site settings
+- **Firefox:** Settings → Privacy & Security → Cookies and Site Data
+- **Safari:** Settings → Privacy
 - **Edge:** Settings → Cookies and site permissions
 
-Disabling cookies may affect some site functionality.
+Blocking storage may reset your theme or show the notice again. It does not affect your ability to read the site. You can also use private browsing, which discards local storage when you close the window.
 
 ---
 
-## 6. Do Not Track
+## 5. Do Not Track and Global Privacy Control
 
-We do not currently run advertising trackers. If analytics are added, Do Not Track and cookie choices should be respected where technically supported.
+We do not track you across sites and do not sell or share personal data for advertising. There is therefore no cross-site tracking to opt out of through Do Not Track or Global Privacy Control. We honour applicable opt-out signals where the law requires it.
 
 ---
 
-## 7. Updates
+## 6. Consent
 
-We may update this Cookie Policy periodically. Check this page for the latest version.
+The storage listed above is essential and does not require consent under the ePrivacy Directive, the UK Privacy and Electronic Communications Regulations, or similar laws. The notice you see is informational. If we introduce optional analytics or advertising cookies, we will ask for consent before setting them, explain the categories, and update this policy. Refusing optional cookies will not block the site.
+
+---
+
+## 7. Changes
+
+We may update this policy if our practices or providers change. The new version will be posted here with a new "Last updated" date. Material changes affecting optional cookies will be notified before the cookies are set.
 
 ---
 
 ## 8. Contact
 
-Questions about our use of cookies: hello@oddfromyou.com
+Questions about cookies or storage: **hello@oddfromyou.com**
+
+Privacy and grievance contact: hello@oddfromyou.com. See the [Privacy Policy](https://www.oddfromyou.com/legal/privacy-policy) for your rights and how to exercise them.

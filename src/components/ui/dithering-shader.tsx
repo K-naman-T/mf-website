@@ -3,6 +3,7 @@
 import type React from "react";
 
 import { useEffect, useRef } from "react";
+import type { MotionValue } from "motion/react";
 
 // GLSL utility functions
 const declarePI = `
@@ -79,6 +80,8 @@ uniform float u_shape;
 uniform float u_type;
 uniform float u_pxSize;
 uniform float u_morph;
+uniform float u_flow;
+uniform vec4 u_wavePressure;
 
 out vec4 fragColor;
 
@@ -174,12 +177,23 @@ void main() {
     // Sine wave — u_morph drives a continuous morph: the ridge count rises
     // from one broad wave to a tight multi-crest chop, the crests shear
     // sideways, and the whole band gently tilts as the value scrolls 0..1.
+    if (u_wavePressure.z > 0.) {
+      // Sample inward so the visible ink is displaced outward from the text.
+      vec2 aspect = vec2(u_resolution.x / u_resolution.y, 1.);
+      vec2 offset = shape_uv - u_wavePressure.xy;
+      float width = min(.82, aspect.x * .38);
+      float distance = length(vec2(offset.x * aspect.x / width, offset.y / .37));
+      float core = 1. - smoothstep(0., 1.1, distance);
+      float ring = 1. - smoothstep(.02, .34, abs(distance - mix(.65, 1.55, u_wavePressure.w)));
+      shape_uv -= offset * core * u_wavePressure.z * .85;
+      shape_uv.y += u_wavePressure.z * (.29 * core - .11 * ring);
+    }
     shape_uv *= 4.;
-    float crests = mix(1.0, 3.2, u_morph);
-    float shear = mix(0.0, 0.45, u_morph);
-    float tilt = mix(0.0, 0.35, u_morph);
+    float crests = mix(1.0, 2.6, u_morph);
+    float shear = mix(0.0, 0.45, u_morph) + u_flow * 0.22;
+    float tilt = mix(0.0, 0.35, u_morph) + u_flow * 0.16;
     float x = shape_uv.x + shear * shape_uv.y;
-    float wave = cos(crests * x - 2. * t) * sin(1.5 * shape_uv.x + t) * (.75 + .25 * cos(3. * t));
+    float wave = cos(crests * x - 2. * t + u_flow * 1.6) * sin(1.5 * shape_uv.x + t) * (.75 + .25 * cos(3. * t));
     shape = 1. - smoothstep(-1., 1., shape_uv.y + tilt * shape_uv.x + wave);
 
   } else if (u_shape < 5.5) {
@@ -275,8 +289,18 @@ interface DitheringShaderProps {
   speed?: number;
   /** Continuous 0..1 driver for in-shader shape morphs. */
   morph?: number;
+  flow?: number;
+  waveMotion?: MotionValue<WaveMotion>;
   className?: string;
   style?: React.CSSProperties;
+}
+
+export interface WaveMotion {
+  /** Coordinates relative to the center of the wave, with positive y up. */
+  x: number;
+  y: number;
+  strength: number;
+  ripple: number;
 }
 
 function hexToRgba(hex: string): [number, number, number, number] {
@@ -356,6 +380,8 @@ export function DitheringShader({
   pxSize = 4,
   speed = 1,
   morph = 0,
+  flow = 0,
+  waveMotion,
   className = "",
   style = {},
 }: DitheringShaderProps) {
@@ -372,8 +398,8 @@ export function DitheringShader({
   // Live props are mirrored into refs so the RAF loop can read the freshest
   // values every frame without tearing down and rebuilding the GL program when
   // a scroll-driven prop (e.g. morph) changes rapidly.
-  const propsRef = useRef({ colorBack, colorFront, shape, type, pxSize, speed, morph });
-  propsRef.current = { colorBack, colorFront, shape, type, pxSize, speed, morph };
+  const propsRef = useRef({ colorBack, colorFront, shape, type, pxSize, speed, morph, flow });
+  propsRef.current = { colorBack, colorFront, shape, type, pxSize, speed, morph, flow };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -403,6 +429,8 @@ export function DitheringShader({
       u_type: gl.getUniformLocation(program, "u_type"),
       u_pxSize: gl.getUniformLocation(program, "u_pxSize"),
       u_morph: gl.getUniformLocation(program, "u_morph"),
+      u_flow: gl.getUniformLocation(program, "u_flow"),
+      u_wavePressure: gl.getUniformLocation(program, "u_wavePressure"),
     };
 
     // Set up position attribute
@@ -440,6 +468,7 @@ export function DitheringShader({
     const render = () => {
       sizeCanvas();
       const p = propsRef.current;
+      const wave = waveMotion?.get();
       const currentTime = (Date.now() - startTimeRef.current) * 0.001 * p.speed;
 
       const context = glRef.current;
@@ -466,6 +495,9 @@ export function DitheringShader({
         context.uniform1f(locations.u_type, DitheringTypes[p.type]);
       if (locations.u_pxSize) context.uniform1f(locations.u_pxSize, p.pxSize);
       if (locations.u_morph) context.uniform1f(locations.u_morph, p.morph);
+      if (locations.u_flow) context.uniform1f(locations.u_flow, p.flow);
+      if (wave && locations.u_wavePressure)
+        context.uniform4f(locations.u_wavePressure, wave.x, wave.y, wave.strength, wave.ripple);
 
       context.drawArrays(context.TRIANGLES, 0, 6);
     };
@@ -485,25 +517,33 @@ export function DitheringShader({
       animationRef.current = requestAnimationFrame(loop);
     }
 
-    window.addEventListener("resize", sizeCanvas);
+    const onResize = () => {
+      if (propsRef.current.speed === 0) render();
+    };
+    window.addEventListener("resize", onResize);
+    const unsubscribe = waveMotion?.on("change", () => {
+      if (propsRef.current.speed === 0) render();
+    });
 
     return () => {
-      window.removeEventListener("resize", sizeCanvas);
+      unsubscribe?.();
+      window.removeEventListener("resize", onResize);
       renderRef.current = null;
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
       if (glRef.current && programRef.current) {
+        glRef.current.deleteBuffer(positionBuffer);
         glRef.current.deleteProgram(programRef.current);
       }
     };
-  }, [width, height]);
+  }, [width, height, waveMotion]);
 
   // Static (speed 0, reduced-motion) path: the RAF loop never runs, so repaint
   // once whenever a live prop changes instead of rebuilding the GL program.
   useEffect(() => {
     if (speed === 0) renderRef.current?.();
-  }, [colorBack, colorFront, shape, type, pxSize, morph, speed]);
+  }, [colorBack, colorFront, shape, type, pxSize, morph, flow, speed]);
 
   return (
     <div

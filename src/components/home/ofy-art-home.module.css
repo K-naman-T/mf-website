@@ -9,6 +9,13 @@
   overflow-x: hidden;
   overscroll-behavior: none;
   scrollbar-width: none;
+  /* Proximity (not mandatory) so the work scene settles to a full frame
+     without taking free scrolling away from the ribbon scrub. */
+  scroll-snap-type: y proximity;
+}
+
+.page[data-manifesto-locked] {
+  overflow-y: hidden;
 }
 
 .page::-webkit-scrollbar {
@@ -44,14 +51,12 @@
 }
 
 .hero,
-.serviceEngineering,
-.contact {
+.serviceEngineering {
   background: #FF0000;
 }
 
 :global([data-theme="dark"]) .hero,
-:global([data-theme="dark"]) .serviceEngineering,
-:global([data-theme="dark"]) .contact {
+:global([data-theme="dark"]) .serviceEngineering {
   background: #000000;
 }
 
@@ -60,53 +65,67 @@
   mask-image: linear-gradient(to bottom, #000 0%, #000 86%, transparent 100%);
 }
 
-.heroImgDesktop,
-.heroImgMobile,
-.contactImgDesktop,
-.contactImgMobile {
+/* Hero lens: the canvas takes over from the still image while the seam is in view. */
+.heroLensWrap {
   position: absolute;
   inset: 0;
 }
 
-.heroImgMobile,
-.contactImgMobile {
+.heroLensCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.heroLensWrap[data-live="true"] .heroLensCanvas {
+  opacity: 1;
+}
+
+.heroLensWrap[data-live="true"] .heroImgDesktop {
+  opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .heroLensCanvas {
+    display: none;
+  }
+}
+
+.heroImgDesktop,
+.heroImgMobile {
+  position: absolute;
+  inset: 0;
+}
+
+.heroImgMobile {
   display: none;
   object-position: center bottom;
 }
 
-/* ── Manifesto ─────────────────────────────────────────────
-   A sheet of folded paper. The claim is set in block letters that stand up
-   out of the page word by word (hinged on the baseline), the key phrase is
-   knocked out of an ink block with a dog-eared corner, and the three clauses
-   are right-aligned strips that unfold down from their own creases. No
-   numbering, no rules-as-list: the type is the structure. */
+/* A pinned sheet with a wave that deforms as the statements trade sides. */
 .manifestoScene {
   --rule: rgba(0, 0, 0, 0.32);
   --ink: #000000;
   --field: #ff0000;
-  /* the back side of a folded ink corner */
   --paper-back: #241a1a;
-  /* the sheet's roll, and the alternate colour the copy over it speaks in */
   --wave-base: rgba(0, 0, 0, 0.92);
   --over: #ff0000;
   --over-rule: rgba(255, 0, 0, 0.5);
-  /* never crop the sheet: it may grow past one screen, it may not be cut */
   position: relative;
+  height: 100dvh;
   min-height: 100dvh;
-  height: auto;
-  display: flex;
-  align-items: stretch;
+  overflow: visible;
   background: #FF0000;
   color: #000000;
-  /* the deep bottom pad is the mixing space into the next scene */
-  padding: clamp(4rem, 9vh, 6rem) clamp(1.15rem, 4vw, 3.5rem) clamp(1.4rem, 3.6vh, 2.6rem);
-  box-sizing: border-box;
 }
-
 
 :global([data-theme="dark"]) .manifestoScene {
   --rule: rgba(255, 0, 0, 0.36);
-  /* the manifesto speaks in brand red on the black field — not cream */
   --ink: #ff0000;
   --field: #000000;
   --paper-back: #7d0000;
@@ -117,50 +136,83 @@
   color: #ff0000;
 }
 
-.manifestoGrid {
-  display: grid;
+.manifestoStage {
   position: relative;
-  z-index: 1;
-  grid-template-columns: minmax(0, 1fr) minmax(0, min(46rem, 56%));
-  grid-template-rows: auto 1fr;
-  grid-template-areas:
-    "statement statement"
-    "clauses   closing";
-  align-items: end;
-  column-gap: clamp(2rem, 5vw, 5rem);
-  row-gap: clamp(1rem, 2.6vh, 2rem);
-  width: 100%;
-  max-width: 1560px;
-  margin: 0 auto;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--field);
+  color: var(--ink);
 }
 
-/* The sheet's roll: the project's dithered gradient wave, rising out of the
-   bottom of the sheet and filling the open half of the composition. It
-   carries the clauses and the punchline knocked out of it in the alternate
-   colour, its crest feathers into the field, and its tail dissolves into the
-   scene below so the two mix without a seam. */
+.manifestoStageInner {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: clamp(4rem, 9vh, 6rem) clamp(1.15rem, 4vw, 3.5rem) clamp(2rem, 5vh, 4rem);
+}
+
+.manifestoGrid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1560px;
+  height: 100%;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+.manifestoBeats {
+  position: relative;
+  height: min(56vh, 34rem);
+  margin-top: clamp(1rem, 4vh, 3rem);
+}
+
+.manifestoBeat {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.manifestoBeat[data-side="right"] {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.manifestoBeat[data-side="right"] .manifestoStatement {
+  margin-left: auto;
+}
+
 .manifestoWave {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: -20%;
+  right: -20%;
   bottom: 0;
-  z-index: 0;
-  height: clamp(17rem, 66vh, 40rem);
+  z-index: 1;
+  height: clamp(15rem, 52vh, 36rem);
   overflow: hidden;
   pointer-events: none;
   color: var(--ink);
 }
 
-.manifestoWaveRoll {
+.manifestoPixels {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: difference;
 }
 
 .waveShader {
   display: block;
 }
 
-/* Fallback swell — still a wave if the shader cannot run (no WebGL2). */
 .waveFallback {
   position: absolute;
   inset: 0;
@@ -169,31 +221,22 @@
     radial-gradient(96% 92% at 8% 168%, var(--ink) 0%, var(--ink) 44%, transparent 84%);
 }
 
-/* ── The claim: block letters, big enough to be the page ── */
 .manifestoStatement {
-  grid-area: statement;
   margin: 0;
+  max-width: 22ch;
   font-family: "Anton", "Bebas Neue", "Teko", sans-serif;
   font-weight: 400;
-  font-size: clamp(2.6rem, min(11.5vw, 13.5svh), 11rem);
-  line-height: 0.87;
-  letter-spacing: -0.004em;
+  font-size: clamp(2.6rem, min(9.5vw, 11svh), 9rem);
+  line-height: 1.02;
+  letter-spacing: 0.005em;
   text-transform: uppercase;
   text-wrap: balance;
-  /* the page is a sheet: every word folds against the same vanishing point */
-  perspective: 900px;
 }
 
-/* A word as a paper panel, hinged where it meets the line below it. */
-.foldPanel {
+.manifestoWord {
   display: inline-block;
-  transform-origin: 50% 100%;
-  transform-style: preserve-3d;
 }
 
-/* The marked phrase is folded into its own corner of the sheet: an ink
-   keyline box with the top-right corner turned back, so the words stay the
-   same ink as the rest of the claim and only the fold marks them. */
 .statementMark {
   position: relative;
   display: inline-block;
@@ -214,7 +257,6 @@
   );
 }
 
-/* the corner turned back on itself */
 .statementMark::after {
   content: "";
   position: absolute;
@@ -224,78 +266,6 @@
   height: 0.54em;
   background: var(--ink);
   clip-path: polygon(0 0, 0 100%, 100% 100%);
-}
-
-/* ── The three clauses: right-aligned strips that unfold ── */
-.manifestoClauses {
-  grid-area: clauses;
-  align-self: end;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(0.6rem, 1.6vh, 1rem);
-  width: 100%;
-  perspective: 800px;
-}
-
-.manifestoClause {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.clauseCrease {
-  display: block;
-  width: 100%;
-  height: 1px;
-  margin-bottom: 0.55rem;
-  background: var(--over-rule);
-  transform-origin: 0% 50%;
-}
-
-.clauseText {
-  margin: 0;
-  max-width: 46ch;
-  font-family: "Teko", "Anton", sans-serif;
-  font-size: clamp(0.98rem, min(1.7vw, 2svh), 1.4rem);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: 0.005em;
-  text-transform: uppercase;
-  text-align: left;
-  color: var(--over);
-  /* an ink keyline so the copy reads over both dense and open grain */
-  text-shadow:
-    0.7px 0 0 var(--ink),
-    -0.7px 0 0 var(--ink),
-    0 0.7px 0 var(--ink),
-    0 -0.7px 0 var(--ink);
-  transform-origin: 50% 0;
-  transform-style: preserve-3d;
-}
-
-/* ── The punchline, sitting on the bottom line of the sheet ── */
-.manifestoClosing {
-  grid-area: closing;
-  align-self: end;
-  justify-self: end;
-  margin: 0;
-  max-width: 30ch;
-  text-align: right;
-  color: var(--over);
-  /* an ink keyline so the copy reads over both dense and open grain */
-  text-shadow:
-    0.7px 0 0 var(--ink),
-    -0.7px 0 0 var(--ink),
-    0 0.7px 0 var(--ink),
-    0 -0.7px 0 var(--ink);
-  font-family: "Anton", "Bebas Neue", "Teko", sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.05rem, min(1.9vw, 2.4svh), 1.85rem);
-  line-height: 1.06;
-  letter-spacing: -0.005em;
-  text-transform: uppercase;
 }
 
 .homeHeader {
@@ -598,7 +568,10 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: clamp(5.25rem, 11vh, 7rem) clamp(1.15rem, 4vw, 3rem);
+  padding: 0;
+  height: 100dvh;
+  /* Full-frame scene: its snap point is the viewport itself. */
+  scroll-snap-align: center;
   box-sizing: border-box;
 }
 
@@ -606,234 +579,43 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0.8rem;
-  width: min(1080px, 92vw);
+  gap: clamp(1rem, 2vh, 1.5rem);
+  width: 100%;
+  height: 100%;
   max-height: none;
 }
 
-.workEyebrow {
-  margin: 0;
-  pointer-events: none;
-  font-family: "Courier Prime", "Special Elite", "Courier New", monospace, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: lowercase;
-  color: rgba(0, 0, 0, 0.55);
-  transition:
-    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-:global([data-theme="dark"]) .workEyebrow {
-  color: rgba(230, 218, 204, 0.55);
-}
-
-.workFrame {
-  position: relative;
-  /* 3 x 2 grid of 9:16 plates — the frame takes the grid's own aspect, so object-fit: cover
-     has nothing to crop and every subject stays whole. Width drives the size: the scene is
-     free to be taller than the viewport, so the tiles can be big. */
-  width: 100%;
-  aspect-ratio: 27 / 32;
-  height: auto;
-  max-height: none;
-  min-height: 0;
-  overflow: hidden;
-  box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.88);
-  transition: clip-path 0.72s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-:global([data-theme="dark"]) .workFrame {
-  border-color: rgba(230, 218, 204, 0.42);
-}
-
-.workColumns {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: rgba(0, 0, 0, 0.88);
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-}
-
-:global([data-theme="dark"]) .workColumns {
-  background: rgba(230, 218, 204, 0.42);
-}
-
-.workCol {
-  appearance: none;
-  position: relative;
-  display: flex;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  overflow: hidden;
-  container-type: inline-size;
-}
-
-.workColArt {
+/* Light spill at the work frame's top edge while the hero picture is refracted away. */
+.seamBloom {
   position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  pointer-events: none;
-}
-
-.workColInner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  min-width: 0;
-  padding: clamp(1.35rem, 3.5vh, 2rem) clamp(0.85rem, 1.5vw, 1.4rem) clamp(1rem, 2.8vh, 1.5rem);
-}
-
-.workColInner::before {
-  content: "";
-  position: absolute;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: 38%;
-  background: linear-gradient(to top, #FF0000 18%, rgba(255, 0, 0, 0));
+  height: clamp(80px, 12vh, 140px);
+  z-index: 2;
   pointer-events: none;
-  z-index: -1;
-  transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  background:
+    radial-gradient(58% 100% at 50% 0%, rgba(255, 232, 224, 0.3), rgba(255, 40, 16, 0.26) 36%, rgba(255, 0, 0, 0) 74%),
+    linear-gradient(to bottom, rgba(255, 30, 10, 0.24), rgba(255, 0, 0, 0) 68%);
+  filter: blur(22px);
+  mix-blend-mode: screen;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 56%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 56%, transparent 100%);
 }
 
-:global([data-theme="dark"]) .workColInner::before {
-  background: linear-gradient(to top, #000000 18%, rgba(0, 0, 0, 0));
+/* On the red field the frames already meet; a screen bloom would only wash the card tops. */
+:global([data-theme="red"]) .seamBloom {
+  display: none;
 }
 
-.workColInner::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 82%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  background: linear-gradient(
-    to top,
-    #FF0000 0%,
-    #FF0000 28%,
-    rgba(255, 0, 0, 0.82) 52%,
-    rgba(255, 0, 0, 0)
-  );
-  transition: opacity 0.45s ease;
-}
 
-:global([data-theme="dark"]) .workColInner::after {
-  background: linear-gradient(
-    to top,
-    #000000 0%,
-    #000000 28%,
-    rgba(0, 0, 0, 0.82) 52%,
-    rgba(0, 0, 0, 0)
-  );
-}
 
-.workIcon {
-  width: clamp(52px, 5.4vw, 84px);
-  height: clamp(52px, 5.4vw, 84px);
-  aspect-ratio: 1;
-  margin-bottom: 1.1rem;
-  object-fit: contain;
-  display: block;
-  filter: brightness(0);
-  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1), height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-:global([data-theme="dark"]) .workIcon {
-  filter: brightness(0) invert(1);
-}
-
-.workColLabel {
-  display: block;
-  font: 800 clamp(0.78rem, 1.15vw, 1.05rem)/1 "Inter", sans-serif;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #000000;
-  white-space: nowrap;
-}
-
-@container (max-width: 220px) {
-  .workColInner {
-    padding-inline: 0.55rem;
-  }
-
-  .workColLabel {
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
-  }
-}
-
-.workColCopy {
-  display: block;
-  max-width: 28ch;
-  max-height: 0;
-  margin: 0;
-  overflow: hidden;
-  opacity: 0;
-  font: 400 clamp(0.82rem, 1.05vw, 1rem)/1.45 "Courier Prime", monospace;
-  text-transform: lowercase;
-  color: rgba(0, 0, 0, 0.82);
-  transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), max-height 0.45s ease, margin 0.45s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .workCol:hover .workColCopy,
-  .workCol:focus-visible .workColCopy {
-    max-height: 8rem;
-    margin-top: 0.85rem;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .workCol:hover .workColInner::before,
-  .workCol:focus-visible .workColInner::before {
-    height: 82%;
-  }
-
-  .workCol:hover .workColInner::after,
-  .workCol:focus-visible .workColInner::after {
-    opacity: 1;
-  }
-}
-
-.workCol[data-open="true"] .workColCopy {
-  max-height: 8rem;
-  margin-top: 0.85rem;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.workCol[data-open="true"] .workColInner::before {
-  height: 82%;
-}
-
-.workCol[data-open="true"] .workColInner::after {
-  opacity: 1;
+/* ── Warp carousel: the canvas engine in warp/engine.tsx paints everything. ── */
+.warpStage {
+  flex: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .serviceProduct .contentGrid {
@@ -898,97 +680,8 @@
   letter-spacing: 0.15em;
 }
 
-.contactComposition {
-  padding-bottom: 10vh;
-}
-
-@media (max-width: 768px) {
-  .contactComposition {
-    padding-bottom: 6vh;
-  }
-}
-
-.contactContent {
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  height: 100dvh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  box-sizing: border-box;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-.contactContent[data-contact-visible="true"] {
-  opacity: 1;
-  transition-delay: 0.15s;
-}
-
 .activeContent {
   pointer-events: none;
-}
-
-.activeContent .contactEmail,
-.activeContent .contactButton,
-.flowContent .contactEmail,
-.flowContent .contactButton {
-  pointer-events: auto;
-}
-
-.contactStage {
-  display: grid;
-  grid-template-columns: minmax(220px, 0.4fr) 1fr;
-  align-items: center;
-  width: 100%;
-  min-height: 100%;
-  box-sizing: border-box;
-}
-
-.contactGrid {
-  width: auto;
-  max-width: 100%;
-  margin: 0 0 0 8vw;
-  padding-right: 1rem;
-  box-sizing: border-box;
-}
-
-.contactGrid .gridTitle {
-  text-align: left;
-  margin-left: 0;
-  padding-left: clamp(1rem, 2vw, 1.5rem);
-}
-
-.contactEmail {
-  display: block;
-  padding: clamp(1rem, 2vw, 1.5rem);
-  color: rgba(0, 0, 0, 0.85);
-  text-decoration: underline;
-  font-family: "Courier Prime", "Special Elite", "Courier New", monospace, sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.1rem, 2vw, 1.8rem);
-  line-height: 1.2;
-  text-underline-offset: 0.35em;
-  text-align: left;
-  text-transform: lowercase;
-}
-
-.contactButton {
-  display: block;
-  width: 100%;
-  padding: 0.7rem 1.2rem;
-  border: none;
-  background: transparent;
-  color: rgba(0, 0, 0, 0.6);
-  font: 700 0.68rem/1 "Inter", sans-serif;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-align: left;
 }
 
 @media (max-width: 768px) {
@@ -1086,25 +779,9 @@
 
   /* -- grid widths -- */
   .heroGrid,
-  .contentGrid,
-  .contactGrid {
+  .contentGrid {
     width: min(86vw, 350px);
     max-width: 350px;
-  }
-
-  .contactContent {
-    justify-content: flex-start;
-    padding-top: 5.5rem;
-  }
-
-  .contactStage {
-    grid-template-columns: 1fr;
-    align-items: flex-start;
-    padding: 0 6vw 8vh;
-  }
-
-  .contactGrid {
-    margin-left: 0;
   }
 
   .heroGrid {
@@ -1112,55 +789,32 @@
     max-width: 380px;
   }
 
-  /* Mobile: the claim still owns the screen, stacked over its clauses. The
-     section may grow past one screen rather than crop the block letters. */
-  .manifestoScene {
-    height: auto;
-    min-height: 100dvh;
-    padding: 5.1rem 1.15rem 6rem;
+  /* Keep the headline and full-size wave clear of the mobile header. */
+  .manifestoStageInner {
+    padding: 4.5rem 1.15rem 2rem;
   }
 
-  .manifestoGrid {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "statement"
-      "clauses"
-      "closing";
-    align-items: start;
-    align-content: space-between;
-    row-gap: 1.5rem;
+  .manifestoBeats {
+    /* All statements bottom-align on one baseline: wave top + 4.5rem overlap.
+       Height = viewport - stage padding - beats margin - wave height + overlap. */
+    height: calc(100svh - 4.5rem - clamp(1.5rem, 4.5svh, 2.5rem) - clamp(9.5rem, min(58svh, calc(95svh - 17rem)), 34rem) + 4.5rem);
+    margin-top: clamp(1.5rem, 4.5svh, 2.5rem);
+  }
+
+  .manifestoBeat {
+    align-items: flex-end;
   }
 
   .manifestoWave {
-    height: clamp(15rem, 58vh, 26rem);
+    height: clamp(9.5rem, min(58svh, calc(95svh - 17rem)), 34rem);
   }
 
   .manifestoStatement {
-    font-size: clamp(2.6rem, 15vw, 5rem);
-    line-height: 0.88;
+    font-size: clamp(2.25rem, min(13.8vw, 8.5svh), 5.2rem);
+    line-height: 1;
+    max-width: 100%;
   }
 
-  .manifestoClauses {
-    align-items: stretch;
-    gap: 1.1rem;
-  }
-
-  .manifestoClause {
-    align-items: flex-start;
-  }
-
-  .clauseText {
-    font-size: clamp(1.12rem, 5vw, 1.5rem);
-    line-height: 1.24;
-    text-align: left;
-    max-width: none;
-  }
-
-  .manifestoClosing {
-    max-width: none;
-    font-size: clamp(1.25rem, 5.8vw, 1.95rem);
-  }
 
   .tasteComposition .contentGrid,
   .serviceEngineering .contentGrid,
@@ -1175,13 +829,11 @@
     mask-image: none;
   }
 
-  .heroImgDesktop,
-  .contactImgDesktop {
+  .heroImgDesktop {
     display: none;
   }
 
-  .heroImgMobile,
-  .contactImgMobile {
+  .heroImgMobile {
     display: block;
     object-fit: cover;
     object-position: center bottom;
@@ -1232,78 +884,7 @@
 
   .workScene {
     overflow: hidden;
-    padding: 5.1rem 0.9rem 1.6rem;
-  }
-
-  .workStage {
-    width: min(100%, 92vw);
-  }
-
-  .workFrame {
-    height: min(72vh, 640px);
-    min-height: 340px;
-  }
-
-  .workColumns {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, minmax(0, 1fr));
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    gap: 1px;
-    background: rgba(0, 0, 0, 0.88);
-  }
-
-  :global([data-theme="dark"]) .workColumns {
-    background: rgba(230, 218, 204, 0.42);
-  }
-
-  .workCol {
-    flex: none;
-    min-width: 0;
-    min-height: 0;
-    width: auto;
-    height: auto;
-  }
-
-  .workColArt {
-    object-position: center 42%;
-  }
-
-  .workCol[data-open="true"] {
-    min-width: 0;
-  }
-
-  .workColumns:has(.workCol[data-open="true"]:nth-child(1)) { grid-template-rows: 2.15fr 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr; }
-  .workColumns:has(.workCol[data-open="true"]:nth-child(2)) { grid-template-rows: 0.7fr 2.15fr 0.7fr 0.7fr 0.7fr 0.7fr; }
-  .workColumns:has(.workCol[data-open="true"]:nth-child(3)) { grid-template-rows: 0.7fr 0.7fr 2.15fr 0.7fr 0.7fr 0.7fr; }
-  .workColumns:has(.workCol[data-open="true"]:nth-child(4)) { grid-template-rows: 0.7fr 0.7fr 0.7fr 2.15fr 0.7fr 0.7fr; }
-  .workColumns:has(.workCol[data-open="true"]:nth-child(5)) { grid-template-rows: 0.7fr 0.7fr 0.7fr 0.7fr 2.15fr 0.7fr; }
-  .workColumns:has(.workCol[data-open="true"]:nth-child(6)) { grid-template-rows: 0.7fr 0.7fr 0.7fr 0.7fr 0.7fr 2.15fr; }
-
-  .workColInner {
-    padding: 0.7rem 0.95rem 0.65rem;
-  }
-
-  .workColLabel {
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-  }
-
-  .workIcon {
-    width: 64px;
-    height: 64px;
-  }
-
-  .workCol[data-open="true"] .workIcon {
-    width: 92px;
-    height: 92px;
-  }
-
-  .workColCopy {
-    max-width: 22ch;
-    font-size: 0.82rem;
+    padding: 0;
   }
 
   .serviceProduct .productBracket {
@@ -1370,26 +951,6 @@
   .serviceAi .aiText {
     text-align: center;
   }
-
-  /* -- contact -- */
-  .contact .gridTitle {
-    font-size: clamp(2.15rem, 10.5vw, 2.7rem);
-    padding: 0.55rem 0.75rem;
-  }
-
-  .contactEmail {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: clamp(.9rem,4vw,1.1rem);
-    overflow-wrap: anywhere;
-    padding: 0.55rem 0.75rem;
-  }
-
-  .contactButton {
-    font-size: .75rem;
-    font-weight: 800;
-    padding: 0.45rem 0.75rem;
-  }
 }
 
 .seamlessBackgrounds {
@@ -1422,20 +983,17 @@
   object-fit: cover;
 }
 
-.heroImgMobile,
-.contactImgMobile {
+.heroImgMobile {
   display: none;
   object-position: center bottom;
 }
 
 @media (max-width: 768px) {
-  .heroImgDesktop,
-  .contactImgDesktop {
+  .heroImgDesktop {
     display: none;
   }
 
-  .heroImgMobile,
-  .contactImgMobile {
+  .heroImgMobile {
     display: block;
   }
 }
@@ -1490,23 +1048,8 @@
 :global([data-theme="dark"]) .gridBody {
   color: rgba(230, 218, 204, 0.88);
 }
-:global([data-theme="dark"]) .workCol {
-  border-color: transparent;
-}
-:global([data-theme="dark"]) .workColLabel {
-  color: rgba(230, 218, 204, 0.92);
-}
-:global([data-theme="dark"]) .workColCopy {
-  color: rgba(230, 218, 204, 0.78);
-}
 :global([data-theme="dark"]) .iconLabel {
   color: rgba(230, 218, 204, 0.92);
-}
-:global([data-theme="dark"]) .contactEmail {
-  color: rgba(230, 218, 204, 0.88);
-}
-:global([data-theme="dark"]) .contactButton {
-  color: rgba(230, 218, 204, 0.6);
 }
 
 
@@ -1542,41 +1085,55 @@
     transition: none;
   }
 
-  .workCol,
-  .workIcon,
-  .workColCopy,
-  .workColInner::before,
-  .workColInner::after {
-    transition: none;
+  /* Reduced motion: no pin, no stacked beats — the first line just sits there. */
+  .manifestoScene {
+    height: auto;
   }
 
-  /* Reduced motion: the sheet is simply there, already unfolded, with no
-     wait for the scene to take the viewport. */
-  .manifestoStatement,
-  .foldPanel,
-  .manifestoClause,
-  .clauseCrease,
-  .clauseText,
-  .manifestoClosing {
+  .manifestoStage {
+    position: relative;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .manifestoStageInner {
+    min-height: 100dvh;
+  }
+
+  .manifestoBeats {
+    height: auto;
+  }
+
+  .manifestoBeat {
+    position: relative;
+    inset: auto;
+  }
+
+  .manifestoBeat:not(:first-child) {
+    display: none;
+  }
+
+  .manifestoBeat:first-child :is(.manifestoWord, .statementMark) {
     opacity: 1 !important;
-    transform: none !important;
   }
 
-  /* Reduced motion: no crossfade — contact content appears with the scene. */
-  .contactContent {
+  .manifestoPixels {
+    display: none;
+  }
+
+  /* Warp carousel: snap the entrance and lens flip, no breathing glow. */
+  .warpCard,
+  .warpFace {
     transition: none !important;
-    opacity: 1 !important;
   }
-}
 
-.contactGrid {
-  position: relative;
-  z-index: 2;
+  .warpCard[data-front="true"] {
+    animation: none !important;
+  }
 }
 
 .heroContent.flowContent,
-.serviceContent.flowContent,
-.contactContent.flowContent {
+.serviceContent.flowContent {
   position: absolute;
 }
 
@@ -1692,4 +1249,151 @@
 
 @media (max-width: 768px) {
   .mobileOverlay { display: flex; }
+}
+
+.closing {
+  /* The sand canvas is portaled in here and absolutely fills this field.
+     isolation keeps its z-index 0 inside the closing section. */
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #000;
+  color: #f2f0ed;
+  padding: clamp(3rem, 9svh, 6rem) clamp(1.15rem, 5vw, 5rem) 0;
+}
+
+/* Full-field sand: grains must reach the left rail gutter where the zipper
+   seam opens, so the canvas is wider than the centered star box. */
+.starCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.closingMain {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.6rem, 4.75svh, 3.5rem);
+  text-align: center;
+  padding-bottom: clamp(1.45rem, 5svh, 4.5rem);
+}
+
+/* The star box: red sand settles into the two-star mark, letterboxed. */
+.starField {
+  position: relative;
+  width: min(72vw, 560px);
+  max-width: 100%;
+  aspect-ratio: 700 / 280;
+}
+
+.closingStarPiece {
+  will-change: transform;
+  /* Match the intro pieces: GSAP writes CSS transforms, and the default SVG
+     origin (view-box 0 0) squishes the pieces toward the top. Centering the
+     origin on the viewBox makes the squint read as the intro's eyelid. */
+  transform-origin: center center;
+}
+
+.starFieldLogo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* The mark ships pure black; tint both copies red on the black field. */
+  filter: invert(16%) sepia(100%) saturate(7499%) hue-rotate(1deg) brightness(100%) contrast(116%);
+}
+
+.closingRegistered {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #ff0000;
+  font: 700 clamp(0.75rem, 2vw, 1.25rem)/1 Inter, sans-serif;
+}
+
+.closingCta {
+  display: inline-flex;
+  gap: 1.8rem;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 0.85rem 1.15rem;
+  color: #fff;
+  font-size: clamp(0.88rem, 1.35vw, 1.08rem);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.25s, border-color 0.25s;
+}
+
+.closingCta > span {
+  color: #ff0000;
+}
+
+.closingCta:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: #fff;
+}
+
+.closingFooter {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.62);
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  padding: 1rem 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.closingFooter nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.2rem;
+}
+
+.closingFooter a {
+  color: inherit;
+}
+
+.closingFooter a:hover {
+  color: #fff;
+}
+
+.closingCta:focus-visible,
+.closingFooter a:focus-visible {
+  outline: 2px solid #ff0000;
+  outline-offset: 4px;
+}
+
+@media (max-height: 470px) {
+  .closing {
+    padding-top: 2.3rem;
+  }
+
+  .starField {
+    width: min(52vw, 34svh);
+  }
+
+  .closingMain {
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .closingFooter {
+    padding-block: 0.55rem;
+  }
 }

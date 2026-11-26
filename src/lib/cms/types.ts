@@ -29,31 +29,24 @@ export const IconCatalogSchema = z.object({
   icons: z.array(IconEntrySchema),
 });
 
-export const ServiceIconSchema = z.object({
+export const OfferingPointSchema = z.object({
   iconId: z.string().min(1),
   label: z.string().min(1),
   path: z.string().min(1),
   copy: z.string().min(1),
 });
 
+export const ServiceIconSchema = z.object({
+  iconId: z.string().min(1),
+  label: z.string().min(1),
+  path: z.string().min(1),
+  points: z.array(OfferingPointSchema),
+});
+
 export const ServiceSectionSchema = z.object({
   title: z.string().min(1),
   body: z.string().min(1),
   icons: z.array(ServiceIconSchema),
-});
-
-export const BeatSchema = z.object({
-  rail: z.string().min(1).optional(),
-  heading: z.string().min(1),
-  body: z.string().min(1),
-});
-
-export const ManifestoContentSchema = z.object({
-  title: z.string().min(1),
-  eyebrow: z.string().min(1),
-  intro: z.string().min(1),
-  backLabel: z.string().min(1),
-  beats: z.array(BeatSchema),
 });
 
 export const HomeContactSchema = z.object({
@@ -70,14 +63,15 @@ export const HomeMetadataSchema = z.object({
 });
 
 export const HomeManifestoSchema = z.object({
-  /** the claim the whole section argues for */
-  statement: z.string().min(1),
-  /** phrase inside `statement` that takes the hand-drawn mark */
-  mark: z.string().min(1),
-  /** supporting clauses, one per ledger row */
-  clauses: z.array(z.string().min(1)).min(1),
-  /** punchline under the statement */
-  closing: z.string().min(1),
+  /** the bold lines that hand over as the pinned section scrolls */
+  sequence: z
+    .array(
+      z.object({
+        text: z.string().min(1),
+        mark: z.string(),
+      }),
+    )
+    .min(1),
 });
 
 export const HomeProcessStepSchema = z.object({
@@ -181,9 +175,8 @@ export type LegalDocumentEntry = z.infer<typeof LegalDocumentEntrySchema>;
 export type IconCatalog = z.infer<typeof IconCatalogSchema>;
 export type IconEntry = z.infer<typeof IconEntrySchema>;
 export type ServiceIcon = z.infer<typeof ServiceIconSchema>;
+export type OfferingPoint = z.infer<typeof OfferingPointSchema>;
 export type ServiceSection = z.infer<typeof ServiceSectionSchema>;
-export type Beat = z.infer<typeof BeatSchema>;
-export type ManifestoContent = z.infer<typeof ManifestoContentSchema>;
 export type PageCard = z.infer<typeof PageCardSchema>;
 export type PageSection = z.infer<typeof PageSectionSchema>;
 export type PageContent = z.infer<typeof PageContentSchema>;

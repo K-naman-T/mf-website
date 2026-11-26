@@ -29,7 +29,7 @@ export function Navbar({ content, themeOverride }: NavbarProps) {
     }
   }, [isOO, setOOPosition]);
 
-  if (pathname === "/" || pathname === "/manifesto" || pathname.startsWith("/legal")) return null;
+  if (pathname === "/" || pathname.startsWith("/legal")) return null;
 
   return (
     <nav className={isDark ? "mf-nav mf-nav-dark" : "mf-nav mf-nav-red"}>

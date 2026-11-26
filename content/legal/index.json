@@ -1,19 +1,19 @@
 {
   "hero": {
     "eyebrow": "LEGAL",
-    "title": ["LEGAL", "DOCUMENTS"],
+    "title": ["Legal", "Documents"],
     "intro": "Policies, terms, and operating boundaries for OddFromYou products, services, and client engagements."
   },
   "documents": [
     {
       "slug": "terms-of-service",
       "title": "Terms of Service",
-      "description": "The terms that govern OddFromYou services, project engagements, payment, IP, confidentiality, and dispute resolution."
+      "description": "The terms for using this website and engaging OddFromYou: scope, payment, IP, AI systems, data protection, confidentiality, liability, and disputes."
     },
     {
       "slug": "privacy-policy",
       "title": "Privacy Policy",
-      "description": "How OddFromYou collects, uses, stores, shares, and protects personal and project information."
+      "description": "What OddFromYou collects on this site and in engagements, how it is used, stored, and shared, and your rights under India's DPDP Act, the GDPR, and applicable US law."
     },
     {
       "slug": "acceptable-use-policy",
@@ -23,7 +23,7 @@
     {
       "slug": "cookie-policy",
       "title": "Cookie Policy",
-      "description": "How OddFromYou uses cookies for site functionality, preferences, and privacy-respecting analytics."
+      "description": "The essential browser storage used by this site, third-party font and hosting requests, and how to manage them."
     },
     {
       "slug": "refund-policy",

@@ -15,8 +15,8 @@ export function CookieNotice() {
     setVisible(!window.localStorage.getItem(STORAGE_KEY));
   }, []);
 
-  const choose = (value: "essential" | "accepted" | "rejected") => {
-    window.localStorage.setItem(STORAGE_KEY, value);
+  const dismiss = () => {
+    window.localStorage.setItem(STORAGE_KEY, "acknowledged");
     setVisible(false);
   };
 
@@ -37,7 +37,8 @@ export function CookieNotice() {
               <span className="mf-cookie-dock-dot mf-cookie-dock-dot-second" />
             </span>
             <p className="mf-cookie-dock-text">
-              We use essential storage for preferences. Optional cookies stay off unless you accept.{" "}
+              We use essential browser storage for your theme and preferences. No analytics,
+              advertising, or cross-site tracking cookies.{" "}
               <Link href="/legal/cookie-policy" className="mf-cookie-dock-link">
                 Cookie Policy
               </Link>
@@ -46,24 +47,10 @@ export function CookieNotice() {
           <div className="mf-cookie-dock-actions">
             <button
               type="button"
-              className="mf-cookie-dock-btn mf-cookie-dock-btn-ghost"
-              onClick={() => choose("rejected")}
-            >
-              Reject all
-            </button>
-            <button
-              type="button"
-              className="mf-cookie-dock-btn mf-cookie-dock-btn-outline"
-              onClick={() => choose("essential")}
-            >
-              Essential only
-            </button>
-            <button
-              type="button"
               className="mf-cookie-dock-btn mf-cookie-dock-btn-primary"
-              onClick={() => choose("accepted")}
+              onClick={dismiss}
             >
-              Accept all
+              Got it
             </button>
           </div>
         </motion.aside>

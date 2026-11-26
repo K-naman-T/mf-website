@@ -3,19 +3,16 @@ import path from "path";
 import matter from "gray-matter";
 import {
   HomeContentSchema,
-  ManifestoContentSchema,
   LegalDocumentSchema,
   LegalIndexSchema,
   PageContentSchema,
   type HomeContent,
-  type ManifestoContent,
   type LegalDocument,
   type LegalIndex,
   type PageContent,
 } from "./types";
 
 const HOME_MD_PATH = path.join(process.cwd(), "src", "content", "home.md");
-const MANIFESTO_MD_PATH = path.join(process.cwd(), "src", "content", "manifesto.md");
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
 function getIconMap(): Map<string, string> {
@@ -33,20 +30,31 @@ export function getHomeContent(): HomeContent {
   const { data } = matter(raw);
 
   const iconMap = getIconMap();
+  const resolveIcon = (id: string, source: string) => {
+    const resolvedPath = iconMap.get(id);
+    if (!resolvedPath) {
+      throw new Error(`Icon "${id}" not found in content/icons.json for ${source}`);
+    }
+    return resolvedPath;
+  };
 
   const services = (data.services ?? []).map((svc: Record<string, unknown>) => ({
     ...svc,
-    icons: (svc.icons as Array<{ iconId: string; label: string }>).map(
-      (icon) => {
-        const resolvedPath = iconMap.get(icon.iconId);
-        if (!resolvedPath) {
-          throw new Error(
-            `Icon "${icon.iconId}" not found in content/icons.json for service "${svc.title}"`,
-          );
-        }
-        return { ...icon, path: resolvedPath };
-      },
-    ),
+    icons: (
+      svc.icons as Array<{
+        iconId: string;
+        label: string;
+        points: Array<{ iconId: string; label: string; copy: string }>;
+      }>
+    ).map((icon) => ({
+      iconId: icon.iconId,
+      label: icon.label,
+      path: resolveIcon(icon.iconId, String(svc.title)),
+      points: icon.points.map((point) => ({
+        ...point,
+        path: resolveIcon(point.iconId, icon.label),
+      })),
+    })),
   }));
 
   const merged = {
@@ -60,19 +68,6 @@ export function getHomeContent(): HomeContent {
   };
 
   return HomeContentSchema.parse(merged);
-}
-
-export function getManifestoContent(): ManifestoContent {
-  const raw = fs.readFileSync(MANIFESTO_MD_PATH, "utf8");
-  const { data } = matter(raw);
-
-  return ManifestoContentSchema.parse({
-    title: data.title,
-    eyebrow: data.eyebrow,
-    intro: data.intro,
-    backLabel: data.backLabel,
-    beats: data.beats ?? [],
-  });
 }
 
 export function getPageContent(slug: string): PageContent {

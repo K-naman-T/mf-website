@@ -23,17 +23,10 @@ export function AppNavbar({ content, hidden = false, onLogoClick }: AppNavbarPro
 
   const isDark = theme === "dark";
 
-  const defaultLinks = [
-    { label: "WORK", href: pathname === "/" ? "#work" : "/#work" },
-    { label: "MANIFESTO", href: pathname === "/" ? "#manifesto" : "/#manifesto" },
-  ];
-
-  const links = content?.links && content.links.length > 0
-    ? content.links.map((l) => ({
-        label: l.label,
-        href: l.href.startsWith("#") && pathname !== "/" ? `/${l.href}` : l.href,
-      }))
-    : defaultLinks;
+  const links = (content?.links ?? []).map((l) => ({
+    label: l.label,
+    href: l.href.startsWith("#") && pathname !== "/" ? `/${l.href}` : l.href,
+  }));
 
   const cta = content?.cta ?? {
     label: "LET'S TALK",
@@ -200,7 +193,9 @@ export function AppNavbar({ content, hidden = false, onLogoClick }: AppNavbarPro
                 onClick={() => setMenuOpen(false)}
                 aria-label="Close menu"
               >
-                {logoMark}
+                <span className={styles.mobileMenuMark}>
+                  {logoMark}
+                </span>
               </button>
             </motion.div>
             <motion.nav
